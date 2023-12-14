@@ -23,12 +23,12 @@ if(app()->environment('local')){
 </head>
 <body>
     {{-- header --}}
-    <header class="navbar dark:bg-l_nav bg-d_nav" style="user-select: none;">
-        <span class="flex-1 mx-4 text-l_pa_1 sm:text-lg md:text-2xl sm:font-thin xl:font-medium hidden md:block cursor-default">
-            Portfolio
-        </span>
+    <header class="navbar dark:bg-l_pa_1 bg-d_black" style="user-select: none;">
+        <div class="ml-20 flex-1 mx-4 text-l_pa_1 sm:text-lg md:text-3xl sm:font-thin xl:font-medium hidden md:block cursor-default">
+            Amirzan
+        </div>
         <nav class="flex-none">
-            <ul class="flex flex-column flex-wrap text-l_pa_1 sm:text-base md:text-xl sm:font-thin xl:font-medium">
+            <ul class="flex flex-column flex-wrap text-l_pa_1 sm:text-sm md:text-lg sm:font-thin xl:font-medium">
                 <li class="relative group m-4 cursor-pointer">
                     <a href="#home" class="before:absolute hover:before:block before:hidden before:-bottom-2 before:w-full before:bg-red-500 dark:before:bg-d_pa_1 before:h-0.75">Home</a>
                 </li>
@@ -55,22 +55,23 @@ if(app()->environment('local')){
     {{-- end header --}}
 
     {{-- Hero section --}}
-    <section class="hero min-h-screen dark:bg-l_pa_1 bg-d_pa_1">
-        <div class="hero-content flex-col lg:flex-row-reverse">
-            <img src="{{ asset($tPath.'/js/darkMode.js') }}"
-                class="absolute max-w-sm object-cover rounded-lg shadow-2xl w-100 h-100" />
-            <div>
-                <h1 class="text-5xl font-bold">Full stack Laravel developer</h1>
-                <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
-                    exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                <button class="btn btn-primary">Get Started</button>
+    <section class="grid w-full bg-cover min-h-screen dark:bg-white bg-d_black">
+        <content class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-around gap-10 flex-col lg:flex-row-reverse w-full">
+            <img src="{{ asset($tPath.'/img/profile/testing.png') }}"
+                class="right-40 max-w-sm object-cover rounded-lg w-150 h-150" />
+            <div class="flex justify-center flex-col mb-30">
+                <h1 class="text-3xl font-semibold">Full stack Laravel developer</h1>
+                <div class="text-6xl font-bold mt-5">
+                    <p>Hi I'm Amirzan</p>
+                    <p class="mt-1 ">Fikri From Indonesia</p>
+                </div>
             </div>
-        </div>
+        </content>
     </section>
     {{-- end hero section --}}
 
     {{-- main --}}
-    <main class="absolute bg-">
+    <main class="absolute dark:bg-l_pa_1 bg-d_pa_1">
         <section>
             {{--  --}}
         </section>

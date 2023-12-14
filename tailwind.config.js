@@ -24,6 +24,7 @@ module.exports = {
         l_text:'',
         l_btn: '#2F4858',
         /////------Dark------/////////
+        d_black:'#1d232a',
         d_nav:'#de4969',
         d_pa_1: '#223150',
         d_pa_2: '#223150',
