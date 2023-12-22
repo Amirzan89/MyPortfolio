@@ -72,11 +72,27 @@ if(app()->environment('local')){
 
     {{-- main --}}
     <main class="absolute dark:bg-l_pa_1 bg-d_pa_1">
+        {{-- About --}}
         <section>
             {{--  --}}
         </section>
+        {{-- end about --}}
+
+        {{-- Projects --}}
+        <section>
+            {{--  --}}
+        </section>
+        {{-- end projects --}}
+
+        {{-- Contact --}}
+        <section>
+            {{--  --}}
+        </section>
+        {{-- end Contact --}}
     </main>
     {{-- end main --}}
+
+    {{-- footer --}}
     <footer class="footer p-10 bg-base-300 text-base-content">
         <nav>
             <header class="footer-title">Services</header>
@@ -116,6 +132,7 @@ if(app()->environment('local')){
             </div>
         </nav>
     </footer>
+    {{-- end footer --}}
     <script src="{{ asset($tPath.'/js/darkMode.js') }}"></script>
 </body>
 </html>
