@@ -30,16 +30,19 @@ if(app()->environment('local')){
         <nav class="flex-none">
             <ul class="flex flex-column flex-wrap text-l_pa_1 sm:text-sm md:text-lg sm:font-thin xl:font-medium">
                 <li class="relative group m-4 cursor-pointer">
-                    <a href="#home" class="before:absolute before:block before:-bottom-2 before:w-0 before:bg-red-500 dark:before:bg-d_pa_1 before:h-0.75 before:transition-all before:duration-400 ease-in hover:before:w-full">Home</a>
+                    <a href="#home" class="before:absolute before:block before:-bottom-2 before:w-0 before:bg-red-500 dark:before:bg-d_pa_1 before:h-0.75 before:transition-all before:duration-400 ease-in-out hover:before:w-full">Home</a>
                 </li>
                 <li class="relative group m-4 cursor-pointer">
-                    <a href="#about" class="before:absolute before:block before:-bottom-2 before:w-0 before:bg-red-500 dark:before:bg-d_pa_1 before:h-0.75 before:transition-all before:duration-400 ease-in hover:before:w-full">About</a>
+                    <a href="#about" class="before:absolute before:block before:-bottom-2 before:w-0 before:bg-red-500 dark:before:bg-d_pa_1 before:h-0.75 before:transition-all before:duration-400 ease-in-out hover:before:w-full">About</a>
                 </li>
                 <li class="relative group m-4 cursor-pointer">
-                    <a href="#project" class="before:absolute before:block before:-bottom-2 before:w-0 before:bg-red-500 dark:before:bg-d_pa_1 before:h-0.75 before:transition-all before:duration-400 ease-in hover:before:w-full">Projects</a>
+                    <a href="#service" class="before:absolute before:block before:-bottom-2 before:w-0 before:bg-red-500 dark:before:bg-d_pa_1 before:h-0.75 before:transition-all before:duration-400 ease-in-out hover:before:w-full">Services</a>
                 </li>
                 <li class="relative group m-4 cursor-pointer">
-                    <a href="#contact" class="before:absolute before:block before:-bottom-2 before:w-0 before:bg-red-500 dark:before:bg-d_pa_1 before:h-0.75 before:transition-all before:duration-400 ease-in hover:before:w-full">Contact</a>
+                    <a href="#project" class="before:absolute before:block before:-bottom-2 before:w-0 before:bg-red-500 dark:before:bg-d_pa_1 before:h-0.75 before:transition-all before:duration-400 ease-in-out hover:before:w-full">Projects</a>
+                </li>
+                <li class="relative group m-4 cursor-pointer">
+                    <a href="#contact" class="before:absolute before:block before:-bottom-2 before:w-0 before:bg-red-500 dark:before:bg-d_pa_1 before:h-0.75 before:transition-all before:duration-400 ease-in-out hover:before:w-full">Contact</a>
                 </li>
             </ul>
         </nav>
@@ -71,26 +74,26 @@ if(app()->environment('local')){
     {{-- end hero section --}}
 
     {{-- main --}}
-    <main class="absolute dark:bg-l_pa_1 bg-d_pa_1 w-auto">
+    <main class="absolute dark:bg-l_pa_1 bg-black w-auto">
         {{-- About --}}
-        <section id="About" class="relative left-1/2 -translate-x-1/2 flex justify-evenly">
-            <div class="image h-150 w-100 bg-white rounded-3xl flex items-end">
+        <section id="about" class="relative left-1/2 -translate-x-1/2 flex justify-evenly mt-20">
+            <div class="image h-150 w-100 bg-gray-600 rounded-3xl flex items-end">
                 <img src="{{ asset($tPath.'/img/profile/testing.png') }}"
                 class="relative left-2/4 -translate-x-2/4 bottom-0 max-w-sm object-cover rounded-lg h-3/4"/>
             </div>
-            <div class="content bg-green-400 w-2/3 flex flex-col text-white">
+            <div class="content  w-2/3 flex flex-col text-white cursor-default">
                 <span class="text-6xl">About Me</span>
                 <span class="mt-7 text-2xl">
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis, et. Consequatur molestias in ducimus tempore dolore. Molestias earum molestiae nesciunt. Nemo dolore deserunt aperiam sapiente maxime unde ut saepe quaerat.
                 </span>
-                <ul class="text-2xl mt-5 text-white flex flex-row gap-4 ">
-                    <li class="relative before:absolute hover:before:block before:block before:-bottom-2 before:w-full before:bg-red-500 dark:before:bg-d_pa_1 before:h-0.75 cursor-pointer">Skill</li>
-                    <li class="relative before:absolute hover:before:block before: before:-bottom-2 before:w-full before:bg-red-500 dark:before:bg-d_pa_1 before:h-0.75 cursor-pointer">Experience</li>
-                    <li class="relative before:absolute hover:before:block before:hidden before:-bottom-2 before:w-full before:bg-red-500 dark:before:bg-d_pa_1 before:h-0.75 cursor-pointer">Education</li>
+                <ul class="text-2xl mt-5 text-white flex flex-row gap-7">
+                    <li class="relative before:absolute before:-bottom-2 before:w-0 before:bg-red-500 dark:before:bg-d_pa_1 before:h-0.75 cursor-pointer before:transition-all before:duration-400 ease-in-out hover:before:w-full">Skill</li>
+                    <li class="relative before:absolute before:-bottom-2 before:w-0 before:bg-red-500 dark:before:bg-d_pa_1 before:h-0.75 cursor-pointer before:transition-all before:duration-400 ease-in-out hover:before:w-full">Experience</li>
+                    <li class="relative before:absolute before:-bottom-2 before:w-0 before:bg-red-500 dark:before:bg-d_pa_1 before:h-0.75 cursor-pointer before:transition-all before:duration-400 ease-in-out hover:before:w-full">Education</li>
                 </ul>
                 <div class="content mt-4 w-auto h-100  ">
                     <div class="skills">
-                        <div class="menu text-2xl">Web Development</div>
+                        <div class="menu text-2xl text-red-400">Web Development</div>
                         <div class="submenu text-2xl">
                             Building 
                         </div>
@@ -101,8 +104,21 @@ if(app()->environment('local')){
         </section>
         {{-- end about --}}
 
+        {{-- Services --}}
+        <section id="service" class="mt-50">
+            <span class="text-6xl text-white relative left-20">My Tech Stack</span>
+            <div class="w-auto h-100 bg-yellow-300 flex flex-row justify-around mt-10">
+                <div class="card bg-red-400 w-1/4">
+                </div>
+                <div class="card bg-red-400 w-1/4"></div>
+                <div class="card bg-red-400 w-1/4"></div>
+            </div>
+            {{--  --}}
+        </section>
+        {{-- end services --}}
+
         {{-- Projects --}}
-        <section id="Project" class="mt-30">
+        <section id="project" class="mt-30">
             <div class="w-auto h-100 bg-yellow-300"></div>
             {{--  --}}
         </section>
