@@ -100,17 +100,45 @@ if(app()->environment('local')){
                     </div>
                 </div>
             </div>
-            {{--  --}}
         </section>
         {{-- end about --}}
 
         {{-- Services --}}
-        <section id="service" class="mt-50 text-white">
+        <section id="service" class="mt-50 bb-50 text-white">
             <span class="text-6xl relative left-20">My Tech Stack</span>
             <div class="w-auto h-100 flex flex-row justify-around mt-10">
+                {{-- <div class="card bg-d_black w-1/4">
+                    <img src="{{ asset($tPath.'/img/icon/laravel.png') }}" class=" max-w-sm object-cover rounded-lg w-25 h-25 relative left-2/4 -translate-x-2/4 mt-10" />
+                    <span class="text-4xl relative left-5 mt-5 font-bold">Laravel</span>
+                    <span class="text-xl relative left-5 mt-5"> Laravel is an elegant and expressive framework that simplifies the development process, allowing for the creation of feature-rich and maintainable applications.</span>
+                    <span>I specialize in building robust and scalable web applications using the Laravel PHP framework. Laravel is an elegant and expressive framework that simplifies the development process, allowing for the creation of feature-rich and maintainable applications. With its intuitive syntax, powerful tools, and a vibrant ecosystem, I leverage Laravel to deliver high-performance solutions that meet the unique needs of clients. From backend development to crafting RESTful APIs and integrating modern frontend technologies, I bring Laravel's versatility to create seamless and efficient web experiences.</span>
+                    <span class="hover:text-red-500">
+                    <a href="https://laravel.com" class="">
+                        Learn More</a>
+                    </span>
+                </div>
+                <div class="card bg-d_black w-1/4">
+                    <img src="{{ asset($tPath.'/img/icon/tailwind.png') }}" class=" max-w-sm object-cover rounded-lg w-30 h-30 relative left-10 mt-10" />
+                    <span>Tainwind CSS</span>
+                    <span>Tailwind is a utility-first CSS framework that allows me to build sleek and responsive designs with speed and precision.</span>
+                    <span>I specialize in crafting modern and visually appealing user interfaces with Tailwind CSS. Tailwind is a utility-first CSS framework that allows me to build sleek and responsive designs with speed and precision. By leveraging its extensive set of pre-designed utility classes, I create seamless and aesthetically pleasing user interfaces that not only look great but also adhere to best practices in web development. With Tailwind, I bring a fine balance of design and functionality to every project, ensuring a delightful user experience.</span>
+                    <span class="hover:text-red-500">
+                        <a href="https://tailwindcss.com">Learn more</a>
+                    </span>
+                </div>
+                <div class="card bg-d_black w-1/4">
+                    <img src="{{ asset($tPath.'/img/icon/vue.png') }}" class=" max-w-sm object-cover rounded-lg w-30 h-30 relative left-10 mt-10" />
+                    <span>Vue JS</span>
+                    <span>Vue.js is a progressive JavaScript framework that allows me to create seamless and responsive web applications with ease</span>
+                    <span>I specialize in developing dynamic and interactive web applications using Vue.js. Vue.js is a progressive JavaScript framework that allows me to build seamless and responsive user interfaces with ease. With its reactive data binding and component-based architecture, I create modern and engaging front-end experiences. Whether it's building single-page applications or integrating dynamic features into existing projects, Vue.js empowers me to deliver efficient and user-centric solutions. I bring the power of Vue.js to enhance the interactivity and user experience of web applications.</span>
+                    <span class="hover:text-red-500">
+                        <a href="https://vuejs.org/">Learn more</a>
+                    </span>
+                </div>
+            </div> --}}
             <div class="flex flex-wrap justify-around mt-10">
                 <div class="card bg-d_black w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6">
-                    <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4">
+                    <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4 mt-4">
                         <img src="{{ asset($tPath.'/img/icon/laravel.png') }}" class="max-w-full object-cover rounded-lg" />
                     </div>
                     <div class="flex flex-col">
@@ -123,7 +151,7 @@ if(app()->environment('local')){
                     </div>
                 </div>
                 <div class="card bg-d_black w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6">
-                    <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4">
+                    <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4 mt-4">
                         <img src="{{ asset($tPath.'/img/icon/tailwind.svg') }}" class="max-w-full object-cover rounded-lg" />
                     </div>
                     <div class="flex flex-col">
@@ -136,7 +164,7 @@ if(app()->environment('local')){
                     </div>
                 </div>
                 <div class="card bg-d_black w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6">
-                    <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4">
+                    <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4 mt-4">
                         <img src="{{ asset($tPath.'/img/icon/vue.png') }}" class="max-w-full object-cover rounded-lg" />
                     </div>
                     <div class="flex flex-col">
@@ -149,15 +177,98 @@ if(app()->environment('local')){
                     </div>
                 </div>
             </div>
-            
-            {{--  --}}
         </section>
         {{-- end services --}}
 
         {{-- Projects --}}
-        <section id="project" class="mt-30">
-            <div class="w-auto h-100 bg-yellow-300"></div>
-            {{--  --}}
+        <section id="project" class="mt-50">
+            <span class="text-6xl relative left-20">Project</span>
+            {{-- my project --}}
+            <div class="w-auto min-h-200 flex flex-col mt-10 bg-yellow-400">
+                <span class="text-black font-semibold text-4xl ml-20 mt-5">My project</span>
+                <div class="flex flex-wrap justify-around mt-10">
+                    <div class="card bg-d_black w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6 mb-10">
+                        <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4">
+                            <img src="{{ asset($tPath.'/img/icon/laravel.png') }}" class="max-w-full object-cover rounded-lg" />
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-4xl font-bold mb-2">Laravel</span>
+                            <span class="text-xl">Laravel is an elegant and expressive framework that simplifies the development process, allowing for the creation of feature-rich and maintainable applications.</span>
+                            <span class="hover:text-red-500 block mt-4">
+                                <a href="https://laravel.com">Learn More</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card bg-d_black w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6 mb-10">
+                        <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4">
+                            <img src="{{ asset($tPath.'/img/icon/tailwind.svg') }}" class="max-w-full object-cover rounded-lg" />
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-4xl font-bold mb-2">Tailwind CSS</span>
+                            <span class="text-xl">Tailwind is a utility-first CSS framework that allows me to build sleek and responsive designs with speed and precision.</span>
+                            <span class="hover:text-red-500 block mt-4">
+                                <a href="https://tailwindcss.com">Learn More</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card bg-d_black w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6 mb-10">
+                        <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4">
+                            <img src="{{ asset($tPath.'/img/icon/vue.png') }}" class="max-w-full object-cover rounded-lg" />
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-4xl font-bold mb-2">Vue JS</span>
+                            <span class="text-xl">Vue.js is a progressive JavaScript framework that allows me to create seamless and responsive web applications with ease.</span>
+                            <span class="hover:text-red-500 block mt-4">
+                                <a href="https://vuejs.org/">Learn More</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- end project --}}
+            {{-- team project --}}
+            <div class="w-auto min-h-200 flex flex-col mt-10 bg-yellow-400">
+                <span class="text-black font-semibold text-4xl ml-20 mt-5">My project</span>
+                <div class="flex flex-wrap justify-around mt-10">
+                    <div class="card bg-d_black w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6 mb-10">
+                        <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4">
+                            <img src="{{ asset($tPath.'/img/icon/laravel.png') }}" class="max-w-full object-cover rounded-lg" />
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-4xl font-bold mb-2">Laravel</span>
+                            <span class="text-xl">Laravel is an elegant and expressive framework that simplifies the development process, allowing for the creation of feature-rich and maintainable applications.</span>
+                            <span class="hover:text-red-500 block mt-4">
+                                <a href="https://laravel.com">Learn More</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card bg-d_black w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6 mb-10">
+                        <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4">
+                            <img src="{{ asset($tPath.'/img/icon/tailwind.svg') }}" class="max-w-full object-cover rounded-lg" />
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-4xl font-bold mb-2">Tailwind CSS</span>
+                            <span class="text-xl">Tailwind is a utility-first CSS framework that allows me to build sleek and responsive designs with speed and precision.</span>
+                            <span class="hover:text-red-500 block mt-4">
+                                <a href="https://tailwindcss.com">Learn More</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card bg-d_black w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6 mb-10">
+                        <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4">
+                            <img src="{{ asset($tPath.'/img/icon/vue.png') }}" class="max-w-full object-cover rounded-lg" />
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-4xl font-bold mb-2">Vue JS</span>
+                            <span class="text-xl">Vue.js is a progressive JavaScript framework that allows me to create seamless and responsive web applications with ease.</span>
+                            <span class="hover:text-red-500 block mt-4">
+                                <a href="https://vuejs.org/">Learn More</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- end team project --}}
         </section>
         {{-- end projects --}}
 
