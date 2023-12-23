@@ -11,6 +11,10 @@
         <div class="bg-red-500 w-100 h-100 transition duration-300 ease-in-out delay-300 hover:scale-150">
             <p>tersreahh</p>
         </div>
+        <div class="bg-green-500 w-100 h-100 transition-all duration-500 ease-in hover:w-200">
+        {{-- <div class="bg-green-500 w-100 h-100 transition duration-500 ease-in-out delay-300 hover:w-200"> --}}
+            <p>gbuttt </p>
+        </div>
     {{-- <button class="absolute left-100 transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-200 hover:bg-indigo-500 duration-300">
         Save Changes
       </button> --}}
