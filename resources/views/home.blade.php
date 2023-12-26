@@ -273,39 +273,33 @@ if(app()->environment('local')){
         {{-- end projects --}}
 
         {{-- Contact --}}
-        {{-- <section id="contact">
-            <div class="hero min-h-screen bg-base-200">
-                <div class="hero-content flex-col lg:flex-row-reverse">
-                  <div class="text-center lg:text-left">
-                    <h1 class="text-5xl font-bold">Login now!</h1>
-                    <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                  </div>
-                  <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                    <form class="card-body">
-                      <div class="form-control">
-                        <label class="label">
-                          <span class="label-text">Email</span>
-                        </label>
-                        <input type="email" placeholder="email" class="input input-bordered" required />
-                      </div>
-                      <div class="form-control">
-                        <label class="label">
-                          <span class="label-text">Password</span>
-                        </label>
-                        <input type="password" placeholder="password" class="input input-bordered" required />
-                        <label class="label">
-                          <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
-                        </label>
-                      </div>
-                      <div class="form-control mt-6">
-                        <button class="btn btn-primary">Login</button>
-                      </div>
-                    </form>
-                  </div>
+        <section class="mt-50  w-full h-400 bg-black">
+            <form class="relative bg--500 w-150 mx-auto h-2/4 top-2/4 -translate-y-2/4 flex flex-col gap-6 align-center" action="#" method="POST" id="contact">
+                <span class="text-white text-5xl mx-auto">Contact Me !</span>
+                <div class="mx-auto mt-3 w-full">
+                    <input type="text" placeholder="Email Address" name="email" class="w-full h-14 rounded-xl pl-5 text-2xl input border-2 hover:border-blue-600 focus:outline-none focus:border-4 focus:border-blue-600">
+                    <span style="display: " class="ml-3 mt-1">Email cannot be blank</span>
                 </div>
-              </div> --}}
-            {{--  --}}
-        {{-- </section> --}}
+                <div class="mx-auto w-full h-18 flex flex-row gap-5">
+                    <div class="h-full">
+                        <input type="text" placeholder="Full Name" name="name" class="w-full h-3/4 rounded-xl pl-4 input border-2 hover:border-blue-600 focus:outline-none focus:border-4 focus:border-blue-600">
+                        <span style="display: inline-block" class="ml-3 mt-1">Email cannot be blank</span>
+                    </div>
+                    <div class="h-full">
+                        <input type="text" placeholder="Subject" name="subject" class="w-full h-3/4 rounded-xl pl-4 input border-2 hover:border-blue-600 focus:outline-none focus:border-4 focus:border-blue-600">
+                        <span style="display: inline-block" class="ml-3 mt-1">Email cannot be blank</span>
+                    </div>
+                </div>
+                <div class="mx-auto w-full h-50">
+                    <textarea name="message" cols="" rows="" class="w-full h-full pl-4 rounded-xl pt-3 input border-2 hover:border-blue-600 focus:outline-none focus:border-4 focus:border-blue-600" style="resize: none" placeholder="Your Message"></textarea>
+                    <span class="be">Message cannot be blank</span>
+                </div>
+                <div class="mx-auto w-full mt-10">
+                    <input type="submit" value="Send Message" class="w-1/3 h-10 bg-red-500 rounded-full relative left-2/4 -translate-x-2/4">
+                </div>
+            </form>
+            
+        </section>
         {{-- end Contact --}}
     </main>
     {{-- end main --}}
