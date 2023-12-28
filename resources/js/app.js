@@ -1,15 +1,5 @@
 import './bootstrap'
-import { createApp } from 'vue/dist/vue.esm-bundler.js'
-const app = createApp({
-    data(){
-        return{
-            error:'',
-        }
-    },
-    methods:{
-        inputEmail(){
-            console.log('email inputt');
-        }
-    }
-});
-app.mount('#contact');
+import { createApp } from 'vue'
+// import { createApp } from 'vue/dist/vue.esm-bundler.js'
+import contact from './Components/contact.vue'
+const contactApp = createApp(contact).mount('#contact')

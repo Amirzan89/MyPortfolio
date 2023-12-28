@@ -1,11 +1,10 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MailController;
 Route::get('/', function () {
     return view('home');
 });
-Route::post('/contact/email', function () {
-    return view('home');
-});
+Route::post('/contact/email',[MailController::class,'send']);
 Route::get('/testing', function () {
     return view('testing');
 });
