@@ -103,6 +103,7 @@ export default{
                 this.isErrorName = false;
                 this.isErrorSubject = false;
                 this.isErrorMessage = false;
+                console.log('gk enek error ');
                 const formData = {
                     email: this.inpEmail,
                     name: this.inpName,
@@ -110,15 +111,17 @@ export default{
                     message: this.inpMessage,
                 };
                 axios.post('/contact/email', formData).then((res)=>{
-                    
-                }).catch((res)=>{
-
+                    console.log('success senddd');
+                    console.log(res);
+                }).catch((err)=>{
+                    console.log('errrror senddd');
+                    console.log(err);
                 });
                 // console.log('Server response:', response.data);
-                this.inpEmail = '';
-                this.inpName = '';
-                this.inpSubject = '';
-                this.inpMessage = '';
+                // this.inpEmail = '';
+                // this.inpName = '';
+                // this.inpSubject = '';
+                // this.inpMessage = '';
             } catch (error) {
                 console.error('Error sending email:', error);
             }

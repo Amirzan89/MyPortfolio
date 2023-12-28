@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactMe;
 class MailController extends Controller
 {
     public function send(Request $request){
@@ -28,6 +29,12 @@ class MailController extends Controller
             }
             return response()->json(['status' => 'error', 'message' => $errors], 400);
         }
-        return response()->json(['status'=>'success','message'=>'Email send success']);
+        Mail::to(env('MAIL_TO_ADDRESS', 'amirzanfikri5@gmail.com'))->send(new ContactMe($request->all()));
+        // if(count(Mail::failures()) > 0) {
+        //     $failures = Mail::failures();
+        //     return response()->json(['status'=>'error','message'=>$failures],400);
+        // } else {
+            return response()->json(['status'=>'success','message'=>'Email send success']);
+        // }
     }
 }
