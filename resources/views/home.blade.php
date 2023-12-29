@@ -336,10 +336,6 @@ if(app()->environment('local')){
     {{-- <script src="{{ asset($tPath.'/js/home.js') }}"></script> --}}
     {{-- <script src="{{ asset($tPath.'/js/darkMode.js') }}"></script> --}}
     {{-- <script src="https://unpkg.com/vue@next"></script> --}}
-    {{-- <script>
-        const app = Vue.createApp({});
-        app.mount('#contact');
-    </script> --}}
     @vite('resources/js/app.js')
 </body>
 </html>
