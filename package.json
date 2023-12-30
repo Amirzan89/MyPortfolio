@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "create-vite": "^5.1.0",
+        "debounce": "^2.0.0",
         "sweetalert2": "^11.10.2",
         "vue": "^3.2.36",
         "vue-router": "^4.0.13"

@@ -19,6 +19,28 @@ if(app()->environment('local')){
             scroll-behavior: smooth;
             scroll-padding: 10rem;
         }
+        @keyframes custom-animation {
+        0%, 100% {
+            top: 8px;
+            height: 64px;
+        }
+        50% {
+            top: 24px;
+            height: 32px;
+        }
+        }
+
+        .custom-animation {
+        animation: custom-animation 1.2s cubic-bezier(0, 1, 0.5, 1) infinite;
+        }
+
+        .custom-animation-delay-long {
+        animation-delay: -0.24s;
+        }
+
+        .custom-animation-delay-short {
+        animation-delay: -0.12s;
+        }
     </style>
 </head>
 <body>
