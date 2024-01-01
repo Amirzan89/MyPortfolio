@@ -44,9 +44,9 @@ if(app()->environment('local')){
     </style>
 </head>
 {{-- <body style="position: relative; min-height: 100vh;"> --}}
-<body>
+<body class="select-none pointer-events-none">
     {{-- header --}}
-    <header class="navbar dark:bg-l_pa_1 bg-d_black" style="user-select: none;">
+    <header class="navbar dark:bg-l_pa_1 bg-d_black pointer-events-auto">
         <div class="ml-20 flex-1 mx-4 text-l_pa_1 sm:text-lg md:text-3xl sm:font-thin xl:font-medium hidden md:block cursor-default">
             Amirzan
         </div>
@@ -70,14 +70,6 @@ if(app()->environment('local')){
             </ul>
         </nav>
         <div id="darkMode"/>
-        {{-- <div class="night-mode relative cursor-pointer ml-6 mr-5" onclick="changeMode()">
-            <span class="hidden" id="darkIcon">
-                <i class="fa-regular fa-moon text-3xl" style="color: #f5efe3;""></i>
-            </span>
-            <span id="lightIcon">
-                <i class="fa-regular fa-sun text-3xl" style="color: #f5efe3;"></i>
-            </span>
-        </div> --}}
     </header>
     {{-- end header --}}
 
@@ -298,14 +290,12 @@ if(app()->environment('local')){
 
         {{-- Contact --}}
         <section class="mt-50  w-full h-400 bg-d_black">
-            <div id="contact" class="w-200 relative top-2/4 -translate-y-2/4 left-2/4 -translate-x-2/4 p-8 bg-white bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-md"/>
+            <div id="contact" class="w-200 relative top-2/4 -translate-y-2/4 left-2/4 -translate-x-2/4 p-8 bg-white bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-md">
         </section>
         {{-- end Contact --}}
-        
+
         {{-- footer --}}
-        <footer class="bg-white w-full h-200  text-black">
-            <p>This is my footer content.</p>
-        </footer>
+        <footer id="footer">
         {{-- end footer --}}
     </main>
     {{-- end main --}}

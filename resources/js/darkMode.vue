@@ -14,10 +14,10 @@
 </template>
 <script>
 export default{
-    data(){
-        return{
-            isDark:false,
-        }
+    computed: {
+        isDark() {
+            return this.$store.getters.isDark;
+        },
     },
     methods:{
         darkMode(){
@@ -25,13 +25,13 @@ export default{
                 setTimeout(() => {
                 document.documentElement.classList.add('dark');
                 localStorage.setItem('dark-mode', 'enabled');
-                this.isDark = true;
-                }, 500);
-            } else {
-                setTimeout(() => {
+                this.$store.dispatch('toggleDarkMode');
+            }, 500);
+        } else {
+            setTimeout(() => {
                 document.documentElement.classList.remove('dark');
                 localStorage.setItem('dark-mode', null);
-                this.isDark = false;
+                this.$store.dispatch('toggleDarkMode');
                 }, 500);
             }
         }

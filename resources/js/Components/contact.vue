@@ -1,5 +1,5 @@
 <template>
-    <form v-on:submit.prevent="sendEmail" id="contact" class="relative bg-500 w-150 mx-auto h-2/4 flex flex-col gap-5 align-center">
+    <form v-on:submit.prevent="sendEmail" id="contact" class="relative bg-500 w-150 mx-auto h-2/4 flex flex-col gap-5 align-center pointer-events-auto">
         <span class="text-white text-5xl mx-auto">Contact Me !</span>
         <div class="mx-auto mt-3 w-full">
             <input type="text" placeholder="Email Address" name="email" class="w-full h-14 rounded-xl pl-5 text-2xl input border-4 focus:outline-none focus:border-5 transition duration-400 ease-in-out" :class="{
@@ -32,7 +32,7 @@
             <span v-if="isErrorMessage" class="ml-3 mt-1 text-red-500 font-semibold text-lg cursor-default">{{ errMessage }}</span>
         </div>
         <div class="mx-auto w-full mt-10">
-            <input type="submit" value="Send Message" class="w-1/3 h-10 bg-red-500 rounded-full relative left-2/4 -translate-x-2/4">
+            <input type="submit" value="Send Message" class="w-1/3 h-10 bg-red-500 rounded-full relative left-2/4 -translate-x-2/4 cursor-pointer">
         </div>
     </form>
     <div class="fixed z-100 w-full h-full top-0 left-0" v-if="isLoading">
