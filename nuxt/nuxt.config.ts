@@ -1,23 +1,28 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
-  runtimeConfig:{
-    public: {
-      baseURL: process.env.APP_URL,
+    devtools: {
+        enabled: true,
+        timeline: {
+            enabled: true,
+        },
     },
-  },
-  ssr: false,
-  css: ['~/assets/css/tailwind.css'],
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
+    runtimeConfig:{
+        public: {
+            baseURL: process.env.APP_URL,
+        },
     },
-  },
-  components: [
-    {
-      path: '~/components',
-      extensions: ['.vue'],
-    }
-  ],
+    ssr: false,
+    css: ['~/assets/css/tailwind.css'],
+    postcss: {
+        plugins: {
+            tailwindcss: {},
+            autoprefixer: {},
+        },
+    },
+    components: [
+        {
+            path: '~/components',
+            extensions: ['.vue'],
+        }
+    ],
 })
