@@ -3,9 +3,9 @@
     <!-- main -->
     <main class="absolute dark:bg-l_pa_1 bg-black w-auto">
         <slot></slot>
-        <section class="mt-50  w-full h-400 bg-d_black">
+        <!-- <section class="mt-50  w-full h-400 bg-d_black">
             <ContactComponent></ContactComponent>
-        </section>
+        </section> -->
         <FooterComponent></FooterComponent>
     </main>
     <!-- end main -->
@@ -14,4 +14,6 @@
 import HeaderComponent from '~/components/Header.vue';
 import ContactComponent from '~/components/Contact.vue';
 import FooterComponent from '~/components/Footer.vue';
+</script>
+<script>
 </script>
