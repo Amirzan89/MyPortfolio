@@ -120,7 +120,7 @@ if(app()->environment('local')){
         {{-- end about --}}
 
         {{-- Services --}}
-        <section id="service" class="mt-50 bb-50 text-white">
+        <section id="service" class="mt-50 bb-50 text-white sm:text-red-500">
             <span class="text-6xl relative left-20">My Tech Stack</span>
             <div class="w-auto h-100 flex flex-row justify-around mt-10">
                 {{-- <div class="card bg-d_black w-1/4">
@@ -197,94 +197,49 @@ if(app()->environment('local')){
         {{-- end services --}}
 
         {{-- Projects --}}
-        <section id="project" class="mt-50">
-            <span class="text-6xl relative left-20">Project</span>
-            {{-- my project --}}
-            <div class="w-auto min-h-200 flex flex-col mt-10 bg-yellow-400">
-                <span class="text-black font-semibold text-4xl ml-20 mt-5">My project</span>
-                <div class="flex flex-wrap justify-around mt-10">
-                    <div class="card bg-d_black w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6 mb-10">
-                        <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4">
-                            <img src="{{ asset($tPath.'/img/icon/laravel.png') }}" class="max-w-full object-cover rounded-lg" />
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="text-4xl font-bold mb-2">Laravel</span>
-                            <span class="text-xl">Laravel is an elegant and expressive framework that simplifies the development process, allowing for the creation of feature-rich and maintainable applications.</span>
-                            <span class="hover:text-red-500 block mt-4">
-                                <a href="https://laravel.com">Learn More</a>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="card bg-d_black w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6 mb-10">
-                        <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4">
-                            <img src="{{ asset($tPath.'/img/icon/tailwind.svg') }}" class="max-w-full object-cover rounded-lg" />
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="text-4xl font-bold mb-2">Tailwind CSS</span>
-                            <span class="text-xl">Tailwind is a utility-first CSS framework that allows me to build sleek and responsive designs with speed and precision.</span>
-                            <span class="hover:text-red-500 block mt-4">
-                                <a href="https://tailwindcss.com">Learn More</a>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="card bg-d_black w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6 mb-10">
-                        <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4">
-                            <img src="{{ asset($tPath.'/img/icon/vue.png') }}" class="max-w-full object-cover rounded-lg" />
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="text-4xl font-bold mb-2">Vue JS</span>
-                            <span class="text-xl">Vue.js is a progressive JavaScript framework that allows me to create seamless and responsive web applications with ease.</span>
-                            <span class="hover:text-red-500 block mt-4">
-                                <a href="https://vuejs.org/">Learn More</a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+        <section id="project" class="mt-50 bg-purple-400 flex flex-col">
+            <div class="flex relative left-1/2 -translate-x-1/2 justify-between items-center" style="width:90%">
+                <span class="text-6xl relative">Projects</span>
+                <a href="/projects" class="text-2xl">See all</a>
             </div>
-            {{-- end project --}}
-            {{-- team project --}}
-            <div class="w-auto min-h-200 flex flex-col mt-10 bg-yellow-400">
-                <span class="text-black font-semibold text-4xl ml-20 mt-5">My project</span>
-                <div class="flex flex-wrap justify-around mt-10">
-                    <div class="card bg-d_black w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6 mb-10">
-                        <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4">
-                            <img src="{{ asset($tPath.'/img/icon/laravel.png') }}" class="max-w-full object-cover rounded-lg" />
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="text-4xl font-bold mb-2">Laravel</span>
-                            <span class="text-xl">Laravel is an elegant and expressive framework that simplifies the development process, allowing for the creation of feature-rich and maintainable applications.</span>
-                            <span class="hover:text-red-500 block mt-4">
-                                <a href="https://laravel.com">Learn More</a>
-                            </span>
-                        </div>
+            <ul class="relative bg-green-500 left-1/2 -translate-x-1/2 flex mt-5 mb-10 gap-5 flex-wrap" style="width: 90%;">
+                <li class="sm:w-full w-70 bg-red-500 list-none rounded-xl flex">
+                    <a href="/projects" class="mb-2">
+                        <img src="/img/project/testing/1.jpg" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3" style="width:90%;">
+                        <h3 class="relative left-5 mt-4 text-xl font-semibold">EduAksi</h3>
+                        <span class="relative left-5 mt-5 mb-5">Team Project</span>
+                    </a>
+                    <div class="loadingg absolute">
+                        <div/>
+                        <h3/>
+                        <span/>
                     </div>
-                    <div class="card bg-d_black w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6 mb-10">
-                        <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4">
-                            <img src="{{ asset($tPath.'/img/icon/tailwind.svg') }}" class="max-w-full object-cover rounded-lg" />
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="text-4xl font-bold mb-2">Tailwind CSS</span>
-                            <span class="text-xl">Tailwind is a utility-first CSS framework that allows me to build sleek and responsive designs with speed and precision.</span>
-                            <span class="hover:text-red-500 block mt-4">
-                                <a href="https://tailwindcss.com">Learn More</a>
-                            </span>
-                        </div>
+                </li>
+                <li class="sm:w-full w-70 bg-red-500 list-none rounded-xl flex">
+                    <a href="/projects" class="mb-2">
+                        <img src="/img/project/testing/2.jpg" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3" style="width:90%;">
+                        <h3 class="relative left-5 mt-4 text-xl font-semibold">File-sharing</h3>
+                        <span class="relative left-5 mt-5 mb-5">Self Project</span>
+                    </a>
+                    <div class="loadingg absolute">
+                        <div/>
+                        <h3/>
+                        <span/>
                     </div>
-                    <div class="card bg-d_black w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-6 mb-10">
-                        <div class=" w-50 h-50 mb-4 relative left-2/4 -translate-x-2/4">
-                            <img src="{{ asset($tPath.'/img/icon/vue.png') }}" class="max-w-full object-cover rounded-lg" />
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="text-4xl font-bold mb-2">Vue JS</span>
-                            <span class="text-xl">Vue.js is a progressive JavaScript framework that allows me to create seamless and responsive web applications with ease.</span>
-                            <span class="hover:text-red-500 block mt-4">
-                                <a href="https://vuejs.org/">Learn More</a>
-                            </span>
-                        </div>
+                </li>
+                <li class="sm:w-full w-70 bg-red-500 list-none rounded-xl flex">
+                    <a href="/projects" class="mb-2">
+                        <img src="/img/project/testing/3.png" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3" style="width:90%;">
+                        <h3 class="relative left-5 mt-4 text-xl font-semibold">Smarttrashku</h3>
+                        <span class="relative left-5 mt-5 mb-5">Team Project</span>
+                    </a>
+                    <div class="loadingg absolute">
+                        <div/>
+                        <h3/>
+                        <span/>
                     </div>
-                </div>
-            </div>
-            {{-- end team project --}}
+                </li>
+            </ul>
         </section>
         {{-- end projects --}}
 

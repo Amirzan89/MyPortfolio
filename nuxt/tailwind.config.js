@@ -10,7 +10,8 @@ export default {
     "./error.vue",
   ],
   theme: {
-    screens: {
+    screens:{
+      'phone': '360px',
       'sm': '640px',
       'md': '768px',
       'lg': '1024px',
@@ -20,9 +21,9 @@ export default {
     extend: {
       colors: {
         primary: {
-          100: '#3F51B5',
-          200: '#757de8',
-          300: '#dedeff',
+          100: '#fefefe',
+          200: '#2b9df8',
+          red: '#b7033a',
         },
         // pallet:'#2E3137',
         // black_palette: '#2F4858',

@@ -84,7 +84,7 @@ class ProjectsController extends Controller
         if ($request->wantsJson()) {
             return response()->json($dataShow);
         }
-        return $this->getView();
+        return $this->getView('home');
     }
     public function projects(Request $request, $link){
         if (file_exists(self::$jsonFile)) {
