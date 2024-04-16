@@ -9,5 +9,8 @@ Route::group(['middleware'=>'cors'],function(){
     Route::get('/testing', function(){
         return view('testing');
     });
+    Route::get('/cv', function(){
+        return view('cv');
+    });
     Route::get('/projects/{any}', 'ProjectsController@projects');
 });
