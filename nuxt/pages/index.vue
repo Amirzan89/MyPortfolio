@@ -48,93 +48,50 @@
             </NuxtLink>
         </div>
         <ul class="relative left-1/2 -translate-x-1/2 flex mt-5 mb-10 flex-wrap justify-between bg-blue-500" style="width:95%;">
-            <li class="list-none relative" style="width:31%;">
-                <NuxtLink to="/projects" class="mb-2 hover:bg-red-500 flex flex-col rounded-xl">
-                    <img :src="publicConfig.baseURL + '/img/project/testing/1.jpg'" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3 h-40" style="width:90%">
-                    <h3 class="relative left-5 mt-4 text-xl font-semibold w-max">EduAksi</h3>
-                    <span class="relative left-5 mt-5 mb-10 w-max">Team Project</span>
-                </NuxtLink>
-                <div class="card-loading absolute top-0 left-0 flex flex-col bg-transparent w-full">
-                    <div class="h-40 mt-3 rounded-md relative left-1/2 -translate-x-1/2 items-loading" style="width: 90%; animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
-                    <h3 class="w-55 h-8 rounded-md relative left-5 mt-5 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
-                    <span class="w-30 h-7 relative left-5 mt-4 mb-10 rounded-md items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
-                </div>
-            </li>
-            <li class="list-none relative" style="width:31%;">
-                <NuxtLink to="/projects" class="mb-2 hover:bg-red-500 flex flex-col rounded-xl">
-                    <img :src="publicConfig.baseURL + '/img/project/testing/2.jpg'" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3 h-40" style="width:90%">
-                    <h3 class="relative left-5 mt-7 text-xl font-semibold w-max">File-sharing</h3>
-                    <span class="relative left-5 mt-3 mb-5 text-lg w-max">Self Project</span>
-                </NuxtLink>
-                <div class="card-loading absolute top-0 left-0 flex flex-col bg-transparent w-full">
-                    <div class="h-40 mt-3 rounded-md relative left-1/2 -translate-x-1/2 items-loading" style="width: 90%; animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
-                    <h3 class="w-55 h-9 rounded-md relative left-5 mt-5 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
-                    <span class="w-30 h-7 relative left-5 mt-4 mb-10 rounded-md items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
-                </div>
-            </li>
-            <li class="list-none relative" style="width:31%;">
-                <NuxtLink to="/projects" class="mb-2 hover:bg-red-500 flex flex-col rounded-xl">
-                    <img :src="publicConfig.baseURL + '/img/project/testing/3.png'" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3 h-40" style="width:90%">
-                    <h3 class="relative left-5 mt-7 text-xl font-semibold w-max">Smarttrashku</h3>
-                    <span class="relative left-5 mt-3 mb-5 text-lg w-max">Team Project</span>
-                </NuxtLink>
-                <div class="card-loading absolute top-0 left-0 flex flex-col bg-transparent w-full">
-                    <div class="h-40 mt-3 rounded-md relative left-1/2 -translate-x-1/2 items-loading" style="width: 90%; animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
-                    <h3 class="w-55 h-9 rounded-md relative left-5 mt-5 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
-                    <span class="w-30 h-7 relative left-5 mt-4 mb-10 rounded-md items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
-                </div>
-            </li>
+            <template v-for="(item, index) in local.fetchedViewData" :key="index">
+                <li class="list-none relative" style="width:31%;" ref="cardRefs">
+                    <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 hover:bg-red-500 flex flex-col rounded-xl">
+                        <img :src="publicConfig.baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3 h-40" style="width:90%">
+                        <h3 class="relative left-5 mt-4 text-xl font-semibold w-max">{{ item.nama }}</h3>
+                        <span class="relative left-5 mt-5 mb-10 w-max">{{ item.category }}</span>
+                    </NuxtLink>
+                    <div class="card-loading absolute top-0 left-0 flex flex-col bg-transparent w-full">
+                        <div class="h-40 mt-3 rounded-md relative left-1/2 -translate-x-1/2 items-loading" style="width: 90%; animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
+                        <h3 class="w-55 h-8 rounded-md relative left-5 mt-5 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
+                        <span class="w-30 h-7 relative left-5 mt-4 mb-10 rounded-md items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
+                    </div>
+                </li>
+            </template>
         </ul>
     </section>
     <!-- end project -->
     <!-- contact -->
     <section class="mt-20  w-full h-200" style="padding-top: 70px;">
-    <!-- <section id="contact" class="mt-20 bg-purple-400"> -->
         <div class="w-200 relative top-2/4 -translate-y-2/4 left-2/4 -translate-x-2/4 p-8 bg-primary-200 bg--opacity-30 backdrop-filter backdrop-blur-lg rounded-md">
-            <form v-on:submit.prevent="sendEmail" id="contact" class="relative bg-500 w-150 mx-auto h-2/4 flex flex-col gap-5 align-center pointer-events-auto">
+            <form id="contact" class="relative bg-500 w-150 mx-auto h-2/4 flex flex-col gap-5 align-center pointer-events-auto">
                 <span class="text-white text-5xl mx-auto">Contact Me !</span>
                 <div class="mx-auto mt-3 w-full">
-                    <input type="text" placeholder="Email Address" name="email" class="w-full h-14 rounded-xl pl-5 text-2xl input border-4 focus:outline-none focus:border-5 transition duration-400 ease-in-out" :class="{
-                        'hover:border-blue-600 focus:border-blue-600' : !isErrorEmail && !isValidEmail,
-                        'border-popup_error hover:border-popup_error focus:border-popup_error' : isErrorEmail,
-                        'border-popup_success hover:border-popup_success focus:border-popup_success' : isValidEmail }" v-model="inpEmail" @input="handleInput('email')">
-                    <span v-if="isErrorEmail" class="ml-3 mt-2 text-red-500 font-semibold text-lg cursor-default">{{ errEmail }}</span>
+                    <input type="text" placeholder="Email Address" name="email" class="w-full h-14 rounded-xl pl-5 text-2xl input border-4 focus:outline-none focus:border-5 transition duration-400 ease-in-out" ref="inpEmail" v-model="input.email" @input="inpChange('email')">
+                    <!-- <span v-if="isErrorEmail" class="ml-3 mt-2 text-red-500 font-semibold text-lg cursor-default">{{ errEmail }}</span> -->
                 </div>
                 <div class="mx-auto w-full h-18 flex flex-row gap-4">
                     <div class="h-full flex-1">
-                        <input type="text" placeholder="Full Name" name="name" class="w-full h-3/4 rounded-xl pl-4 text-xl input border-4 hover:border-blue-600 focus:outline-none focus:border-5 focus:border-blue-600 transition duration-400 ease-in-out" :class="{
-                        'hover:border-blue-600 focus:border-blue-600' : !isErrorName && !isValidName,
-                        'border-popup_error hover:border-popup_error focus:border-popup_error' : isErrorName,
-                        'border-popup_success hover:border-popup_success focus:border-popup_success' : isValidName }" v-model="inpName" @input="handleInput('name')">
-                        <span v-if="isErrorName" class="ml-3 mt-1 text-red-500 font-semibold text-lg cursor-default">{{ errName }}</span>
+                        <input type="text" placeholder="Full Name" name="name" class="w-full h-3/4 rounded-xl pl-4 text-xl input border-4 hover:border-blue-600 focus:outline-none focus:border-5 focus:border-blue-600 transition duration-400 ease-in-out" ref="inpName" v-model="input.name" @input="inpChange('name')">
+                        <!-- <span v-if="isErrorName" class="ml-3 mt-1 text-red-500 font-semibold text-lg cursor-default">{{ errName }}</span> -->
                     </div>
                     <div class="h-full flex-1">
-                        <input type="text" placeholder="Subject" name="subject" class="w-full h-3/4 rounded-xl pl-4 text-xl input border-4 hover:border-blue-600 focus:outline-none focus:border-5 focus:border-blue-600 transition duration-400 ease-in-out" :class="{
-                        'hover:border-blue-600 focus:border-blue-600' : !isErrorSubject && !isValidSubject,
-                        'border-popup_error hover:border-popup_error focus:border-popup_error' : isErrorSubject,
-                        'border-popup_success hover:border-popup_success focus:border-popup_success' : isValidSubject }" v-model="inpSubject" @input="handleInput('subject')">
-                        <span v-if="isErrorSubject" class="ml-3 mt-1 text-red-500 font-semibold text-lg cursor-default">{{ errSubject }}</span>
+                        <input type="text" placeholder="Subject" name="subject" class="w-full h-3/4 rounded-xl pl-4 text-xl input border-4 hover:border-blue-600 focus:outline-none focus:border-5 focus:border-blue-600 transition duration-400 ease-in-out" ref="inpSubject" v-model="input.subject" @input="inpChange('subject')">
+                        <!-- <span v-if="isErrorSubject" class="ml-3 mt-1 text-red-500 font-semibold text-lg cursor-default">{{ errSubject }}</span> -->
                     </div>
                 </div>
                 <div class="mx-auto w-full h-50">
-                    <textarea name="message" cols="" rows="" class="w-full h-full pl-4 rounded-xl pt-3 text-lg input border-4 hover:border-blue-600 focus:outline-none focus:border-5 focus:border-blue-600 resize-none transition duration-400 ease-in-out" placeholder="Your Message" :class="{
-                        'hover:border-blue-600 focus:border-blue-600' : !isErrorMessage && !isValidMessage,
-                        'border-popup_error hover:border-popup_error focus:border-popup_error' : isErrorMessage,
-                        'border-popup_success hover:border-popup_success focus:border-popup_success' : isValidMessage }" v-model="inpMessage" @input="handleInput('message')"></textarea>
-                    <span v-if="isErrorMessage" class="ml-3 mt-1 text-red-500 font-semibold text-lg cursor-default">{{ errMessage }}</span>
+                    <textarea name="message" cols="" rows="" class="w-full h-full pl-4 rounded-xl pt-3 text-lg input border-4 hover:border-blue-600 focus:outline-none focus:border-5 focus:border-blue-600 resize-none transition duration-400 ease-in-out" placeholder="Your Message" ref="inpMessage" v-model="input.message" @input="inpChange('message')"></textarea>
+                    <!-- <span v-if="isErrorMessage" class="ml-3 mt-1 text-red-500 font-semibold text-lg cursor-default">{{ errMessage }}</span> -->
                 </div>
                 <div class="mx-auto w-full mt-10">
-                    <input type="submit" value="Send Message" class="w-1/3 h-10 bg-red-500 rounded-full relative left-2/4 -translate-x-2/4 cursor-pointer">
+                    <button value="Send Message" class="w-1/3 h-10 bg-red-500 rounded-full relative left-2/4 -translate-x-2/4 cursor-pointer" @click.prevent="sendEmail"></button>
                 </div>
             </form>
-            <div class="fixed z-100 w-full h-full top-0 left-0" v-if="isLoading">
-                <div class="bg w-full h-full bg-blue-300/20"></div>
-                <div class="inline-block absolute w-40 h-40 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
-                    <div class="absolute left-2 w-10 bg-white custom-animation custom-animation-delay-long"></div>
-                    <div class="absolute left-18 w-10 bg-white custom-animation custom-animation-delay-short"></div>
-                    <div class="absolute left-35 w-10 bg-white custom-animation"></div>
-                </div>
-            </div>
         </div>
     </section>
     <!-- end contact -->
@@ -149,51 +106,27 @@
             background-position: 0% 0%;
         }
     }
-    @keyframes custom-animation {
-    0%, 100% {
-        top: 8px;
-        height: 64px;
-    }
-    50% {
-        top: 24px;
-        height: 32px;
-    }
-    }
-
-    .custom-animation {
-    animation: custom-animation 1.2s cubic-bezier(0, 1, 0.5, 1) infinite;
-    }
-
-    .custom-animation-delay-long {
-    animation-delay: -0.24s;
-    }
-
-    .custom-animation-delay-short {
-    animation-delay: -0.12s;
-    }
 </style>
 <script setup>
 import axios from 'axios';
+import { eventBus } from '~/app/eventBus';
 const publicConfig = useRuntimeConfig().public;
 definePageMeta({
     layout: 'home',
 });
-// useAsyncData(async () => {
-//     const res = await axios.get(publicConfig.baseURL + '/', {
-//         headers: {
-//             'Accept': 'application/json',
-//         }
-//     });
-//     local.fetchedSelfProject = res.data.self_project;
-//     local.fetchedTeamProject = res.data.team_project;
-// });
-// watch(() => local.fetchedSelfProject, () => {
-// }, { immediate:true });
-// watch(() => local.fetchedTeamProject, () => {
-// }, { immediate:true });
+useHead({
+    title:'Welcome | Amirzan Portfolio'
+});
+useAsyncData(async () => {
+    const res = await axios.get(publicConfig.baseURL + '/', {
+        headers: {
+            'Accept': 'application/json',
+        }
+    });
+    local.fetchedViewData = res.data.viewData;
+});
 const local = reactive({
-    fetchedSelfProject: null,
-    fetchedTeamProject: null,
+    fetchedViewData: null,
 });
 const input = reactive({
     name: '',
@@ -201,7 +134,81 @@ const input = reactive({
     email: '',
     message: '',
 });
-const sendEmail = async() => {
+const cardRefs = ref([]);
+const popup = ref(null);
+const inpName = ref(null);
+const inpSubject = ref(null);
+const inpEmail = ref(null);
+const inpMessage = ref(null);
+const handleLoading = (card) => {
+    const image = card.querySelector('img');
+    image.addEventListener('load', () => {
+        const cardLoading = card.querySelector('.card-loading');
+        if (cardLoading) {
+            cardLoading.remove();
+        }
+    });
+    let hasError = false;
+    image.addEventListener('error', () => {
+        hasError = true;
+    });
+    if (hasError && (image.complete || image.naturalWidth === 0)) {
+        const cardLoading = card.querySelector('.card-loading');
+        if (cardLoading) {
+            cardLoading.remove();
+        }
+    }
+}
+watch(() => local.fetchedViewData, () => {
+    if (local?.fetchedViewData !== undefined && typeof local.fetchedViewData === 'object' && Array.isArray(local.fetchedViewData) && Object.keys(local.fetchedViewData).length > 0) {
+        nextTick(() => {
+            local.fetchedViewData.forEach((item, index) => {
+                let card = cardRefs.value[index];
+                handleLoading(card);
+            });
+        });
+    }
+}, { immediate:true });
+const inpChange = (div) => {
+    if(!popup.value.classList.contains('invisible')){
+        popup.value.classList.add('fade-out');
+        setTimeout(function(){
+            popup.value.classList.remove('fade-out');
+        }, 750);
+        popup.value.classList.add('invisible');
+    }
+    errMessage.value = '';
+    if(div == 'name'){
+        inpName.value.classList.remove('border-popup_error','hover:border-popup_error','focus:border-popup_error');
+        inpName.value.classList.add('border-black','hover:border-black','focus:border-black');
+    }else if(div == 'subject'){
+        inpSubject.value.classList.remove('border-popup_error','hover:border-popup_error','focus:border-popup_error');
+        inpSubject.value.classList.add('border-black','hover:border-black','focus:border-black');
+    }else if(div == 'email'){
+        inpEmail.value.classList.remove('border-popup_error','hover:border-popup_error','focus:border-popup_error');
+        inpEmail.value.classList.add('border-black','hover:border-black','focus:border-black');
+    }else if(div == 'message'){
+        inpMessage.value.classList.remove('border-popup_error','hover:border-popup_error','focus:border-popup_error');
+        inpMessage.value.classList.add('border-black','hover:border-black','focus:border-black');
+    }
+};
+const sendEmail = async(event) => {
+    event.preventDefault();
+    if(input.email === null || input.email === ''){
+        inpEmail.value.classList.remove('border-black','hover:border-black','focus:border-black');
+        inpEmail.value.classList.add('border-popup_error','hover:border-popup_error','focus:border-popup_error');
+        errMessage.value = 'Email Harus diisi !';
+    }
+    if(input.password === null || input.password === ''){
+        inpPassword.value.classList.remove('border-black','hover:border-black','focus:border-black');
+        inpPassword.value.classList.add('border-popup_error','hover:border-popup_error','focus:border-popup_error');
+        errMessage.value = 'Password Harus diisi !';
+    }
+    if(errMessage.value != ''){
+        popup.value.classList.remove('invisible');
+        return;
+    }
+    eventBus.emit('showLoading');
     const res = await axios.post(publicConfig.baseURL + '/send-email', {
         name: input.name,
         subject: input.subject,

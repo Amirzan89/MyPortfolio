@@ -12,5 +12,6 @@ Route::group(['middleware'=>'cors'],function(){
         return view('cv');
     });
     Route::post('/download/cv',[HomeController::class,'downloadCV']);
-    Route::get('/projects/{any}', 'HomeController@projects');
+    Route::get('/projects', 'HomeController@projects');
+    Route::get('/projects/{any}', 'HomeController@detailProject');
 });

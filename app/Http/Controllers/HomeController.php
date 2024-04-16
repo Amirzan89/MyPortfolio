@@ -14,6 +14,41 @@ class HomeController extends Controller
     public function __construct(){
         self::$jsonFile = storage_path('app/projects.json');
     }
+    private function dataTestingProjects(): array
+    {
+        return [
+            [
+                'nama' => 'Smarttrashku',
+                'deskripsi' => '',
+                'category' => 'team_project',
+                'tech_stack' => 'laravel, bootstrap',
+                'link' => 'smarttrashku',
+                'link_project'=> 'smarttrashku.amirzan.my.id',
+                'thumbnail' => 'testing/1.jpg',
+                'foto' => [''],
+            ],
+            [
+                'nama' => 'File-shares',
+                'deskripsi' => '',
+                'category' => 'self_project',
+                'tech_stack' => 'laravel, tailwind, vue',
+                'link' => 'file-sharing',
+                'link_project'=> 'file-sharing.amirzan.my.id',
+                'thumbnail' => 'testing/2.jpg',
+                'foto' => [''],
+            ],
+            [
+                'nama' => 'TOkoKU',
+                'deskripsi' => '',
+                'category' => 'self_project',
+                'tech_stack' => 'laravel, tailwind, vue, nuxt',
+                'link' => 'tokoku',
+                'link_project'=> 'tokoku.amirzan.my.id',
+                'thumbnail' => 'testing/3.png',
+                'foto' => [''],
+            ],
+        ];
+    }
     private function dataProjects(): array
     {
         return [
@@ -67,22 +102,16 @@ class HomeController extends Controller
         }
     }
     public function home(Request $request){
-        if (file_exists(self::$jsonFile)) {
-            $projects = json_decode(file_get_contents(self::$jsonFile), true);
-        }else{
-            $projects = $this->dataProjects();
-        }
-        $selfProjects = array_filter($projects, function($project) {
-            return $project['category'] === 'self_project';
-        });
-        $teamProjects = array_filter($projects, function($project) {
-            return $project['category'] === 'team_project';
-        });
-        shuffle($selfProjects);
-        shuffle($teamProjects);
+        // if (file_exists(self::$jsonFile)) {
+        //     $projects = json_decode(file_get_contents(self::$jsonFile), true);
+        // }else{
+        //     $projects = $this->dataProjects();
+        // }
+        $projects = $this->datatestingProjects();
+        shuffle($projects);
+        $projects = array_slice($projects, 0, 3);
         $dataShow = [
-            'self_project' => $selfProjects,
-            'team_project' => $teamProjects,
+            'viewData' => $projects,
         ];
         if ($request->wantsJson()) {
             return response()->json($dataShow);
@@ -90,11 +119,28 @@ class HomeController extends Controller
         return $this->getView('home');
     }
     public function projects(Request $request, $link){
-        if (file_exists(self::$jsonFile)) {
-            $projects = json_decode(file_get_contents(self::$jsonFile), true);
-        }else{
-            $projects = $this->dataProjects();
+        // if (file_exists(self::$jsonFile)) {
+        //     $projects = json_decode(file_get_contents(self::$jsonFile), true);
+        // }else{
+        //     $projects = $this->dataProjects();
+        // }
+        $projects = $this->dataTestingProjects();
+        shuffle($projects);
+        $dataShow = [
+            'viewData' => $projects,
+        ];
+        if ($request->wantsJson()) {
+            return response()->json($dataShow);
         }
+        return $this->getView();
+    }
+    public function detailProject(Request $request, $link){
+        // if (file_exists(self::$jsonFile)) {
+        //     $projects = json_decode(file_get_contents(self::$jsonFile), true);
+        // }else{
+        //     $projects = $this->dataProjects();
+        // }
+        $projects = $this->dataTestingProjects();
         $others = [];
         $found = null;
         foreach($projects as $item){
@@ -114,7 +160,7 @@ class HomeController extends Controller
             return $this->getView();
         }
         $dataShow = [
-            'detailProject' => $item,
+            'detailProject' => $found,
             'other' => $others,
         ];
         if ($request->wantsJson()) {

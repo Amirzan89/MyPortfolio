@@ -24,6 +24,4 @@
 </template>
 <script setup>
 const route = useRoute();
-console.log(route);
-console.log(route.fullPath);
 </script>
