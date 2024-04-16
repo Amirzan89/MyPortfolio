@@ -16,8 +16,28 @@ $tPath = app()->environment('local') ? '' : '/public/';
         <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
         <link href="/css/cv.css" rel="stylesheet" />
+        <style>
+            .link-so{
+                display: flex;
+                gap:10px;
+            }
+            .link-so-item{
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                height: 3.5rem;
+                width: 3.5rem;
+                background-color: #495057;
+                color: #fff;
+                border-radius: 100%;
+                font-size: 1.5rem;
+            }
+        </style>
     </head>
     <body id="page-top" style="background-color: #423848;">
+        <script>
+            var csrfToken = "{{ csrf_token() }}";
+        </script>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="sideNav" style="background-color: #fbdf6a; opacity: 1.0;">
             <a class="navbar-brand js-scroll-trigger" href="#page-top" style="color:#2c1312">
@@ -45,15 +65,19 @@ $tPath = app()->environment('local') ? '' : '/public/';
                         Amirzan Fikri Prasetyo
                     </h1>
                     <div class="subheading mb-5" style="color: #fbdf6a">
-                        JL.Abdurrahman Saleh No 149 Jombang ·
+                        JL. Abdurrahman Saleh No 149 Jombang ·
                         <a href="mailto:amirzanfikri@gmail.com" style="color: #fbdf6a">amirzanfikri5@gmail.com</a>
                     </div>
                     <p class="lead mb-5" style="color:#f8f7d4">Hello there i'm web developer on laravel and vue. I offer expertise in website development, responsive design, front end using tailwind css & vue js or back end using laravel. I am committed to delivering high-quality work and collaborating with clients to create effective and functional websites that meet their needs. With a strong attention to detail and a passion for learning and staying up-to-date with industry trends, I am excited to work with you on your web development projects.</p>
-                    <div class="social-icons">
-                        <a class="social-icon" href="https://www.linkedin.com/in/amirzan-fikri" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                        <a class="social-icon" href="https://github.com/Amirzan89" target="_blank"><i class="fab fa-github"></i></a>
-                        <a class="social-icon" href="https://www.instagram.com/amirzanfikri1" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a class="social-icon" href="https://www.upwork.com/freelancers/~012f5a955a10478852?s=1110580755107926016" target="_blank"><img src="/img/cv/upwork.svg" alt="" style="width:25px; height: 25px;"></a>
+                    <div class="link-so">
+                        <a class="link-so-item" href="https://www.linkedin.com/in/amirzan-fikri" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="link-so-item" href="https://github.com/Amirzan89" target="_blank"><i class="fab fa-github"></i></a>
+                        <a class="link-so-item" href="https://www.instagram.com/amirzanfikri1" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a class="link-so-item" href="https://www.upwork.com/freelancers/~012f5a955a10478852?s=1110580755107926016" target="_blank"><img src="/img/cv/upwork.svg" alt="" style="width:25px; height: 25px;"></a>
+                        <button class="" onclick="downloadCV()" style="width:230px; height:55px; border-radius:12px; background-color: #495057; font-size: 25px; color:white; display:flex; align-items:center; justify-content:center; gap: 10px; box-shadow: none; border: none;">
+                            <i class="fa-solid fa-download"></i>
+                            <span>Download CV</span>
+                        </button>
                     </div>
                 </div>
             </section>
@@ -176,5 +200,44 @@ $tPath = app()->environment('local') ? '' : '/public/';
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="/js/cv.js"></script>
+        <script>
+            const domain = window.location.protocol + '//' + window.location.hostname + ":" + window.location.port;
+            function downloadCV(){
+                var xhr = new XMLHttpRequest();
+                //open the request
+                xhr.open('POST', domain + "/download/cv")
+                xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+                xhr.responseType = 'blob';
+                // send the form data
+                xhr.send(JSON.stringify({}));
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            if (xhr.responseType === 'blob') {
+                                var blob = xhr.response;
+                                var contentDisposition = xhr.getResponseHeader('Content-Disposition');
+                                var match = contentDisposition.match("filename=(.+\..+?)");
+                                if (match) {
+                                    var filename = match[1];
+                                    var link = document.createElement('a');
+                                    link.href = window.URL.createObjectURL(blob);
+                                    link.download = filename;
+                                    link.click();
+                                } else {
+                                    console.log('Invalid content-disposition header');
+                                }
+                            } else {
+                                // Assuming JSON response
+                                var jsonResponse = JSON.parse(xhr.responseText);
+                            }
+                        } else {
+                            xhr.response.text().then(function (jsonText) {
+                                showRedPopup(JSON.parse(jsonText));
+                            });
+                        }
+                    }
+                };
+            }
+        </script>
     </body>
 </html>

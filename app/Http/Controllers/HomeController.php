@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Crypt;
 use Inertia\Inertia;
-class ProjectsController extends Controller
+class HomeController extends Controller
 {
     private static $jsonFile;
     public function __construct(){
@@ -118,5 +121,13 @@ class ProjectsController extends Controller
             return response()->json($dataShow);
         }
         return $this->getView();
+    }
+    public function downloadCV(Request $request){
+        $filePath = storage_path("app/cv.pdf");
+        if (!file_exists($filePath)) {
+            return response()->json(['status' => 'error', 'message' =>'CV tidak ditemukan'], 404);
+        }
+        return Response::download($filePath, 'cv.pdf', [
+        ]);
     }
 }
