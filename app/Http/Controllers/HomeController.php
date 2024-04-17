@@ -25,7 +25,17 @@ class HomeController extends Controller
                 'link' => 'smarttrashku',
                 'link_project'=> 'smarttrashku.amirzan.my.id',
                 'thumbnail' => 'testing/1.jpg',
-                'foto' => [''],
+                'foto' => ['testing/1.jpg', 'testing/2.jpg', 'testing/3.png'],
+            ],
+            [
+                'nama' => 'Smarttrashku',
+                'deskripsi' => '',
+                'category' => 'team_project',
+                'tech_stack' => 'laravel, bootstrap',
+                'link' => 'smarttrashku',
+                'link_project'=> 'smarttrashku.amirzan.my.id',
+                'thumbnail' => 'testing/1.jpg',
+                'foto' => ['testing/1.jpg', 'testing/2.jpg', 'testing/3.png'],
             ],
             [
                 'nama' => 'File-shares',
@@ -35,7 +45,27 @@ class HomeController extends Controller
                 'link' => 'file-sharing',
                 'link_project'=> 'file-sharing.amirzan.my.id',
                 'thumbnail' => 'testing/2.jpg',
-                'foto' => [''],
+                'foto' => ['testing/2.jpg', 'testing/3.png', 'testing/1.jpg'],
+            ],
+            [
+                'nama' => 'Smarttrashku',
+                'deskripsi' => '',
+                'category' => 'team_project',
+                'tech_stack' => 'laravel, bootstrap',
+                'link' => 'smarttrashku',
+                'link_project'=> 'smarttrashku.amirzan.my.id',
+                'thumbnail' => 'testing/1.jpg',
+                'foto' => ['testing/1.jpg', 'testing/2.jpg', 'testing/3.png'],
+            ],
+            [
+                'nama' => 'File-shares',
+                'deskripsi' => '',
+                'category' => 'self_project',
+                'tech_stack' => 'laravel, tailwind, vue',
+                'link' => 'file-sharing',
+                'link_project'=> 'file-sharing.amirzan.my.id',
+                'thumbnail' => 'testing/2.jpg',
+                'foto' => ['testing/2.jpg', 'testing/3.png', 'testing/1.jpg'],
             ],
             [
                 'nama' => 'TOkoKU',
@@ -45,7 +75,7 @@ class HomeController extends Controller
                 'link' => 'tokoku',
                 'link_project'=> 'tokoku.amirzan.my.id',
                 'thumbnail' => 'testing/3.png',
-                'foto' => [''],
+                'foto' => ['testing/3.png', 'testing/1.jpg', 'testing/2.jpg'],
             ],
         ];
     }
@@ -118,7 +148,7 @@ class HomeController extends Controller
         }
         return $this->getView('home');
     }
-    public function projects(Request $request, $link){
+    public function projects(Request $request){
         // if (file_exists(self::$jsonFile)) {
         //     $projects = json_decode(file_get_contents(self::$jsonFile), true);
         // }else{

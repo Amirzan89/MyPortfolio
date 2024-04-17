@@ -47,7 +47,7 @@ useHead({
     title:'My Project | Amirzan Portfolio'
 });
 useAsyncData(async () => {
-    const res = await axios.get(publicConfig.baseURL + '/', {
+    const res = await axios.get(publicConfig.baseURL + '/projects', {
         headers: {
             'Accept': 'application/json',
         }
