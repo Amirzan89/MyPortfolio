@@ -1,8 +1,8 @@
 <template>
     <section class="relative left-1/2 -translate-x-1/2 flex flex-col gap-5" style="width: 80%; padding-top: 70px;">
-        <div class="carousel flex overflow-x-scroll relative whitespace-nowrap" @scroll="handleCarouselScroll" @wheel="handleCarouselMouse">
+        <div class="carousel flex overflow-x-scroll relative whitespace-nowrap" ref="carouselRef">
             <template v-for="(item, index) in local.fetchedDetailProject?.foto" :key="index">
-                <img :src="publicConfig.baseURL + '/img/project/' + item" alt="" ref="carouselRef" style="transition: 1s;" class="object-contain">
+                <img :src="publicConfig.baseURL + '/img/project/' + item" alt="" ref="caItemRef" style="transition: 1s;" class="object-contain">
             </template>
         </div>
         <div class="flex justify-center gap-4">
@@ -56,7 +56,7 @@
 </style>
 <script setup>
 import axios from 'axios';
-import CarouselSlide from '~/composition/carouselSlide';
+import CarouselSlide from '~/composition/CarouselSlide';
 const publicConfig = useRuntimeConfig().public;
 const route = useRoute();
 definePageMeta({
@@ -87,9 +87,10 @@ const local = reactive({
     fetchedDetailProject: null,
     fetchedOtherProject: null,
     thumbnail: '',
-    indC: 0,
+    carouselSlide: null,
 });
-const carouselRef = ref([]);
+const carouselRef = ref(null);
+const caItemRef = ref([]);
 const slideRef = ref([]);
 const cardRefs = ref([]);
 const handleLoading = (card) => {
@@ -115,8 +116,9 @@ watch(() => local.fetchedDetailProject, () => {
     if (local?.fetchedDetailProject !== undefined && local.fetchedDetailProject !== null && typeof local.fetchedDetailProject === 'object' && !Array.isArray(local.fetchedDetailProject) && Object.keys(local.fetchedDetailProject).length > 0) {
         local.thumbnail = local.fetchedDetailProject.thumbnail;
         nextTick(() => {
-            carouselRef.value = CarouselSlide.initCarousel(carouselRef.value);
-        })
+            local.carouselSlide = new CarouselSlide(carouselRef.value, caItemRef.value, slideRef.value);
+            local.carouselSlide.initCarousel();
+        });
     }
 }, { immediate:true });
 watch(() => local.fetchedOtherProject, () => {
@@ -129,28 +131,17 @@ watch(() => local.fetchedOtherProject, () => {
         });
     }
 }, { immediate:true });
-const changeImg = (inpIndex) => {
+const changeImg = (index) => {
     for(let i = 0; i < slideRef.value.length; i++){
-        if(inpIndex == i){
-            slideRef.value[i].classList.remove('hover:border-red-500');
-            slideRef.value[inpIndex].classList.add('border-red-500');
+        if(index == i){
+            slideRef.value[index].classList.remove('hover:border-red-500');
+            slideRef.value[index].classList.add('border-red-500');
         }else{
             slideRef.value[i].classList.remove('border-red-500');
             slideRef.value[i].classList.add('hover:border-red-500');
         }
     }
-    carouselRef.value = CarouselSlide.changeCarousel(carouselRef.value, inpIndex);
+    local.carouselSlide.changeCarousel(index);
 }
-const handleCarouselMouse = (event) => {
-    event.preventDefault();
-    console.log('mouse scroll');
-    console.log('x ' +event.deltaX);
-    console.log('y ' +event.deltaY);
-    console.log('z ' +event.deltaZ);
-    if(event.deltaX){
-        carouselRef.value = CarouselSlide.scrollCarousel(carouselRef.value, event.deltaX);
-    }else if(event.deltaY){
-        carouselRef.value = CarouselSlide.scrollCarousel(carouselRef.value, event.deltaY);
-    }
-}
+// slideRef.value = computed(() => local.carouselSlide.itemReff);
 </script>
