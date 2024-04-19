@@ -17,28 +17,43 @@ class CarouselSlide{
         this.wrapper.addEventListener('mouseup', this.mouseUp.bind(this));
         this.wrapper.addEventListener('mousemove', this.mouseMove.bind(this));
     }
-    static #debounce(callback, delay) {
-        console.log('debounce with delay '+ 500);
-        let timer
-        return function(...args) {
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-                console.log('ws mari');
-                callback(...args);
-            }, delay);
-        }
-    }
     initCarousel(){
         this.itemReff.forEach((item, index) => {
             this.itemReff[index].style.left = `${index * 100}%`;
         });
     }
+    static #debounce(callback, delay) {
+        let timer = null;
+        return function() {
+            clearTimeout(timer)
+            timer = setTimeout(() => {
+                callback();
+            }, delay);
+        }
+    }
     getActiveImage(){
         // return this.wrapper;
     }
-    handleCarousel(index) {
-        this.wrapper.scrollLeft = index * this.wrapper.offsetWidth;
-    }
+    static #changeStateItem = (instance, index, delay) => {
+        const itsef =  this.#debounce(() => {
+            //change float value
+            const targetScrollLeft = index * instance.wrapper.offsetWidth;
+            const duration = 5000;
+            const intervalTime = 100;
+            const steps = duration / intervalTime;
+            const scrollStep = (targetScrollLeft - instance.wrapper.scrollLeft) / steps;
+            let currentStep = 0;
+            const intervalId = setInterval(() => {
+                instance.wrapper.scrollLeft += scrollStep;
+                currentStep++;
+                if (currentStep >= steps) {
+                    clearInterval(intervalId);
+                    instance.wrapper.scrollLeft = targetScrollLeft;
+                }
+            }, intervalTime);
+        }, delay);
+        this.#changeStateItem = itsef;
+    };
     scrollCarousel(event){
         event.preventDefault();
         let scrollValue = 0;
@@ -59,36 +74,16 @@ class CarouselSlide{
                 this.activeReff[i].classList.add('hover:border-red-500');
             }
         }
-            setTimeout(() => {
-                //change float value
-                const targetScrollLeft = index * this.wrapper.offsetWidth;
-                const duration = 5000;
-                const intervalTime = 100;
-                const steps = duration / intervalTime;
-                const scrollStep = (targetScrollLeft - this.wrapper.scrollLeft) / steps;
-                console.log('index '+ index);
-                console.log('target scroll '+ targetScrollLeft);
-                console.log('scroll step '+ scrollStep);
-                console.log('');
-                let currentStep = 0;
-                const intervalId = setInterval(() => {
-                    this.wrapper.scrollLeft += scrollStep;
-                    currentStep++;
-                    if (currentStep >= steps) {
-                        clearInterval(intervalId);
-                        this.wrapper.scrollLeft = targetScrollLeft;
-                    }
-                }, intervalTime);
-            }, 500);
+        CarouselSlide.#changeStateItem(this, index, 5000);
     }
     changeCarousel(index){
-        this.handleCarousel(index);
+        this.wrapper.scrollLeft = index * this.wrapper.offsetWidth;
     }
     prevCarousel(index){
-        this.handleCarousel(index);
+        this.wrapper.scrollLeft = index * this.wrapper.offsetWidth;
     }
     nextCarousel(index){
-        this.handleCarousel(index);
+        this.wrapper.scrollLeft = index * this.wrapper.offsetWidth;
     }
     mouseDown(event){
         this.isDown = true;
@@ -103,7 +98,7 @@ class CarouselSlide{
     }
     mouseMove(event){
         // }, 500);
-        // CarouselSlide.#debounce(() => {
+        // debounce(() => {
             if (!this.isDown) return;
             event.preventDefault();
             const x = event.pageX - this.wrapper.offsetLeft;
