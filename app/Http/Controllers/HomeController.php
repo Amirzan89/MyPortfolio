@@ -19,17 +19,7 @@ class HomeController extends Controller
         return [
             [
                 'nama' => 'Smarttrashku',
-                'deskripsi' => '',
-                'category' => 'team_project',
-                'tech_stack' => 'laravel, bootstrap',
-                'link' => 'smarttrashku',
-                'link_project'=> 'smarttrashku.amirzan.my.id',
-                'thumbnail' => 'testing/1.jpg',
-                'foto' => ['testing/1.jpg', 'testing/2.jpg', 'testing/3.png'],
-            ],
-            [
-                'nama' => 'Smarttrashku',
-                'deskripsi' => '',
+                'deskripsi' => 'pppp \n\n\n ppp',
                 'category' => 'team_project',
                 'tech_stack' => 'laravel, bootstrap',
                 'link' => 'smarttrashku',
@@ -39,27 +29,7 @@ class HomeController extends Controller
             ],
             [
                 'nama' => 'File-shares',
-                'deskripsi' => '',
-                'category' => 'self_project',
-                'tech_stack' => 'laravel, tailwind, vue',
-                'link' => 'file-sharing',
-                'link_project'=> 'file-sharing.amirzan.my.id',
-                'thumbnail' => 'testing/2.jpg',
-                'foto' => ['testing/2.jpg', 'testing/3.png', 'testing/1.jpg'],
-            ],
-            [
-                'nama' => 'Smarttrashku',
-                'deskripsi' => '',
-                'category' => 'team_project',
-                'tech_stack' => 'laravel, bootstrap',
-                'link' => 'smarttrashku',
-                'link_project'=> 'smarttrashku.amirzan.my.id',
-                'thumbnail' => 'testing/1.jpg',
-                'foto' => ['testing/1.jpg', 'testing/2.jpg', 'testing/3.png'],
-            ],
-            [
-                'nama' => 'File-shares',
-                'deskripsi' => '',
+                'deskripsi' => 'pppppp \n\n\n\n ',
                 'category' => 'self_project',
                 'tech_stack' => 'laravel, tailwind, vue',
                 'link' => 'file-sharing',
@@ -189,6 +159,9 @@ class HomeController extends Controller
             }
             return $this->getView();
         }
+        $found['deskripsi'] = implode('', array_map(function($item){
+            return trim($item) !== '' ? '<p>' . $item . '</p>' : '<br>';
+        }, explode('\n', $found['deskripsi'])));
         $dataShow = [
             'detailProject' => $found,
             'other' => $others,

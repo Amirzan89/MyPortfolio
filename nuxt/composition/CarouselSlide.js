@@ -34,21 +34,32 @@ class CarouselSlide{
     getActiveImage(){
         // return this.wrapper;
     }
-    static #changeStateItem = (instance, index, delay) => {
+    static #changeStateItem = (instance, delay) => {
         const itsef =  this.#debounce(() => {
             //change float value
+            let index = Math.round(instance.wrapper.scrollLeft/instance.wrapper.offsetWidth)
             const targetScrollLeft = index * instance.wrapper.offsetWidth;
-            const duration = 5000;
-            const intervalTime = 100;
+            const duration = 1500;
+            const intervalTime = 5;
             const steps = duration / intervalTime;
             const scrollStep = (targetScrollLeft - instance.wrapper.scrollLeft) / steps;
+            // console.log('hasil '+ instance.wrapper.scrollLeft/instance.wrapper.offsetWidth);
+            // console.log('index' + index);
+            // console.log('target scroll ' + targetScrollLeft);
+            // console.log('rest scroll ');
+            // console.log(targetScrollLeft - instance.wrapper.scrollLeft);
+            // console.log('scroll step ' +scrollStep);
             let currentStep = 0;
             const intervalId = setInterval(() => {
                 instance.wrapper.scrollLeft += scrollStep;
                 currentStep++;
-                if (currentStep >= steps) {
+                if (currentStep > steps) {
+                    // console.log('last step ' + currentStep);
+                    // console.log('scroll left ' + instance.wrapper.scrollLeft);
                     clearInterval(intervalId);
                     instance.wrapper.scrollLeft = targetScrollLeft;
+                    // console.log('scroll left newss ' + instance.wrapper.scrollLeft);
+                    // console.log('');
                 }
             }, intervalTime);
         }, delay);
@@ -74,7 +85,7 @@ class CarouselSlide{
                 this.activeReff[i].classList.add('hover:border-red-500');
             }
         }
-        CarouselSlide.#changeStateItem(this, index, 5000);
+        CarouselSlide.#changeStateItem(this, 1000);
     }
     changeCarousel(index){
         this.wrapper.scrollLeft = index * this.wrapper.offsetWidth;
@@ -97,36 +108,13 @@ class CarouselSlide{
         this.isDown = false;
     }
     mouseMove(event){
-        // }, 500);
-        // debounce(() => {
-            if (!this.isDown) return;
-            event.preventDefault();
-            const x = event.pageX - this.wrapper.offsetLeft;
-            const walk = (x - this.startX) * this.#sensitivity;
-            this.wrapper.scrollLeft = this.scrollLeft - walk;
-            let index = Math.round(this.wrapper.scrollLeft/this.wrapper.offsetWidth);
-            // setTimeout(() => {
-            //     //change float value
-            //     let index = Math.round(this.wrapper.scrollLeft/this.wrapper.offsetWidth);
-            //     const targetScrollLeft = index * this.wrapper.offsetWidth;
-            //     const duration = 500; // Duration of the smooth scroll in milliseconds
-            //     const intervalTime = 10; // Time interval for each step in milliseconds
-            //     const steps = duration / intervalTime; // Number of steps
-            //     const scrollStep = (targetScrollLeft - this.wrapper.scrollLeft) / steps; // Scroll value per step
-            //     let currentStep = 0;
-            //     const intervalId = setInterval(() => {
-            //         this.wrapper.scrollLeft += scrollStep;
-            //         currentStep++;
-            //         if (currentStep >= steps) {
-            //             clearInterval(intervalId);
-            //             this.wrapper.scrollLeft = targetScrollLeft;
-            //         }
-            //     }, intervalTime);
-            // }, 500);
-            setTimeout(() => {
-                //change float value
-                this.wrapper.scrollLeft = index * this.wrapper.offsetWidth;
-            }, 500);
+        if (!this.isDown) return;
+        event.preventDefault();
+        const x = event.pageX - this.wrapper.offsetLeft;
+        const walk = (x - this.startX) * this.#sensitivity;
+        this.wrapper.scrollLeft = this.scrollLeft - walk;
+        let index = Math.round(this.wrapper.scrollLeft/this.wrapper.offsetWidth);
+        CarouselSlide.#changeStateItem(this, 500);
     }
 }
 export default CarouselSlide;

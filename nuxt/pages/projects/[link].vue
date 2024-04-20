@@ -11,16 +11,7 @@
             </template>
         </div>
     </section>
-    <section class="relative left-1/2 -translate-x-1/2 mt-5" style="width:75%; padding-top: 70px;">
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, rerum beatae animi totam eligendi, eum quos libero molestiae nisi, ex molestias non voluptatibus tempora recusandae ab. Explicabo commodi quis temporibus!
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, rerum beatae animi totam eligendi, eum quos libero molestiae nisi, ex molestias non voluptatibus tempora recusandae ab. Explicabo commodi quis temporibus!
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, rerum beatae animi totam eligendi, eum quos libero molestiae nisi, ex molestias non voluptatibus tempora recusandae ab. Explicabo commodi quis temporibus!
-        </p>
+    <section class="relative left-1/2 -translate-x-1/2 mt-5" style="width:75%; padding-top: 70px;" ref="deskripsiRef" v-html="local.fetchedDetailProject?.deskripsi">
     </section>
     <section style="padding-top: 70px;">
         <div class="flex relative left-1/2 -translate-x-1/2 justify-between items-center" style="width:80%">
@@ -62,7 +53,7 @@ const route = useRoute();
 definePageMeta({
     name: 'ProjectsDetail',
     layout: 'home',
-    validate: async(route) => {
+    validate: async(route) => { 
         return true;
         // if(route.params.link === ''){
         //     navigateTo('/projects');
@@ -89,6 +80,7 @@ const local = reactive({
     thumbnail: '',
     carouselSlide: null,
 });
+const deskripsiRef = ref(null);
 const carouselRef = ref(null);
 const caItemRef = ref([]);
 const slideRef = ref([]);
@@ -143,5 +135,5 @@ const changeImg = (index) => {
     }
     local.carouselSlide.changeCarousel(index);
 }
-// slideRef.value = computed(() => local.carouselSlide.itemReff);
+slideRef.value = computed(() => local.carouselSlide.itemReff);
 </script>
