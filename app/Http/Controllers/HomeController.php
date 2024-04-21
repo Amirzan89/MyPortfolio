@@ -125,6 +125,7 @@ class HomeController extends Controller
         //     $projects = $this->dataProjects();
         // }
         $projects = $this->dataTestingProjects();
+        $projects = array_merge(...array_fill(0, 5, $projects)); // make copy
         shuffle($projects);
         $dataShow = [
             'viewData' => $projects,
@@ -152,6 +153,7 @@ class HomeController extends Controller
                 $others[] = $item;
             }
         }
+        $others = array_merge(...array_fill(0, 5, $others)); // make copy
         shuffle($others);
         if($found == null){
             if($request->wantsJson()) {

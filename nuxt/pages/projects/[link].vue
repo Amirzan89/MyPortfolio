@@ -11,21 +11,21 @@
             </template>
         </div>
     </section>
-    <section class="relative left-1/2 -translate-x-1/2 mt-5" style="width:75%; padding-top: 70px;" ref="deskripsiRef" v-html="local.fetchedDetailProject?.deskripsi">
+    <section class="relative left-1/2 -translate-x-1/2 mt-5" style="width:80%; padding-top: 70px;" ref="deskripsiRef" v-html="local.fetchedDetailProject?.deskripsi">
     </section>
-    <section style="padding-top: 70px;">
-        <div class="flex relative left-1/2 -translate-x-1/2 justify-between items-center" style="width:80%">
+    <section style="padding-top: 70px;" class="otherss">
+        <div class="flex relative left-1/2 -translate-x-1/2 justify-between items-center">
             <span class="text-3xl relative font-semibold">Other projects</span>
             <NuxtLink to="/projects" class="text-xl flex gap-2 items-center hover:text-red-500">
                 <span>Others</span>
                 <img :src="publicConfig.baseURL + '/img/icon/arrow-right.svg'" class="w-6">
             </NuxtLink>
         </div>
-        <ul class="relative left-1/2 -translate-x-1/2 flex mt-5 mb-10 flex-wrap justify- -blue-500 gap-5" style="width:80%;">
+        <ul class="conCard relative left-1/2 -translate-x-1/2 flex mt-5 mb-10 flex-wrap -blue-500 gap-5 bg-blue-500">
             <template v-for="(item, index) in local.fetchedOtherProject" :key="index">
-                <li class="list-none relative w-80" ref="cardRefs">
+                <li class="cardI list-none relative" ref="cardRefs">
                     <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 hover:bg-red-500 flex flex-col rounded-xl">
-                        <img :src="publicConfig.baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3 h-40" style="width:90%">
+                        <img :src="publicConfig.baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3">
                         <h3 class="relative left-5 mt-4 text-xl font-semibold w-max">{{ item.nama }}</h3>
                         <span class="relative left-5 mt-5 mb-10 w-max">{{ item.category }}</span>
                     </NuxtLink>
@@ -39,11 +39,111 @@
         </ul>
     </section>
 </template>
-<style>
-.carousel::-webkit-scrollbar {
-    width: 0px;
-    height: 00px;
-}
+<style scoped>
+    .carousel::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+    }
+    section > div, ul{
+        width: 92%;
+    }
+    .cardI{
+            width: 46.2%;
+        }
+    .cardI a img{
+        width: 90%;
+        height: 70px;
+    }
+    @media (min-width: 360px) {
+        /* :root {
+            --phone: 360px;
+        } */
+        .otherss > div, ul{
+            width: 92%;
+        }
+        .cardI{
+            width: 46.2%;
+        }
+        .cardI a img{
+            width: 90%;
+            height: 90px;
+        }
+    }
+    @media (min-width: 640px) {
+        /* :root {
+            --sm: 640px;
+        } */
+        .otherss > div, ul{
+            width: 90%;
+        }
+        .cardI{
+            width: 48%;
+        }
+        .cardI a img{
+            width: 90%;
+            height: 130px;
+        }
+    }
+    @media (min-width: 768px) {
+        /* :root {
+            --md: 768px;
+        } */
+        .otherss > div, ul{
+            width: 90%;
+        }
+        .cardI{
+            width: 48%;
+        }
+        .cardI a img{
+            width: 90%;
+            height: 180px;
+        }
+    }
+    @media (min-width: 1024px) {
+        /* :root {
+            --lg: 1024px;
+        } */
+        .otherss > div, ul{
+            width: 90%;
+        }
+        .cardI{
+            width: 31.5%;
+        }
+        .cardI a img{
+            width: 90%;
+            height: 150px;
+        }
+    }
+    @media (min-width: 1280px) {
+        /* :root {
+            --xl: 1280px;
+        } */
+        .otherss > div, ul{
+            width: 90%;
+        }
+        .cardI{
+            width: 32%;
+        }
+        .cardI a img{
+            width: 90%;
+            height: 185px;
+        }
+    }
+    @media (min-width: 1536px) {
+        /* :root {
+            --2xl: 1536px;
+        } */
+        .otherss > div, ul{
+            width: 90%;
+        }
+        .cardI{
+            width: 23.8%;
+        }
+        .cardI a img{
+            width: 90%;
+            height: 195px;
+        }
+    }
 </style>
 <script setup>
 import axios from 'axios';
