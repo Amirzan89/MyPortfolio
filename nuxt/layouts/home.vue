@@ -1,7 +1,7 @@
 <template>
     <HeaderComponent></HeaderComponent>
     <!-- main -->
-    <main class="dark:bg-l_pa_1 bg-primary-100 w-auto">
+    <main class="bg-white dark:bg-dark_bg">
         <slot></slot>
         <FooterComponent></FooterComponent>
     </main>

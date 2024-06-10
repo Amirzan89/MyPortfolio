@@ -1,19 +1,15 @@
 <template>
     <section style="padding-top: 70px;" class="relative min-h-screen">
         <div class="flex relative left-1/2 -translate-x-1/2 justify-between items-center">
-            <span class="text-3xl relative font-semibold">Projects</span>
-            <NuxtLink to="/projects" class="text-xl flex gap-2 items-center hover:text-red-500">
-                <span>Others</span>
-                <img :src="publicConfig.baseURL + '/img/icon/arrow-right.svg'" class="w-6">
-            </NuxtLink>
+            <span class="text-3xl relative font-semibold text-primary_text dark:bg-primary_dark_text">Projects</span>
         </div>
-        <ul class="relative left-1/2 -translate-x-1/2 flex mt-5 mb-10 flex-wrap gap-5 bg-blue-500">
+        <ul class="relative left-1/2 -translate-x-1/2 flex mt-5 mb-10 flex-wrap gap-5">
             <template v-for="(item, index) in local.fetchedViewData" :key="index">
                 <li class="cardI list-none relative" ref="cardRefs">
-                    <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 hover:bg-red-500 flex flex-col rounded-xl">
+                    <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 hover:bg-primary dark:bg-primary_dark flex flex-col rounded-xl hover:text-white dark:hover:bg-primary_dark_text">
                         <img :src="publicConfig.baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3 h-40">
                         <h3 class="relative left-5 mt-4 text-xl font-semibold w-max">{{ item.nama }}</h3>
-                        <span class="relative left-5 mt-5 mb-10 w-max">{{ item.category }}</span>
+                        <span class="relative left-5 mt-5 mb-10 w-max flex-1">{{ item.category }}</span>
                     </NuxtLink>
                     <div class="card-loading absolute top-0 left-0 flex flex-col bg-transparent w-full">
                         <div class="rounded-md relative left-1/2 -translate-x-1/2 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
@@ -303,7 +299,7 @@ watch(() => local.fetchedViewData, () => {
         nextTick(() => {
             local.fetchedViewData.forEach((item, index) => {
                 let card = cardRefs.value[index];
-                // handleLoading(card);
+                handleLoading(card);
             });
         });
     }

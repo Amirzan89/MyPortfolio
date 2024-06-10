@@ -12,7 +12,7 @@ export default defineNuxtConfig({
         },
     },
     ssr: false,
-    css: ['~/assets/css/tailwind.css', '~/assets/css/global.css'],
+    css: ['~/assets/css/tailwind.css', '~/assets/css/global.css', '@fortawesome/fontawesome-svg-core/styles.css'],
     postcss: {
         plugins: {
             tailwindcss: {},
@@ -24,5 +24,8 @@ export default defineNuxtConfig({
             path: '~/components',
             extensions: ['.vue'],
         }
+    ],
+    modules: [
+        '@pinia/nuxt',
     ],
 })

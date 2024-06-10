@@ -102,11 +102,6 @@ class HomeController extends Controller
         }
     }
     public function home(Request $request){
-        // if (file_exists(self::$jsonFile)) {
-        //     $projects = json_decode(file_get_contents(self::$jsonFile), true);
-        // }else{
-        //     $projects = $this->dataProjects();
-        // }
         $projects = $this->datatestingProjects();
         shuffle($projects);
         $projects = array_slice($projects, 0, 3);
@@ -119,13 +114,8 @@ class HomeController extends Controller
         return $this->getView('home');
     }
     public function projects(Request $request){
-        // if (file_exists(self::$jsonFile)) {
-        //     $projects = json_decode(file_get_contents(self::$jsonFile), true);
-        // }else{
-        //     $projects = $this->dataProjects();
-        // }
         $projects = $this->dataTestingProjects();
-        $projects = array_merge(...array_fill(0, 5, $projects)); // make copy
+        // $projects = array_merge(...array_fill(0, 5, $projects)); // make copy
         shuffle($projects);
         $dataShow = [
             'viewData' => $projects,
@@ -136,11 +126,6 @@ class HomeController extends Controller
         return $this->getView();
     }
     public function detailProject(Request $request, $link){
-        // if (file_exists(self::$jsonFile)) {
-        //     $projects = json_decode(file_get_contents(self::$jsonFile), true);
-        // }else{
-        //     $projects = $this->dataProjects();
-        // }
         $projects = $this->dataTestingProjects();
         $others = [];
         $found = null;
@@ -153,7 +138,7 @@ class HomeController extends Controller
                 $others[] = $item;
             }
         }
-        $others = array_merge(...array_fill(0, 5, $others)); // make copy
+        // $others = array_merge(...array_fill(0, 5, $others)); // make copy
         shuffle($others);
         if($found == null){
             if($request->wantsJson()) {
