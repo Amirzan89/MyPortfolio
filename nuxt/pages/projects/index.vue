@@ -1,12 +1,12 @@
 <template>
     <section style="padding-top: 70px;" class="relative min-h-screen">
         <div class="flex relative left-1/2 -translate-x-1/2 justify-between items-center">
-            <span class="text-3xl relative font-semibold text-primary_text dark:bg-primary_dark_text">Projects</span>
+            <span class="text-3xl relative font-semibold text-primary_text dark:text-primary_dark_text">Projects</span>
         </div>
         <ul class="relative left-1/2 -translate-x-1/2 flex mt-5 mb-10 flex-wrap gap-5">
             <template v-for="(item, index) in local.fetchedViewData" :key="index">
                 <li class="cardI list-none relative" ref="cardRefs">
-                    <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 hover:bg-primary dark:bg-primary_dark flex flex-col rounded-xl hover:text-white dark:hover:bg-primary_dark_text">
+                    <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 hover:bg-primary dark:hover:bg-primary_dark flex flex-col rounded-xl text-primary_text dark:text-primary_dark_text hover:text-white dark:hover:text-white">
                         <img :src="publicConfig.baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3 h-40">
                         <h3 class="relative left-5 mt-4 text-xl font-semibold w-max">{{ item.nama }}</h3>
                         <span class="relative left-5 mt-5 mb-10 w-max flex-1">{{ item.category }}</span>

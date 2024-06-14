@@ -7,7 +7,7 @@ config.autoAddCss = false
 library.add(fas, fab, far)
 /* example
 `
-    <FontAwesomeIcon icon="fa-solid fa-right-to-bracket" class="text-2xl" /> 
+    <FontAwesomeIcon icon="fa-solid fa-right-to-bracket" class="text-2xl" />
 ` */
 export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component('FontAwesomeIcon', FontAwesomeIcon)

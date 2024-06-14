@@ -1,39 +1,51 @@
 <template>
-    <section class="relative left-1/2 -translate-x-1/2 flex flex-col gap-5" style="width: 80%; padding-top: 70px;">
-        <div class="carousel flex overflow-x-scroll relative whitespace-nowrap" ref="carouselRef">
-            <template v-for="(item, index) in local.fetchedDetailProject?.foto" :key="index">
-                <img :src="publicConfig.baseURL + '/img/project/' + item" alt="" ref="caItemRef" style="transition: 1s;" class="object-contain">
-            </template>
+    <section class="w-full" style="padding-top: 70px;">
+        <div class="relative left-1/2 -translate-x-1/2 flex flex-row gap-10 w-11/12 items-start">
+            <div class="carousel flex overflow-x-scroll relative whitespace-nowrap flex-1" ref="carouselRef">
+                <img :src="publicConfig.baseURL + '/img/project/' + local.fetchedDetailProject?.foto[0]" alt="" ref="caItemRef" class="object-contain rounded-xl">
+                <!-- <template v-for="(item, index) in local.fetchedDetailProject?.foto" :key="index">
+                    <img :src="publicConfig.baseURL + '/img/project/' + item" alt="" ref="caItemRef" style="transition: 1s;" class="object-contain w-100">
+                </template> -->
+            </div>
+            <div class="flex flex-col flex-1 text-primary_text dark:text-primary_dark_text">
+                <div class="" v-html="local.formattedDeskripsi"></div>
+                <div class="flex flex-row gap-5 mt-5">
+                    <template v-for="(item, index) in filteredTechStack" :key="index">
+                        <a :href=item.href target="_blank" class="flex items-center justify-center w-max">
+                            <img :src=item.src class="max-w-sm object-cover w-13"/>
+                        </a>
+                    </template>
+                </div>
+                <a :href="local.fetchedDetailProject?.link_project" target="_blank" class="ml-5 mt-10 w-60 h-15 rounded-xl bg-primary dark:bg-primary_dark  text-white flex items-center justify-center text-4xl font-semibold">Demo Project</a>
+            </div>
         </div>
-        <div class="flex justify-center gap-4">
+        <!-- <div class="flex justify-center gap-4">
             <template v-for="(item, index) in local.fetchedDetailProject?.foto" :key="index">
                 <img :src="publicConfig.baseURL + '/img/project/' + item" alt="" class="object-cover w-35 rounded-xl hover:border-red-500 border-5 pointer-events-auto cursor-pointer" ref="slideRef" @click="changeImg(index)">
             </template>
-        </div>
-    </section>
-    <section class="relative left-1/2 -translate-x-1/2 mt-5" style="width:80%; padding-top: 70px;" ref="deskripsiRef" v-html="local.fetchedDetailProject?.deskripsi">
+        </div> -->
     </section>
     <section style="padding-top: 70px;" class="otherss">
-        <div class="flex relative left-1/2 -translate-x-1/2 justify-between items-center">
+        <div class="flex relative left-1/2 -translate-x-1/2 justify-between items-center text-primary_text dark:text-primary_dark_text">
             <span class="text-3xl relative font-semibold">Other projects</span>
             <NuxtLink to="/projects" class="text-xl flex gap-2 items-center hover:text-red-500">
                 <span>Others</span>
-                <img :src="publicConfig.baseURL + '/img/icon/arrow-right.svg'" class="w-6">
+                <FontAwesomeIcon icon="fa-solid fa-arrow-right-long" class="text-2xl"/>
             </NuxtLink>
         </div>
-        <ul class="conCard relative left-1/2 -translate-x-1/2 flex mt-5 mb-10 flex-wrap -blue-500 gap-5 bg-blue-500">
+        <ul class="conCard relative left-1/2 -translate-x-1/2 flex mt-5 mb-10 flex-wrap -blue-500 gap-5">
             <template v-for="(item, index) in local.fetchedOtherProject" :key="index">
                 <li class="cardI list-none relative" ref="cardRefs">
-                    <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 hover:bg-red-500 flex flex-col rounded-xl">
+                    <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 hover:bg-primary dark:hover:bg-primary_dark flex flex-col rounded-xl text-primary_text dark:text-primary_dark_text hover:text-white dark:hover:text-white">
                         <img :src="publicConfig.baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3">
                         <h3 class="relative left-5 mt-4 text-xl font-semibold w-max">{{ item.nama }}</h3>
                         <span class="relative left-5 mt-5 mb-10 w-max">{{ item.category }}</span>
                     </NuxtLink>
-                    <!-- <div class="card-loading absolute top-0 left-0 flex flex-col bg-transparent w-full">
+                    <div class="card-loading absolute top-0 left-0 flex flex-col bg-transparent w-full">
                         <div class="rounded-md relative left-1/2 -translate-x-1/2 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
                         <h3 class="rounded-md relative left-5 mt-5 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
                         <span class="relative left-5 mt-4 mb-10 rounded-md items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
-                    </div> -->
+                    </div>
                 </li>
             </template>
         </ul>
@@ -302,6 +314,9 @@ useAsyncData(async () => {
         }
     });
     local.fetchedDetailProject = res.data.detailProject;
+    local.formattedDeskripsi = local.fetchedDetailProject.deskripsi.split('\n').map(item => {
+        return item.trim()!== ''? `<p>${item}</p>` : '<br>';
+    }).join('');
     local.fetchedOtherProject = res.data.other;
 });
 const local = reactive({
@@ -309,7 +324,36 @@ const local = reactive({
     fetchedOtherProject: null,
     thumbnail: '',
     carouselSlide: null,
+    formattedDeskripsi:'',
 });
+const techStack = {
+    'laravel': {
+        href: 'https://laravel.com',
+        src: '/_nuxt/assets/icon/laravel.svg',
+        name: 'laravel'
+    },
+    'bootstrap': {
+        href: 'https://getbootstrap.com/',
+        src: '/_nuxt/assets/icon/bootstrap.svg',
+        name: 'bootstrap'
+    },
+    'tailwind': {
+        href: 'https://tailwind.com',
+        src: '/_nuxt/assets/icon/tailwind.svg',
+        name: 'tailwind'
+    },
+    'vue': {
+        href: 'https://vue.com',
+        src: '/_nuxt/assets/icon/vue.svg',
+        name: 'vue'
+    },
+    'nuxt': {
+        href: 'https://nuxt.com',
+        src: '/_nuxt/assets/icon/nuxt.svg',
+        name: 'nuxt'
+    },
+};
+
 const deskripsiRef = ref(null);
 const carouselRef = ref(null);
 const caItemRef = ref([]);
@@ -334,12 +378,26 @@ const handleLoading = (card) => {
         }
     }
 }
+const filteredTechStack = computed(() => {
+    if (!local.fetchedDetailProject || local.fetchedDetailProject == null) {
+        return [];
+    }
+    const result = [];
+    local.fetchedDetailProject?.tech_stack?.split(',').map((item)=>{
+        return item.trim();
+    }).forEach(tech => {
+        if (techStack[tech]) {
+            result.push(techStack[tech]);
+        }
+    });
+    return result;
+});
 watch(() => local.fetchedDetailProject, () => {
     if (local?.fetchedDetailProject !== undefined && local.fetchedDetailProject !== null && typeof local.fetchedDetailProject === 'object' && !Array.isArray(local.fetchedDetailProject) && Object.keys(local.fetchedDetailProject).length > 0) {
         local.thumbnail = local.fetchedDetailProject.thumbnail;
         nextTick(() => {
-            local.carouselSlide = new CarouselSlide(carouselRef.value, caItemRef.value, slideRef.value);
-            local.carouselSlide.initCarousel();
+            // local.carouselSlide = new CarouselSlide(carouselRef.value, caItemRef.value, slideRef.value);
+            // local.carouselSlide.initCarousel();
         });
     }
 }, { immediate:true });
@@ -348,7 +406,7 @@ watch(() => local.fetchedOtherProject, () => {
         nextTick(() => {
             local.fetchedOtherProject.forEach((item, index) => {
                 let card = cardRefs.value[index];
-                // handleLoading(card);
+                handleLoading(card);
             });
         });
     }

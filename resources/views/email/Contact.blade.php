@@ -9,11 +9,11 @@
 </head>
 <body>
     <div class="bg">
-        <h1>Full Name : {{$name}}</h1>
+        <h1><strong>Full name : </strong> {{$name}}</h1>
         <br>
-        <h2>Email From : {{$email}}</h2>
+        <h2><strong>Email From : </strong> {{$email}}</h2>
         <div class="content">
-            <p>Message : {{$messages}}</p>
+            <p><strong>Message : </strong> {{$message}}</p>
         </div>
     </div>
 </body>

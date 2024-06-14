@@ -23,18 +23,9 @@ class ContactMe extends Mailable
             'email' => $this->data['email'],
             'name' => $this->data['name'],
             'subject' => $this->data['subject'],
-            'messages' => $this->data['message']
+            'message' => $this->data['message']
         ])
         ->from($this->data['email'], $this->data['name'])
         ->subject($this->data['subject']);
-        // return $this->view('email.Contact')
-        // ->with([
-        //     'email' => $this->data['email'],
-        //     'name' => $this->data['name'],
-        //     'subject' => $this->data['subject'],
-        //     'messages' => $this->data['message']
-        // ])
-        // ->from($this->data['email'], $this->data['name'])
-        // ->subject($this->data['subject']);
     }
 }
