@@ -13,7 +13,7 @@
         <br>
         <h2><strong>Email From : </strong> {{$email}}</h2>
         <div class="content">
-            <p><strong>Message : </strong> {{$message}}</p>
+            <p><strong>Message : </strong> {{$description}}</p>
         </div>
     </div>
 </body>

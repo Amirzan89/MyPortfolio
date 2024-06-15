@@ -334,6 +334,7 @@
 <script setup>
 import PopupComponent from '~/components/Popup.vue';
 import { eventBus } from '~/app/eventBus';
+import { indexPage, contactMe } from '../composition/home';
 const nuxtApp = useNuxtApp();
 const axios = nuxtApp.$axios;
 const publicConfig = useRuntimeConfig().public;
@@ -343,13 +344,14 @@ definePageMeta({
 useHead({
     title:'Welcome | Amirzan Portfolio'
 });
-useAsyncData(async () => {
-    const res = await axios.get(publicConfig.baseURL + '/', {
-        headers: {
-            'Accept': 'application/json',
-        },
-    });
+await useAsyncData(async () => {
+    const res = await indexPage(axios);
+    console.log(res);
+    console.log('ws bar');
+    console.log(res.data.viewData);
     local.fetchedViewData = res.data.viewData;
+    console.log('ws kenek');
+    console.log(local.fetchedViewData);
 });
 const local = reactive({
     fetchedViewData: null,
@@ -439,19 +441,18 @@ const sendEmail = async(event) => {
         return;
     }
     eventBus.emit('showLoading');
-    await axios.get('/sanctum/csrf-cookie');
-    const res = await axios.post(publicConfig.baseURL + '/contact/email', {
+    let contactRes = await contactMe(axios, {
         name: input.name,
         subject: input.subject,
         email: input.email,
-        message: input.message,
+        description: input.message,
     });
-    if(res.status === 'success'){
+    if(contactRes.status === 'success'){
         eventBus.emit('closeLoading');
-        eventBus.emit('showGreenPopup', res.message);
-    }else if(res.status === 'error'){
+        eventBus.emit('showGreenPopup', contactRes.message);
+    }else if(contactRes.status === 'error'){
         eventBus.emit('closeLoading');
-        eventBus.emit('showRedPopup', res.message);
+        eventBus.emit('showRedPopup', contactRes.message);
     }
 }
 </script>

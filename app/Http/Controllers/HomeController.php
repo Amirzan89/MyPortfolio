@@ -218,7 +218,7 @@ class HomeController extends Controller
         ]);
     }
     public function sendContact(Request $request){
-        return response()->json(['status'=>'success', 'message'=>'ws kenekkk']);
+        return response()->json(['status' => 'success', 'message' => 'Your message has been sent successfully! We will get back to you soon.'], 200);
         $validator = Validator::make($request->all(), [
             'email'=>'required|email',
             'name'=>'required',
@@ -236,9 +236,8 @@ class HomeController extends Controller
             foreach ($validator->errors()->toArray() as $field => $errorMessages) {
                 $errors = $errorMessages[0];
             }
-            return response()->json(['status' => 'error', 'message' => $errors,'code' => 400]);
+            return response()->json(['status' => 'error', 'message' => $errors], 400);
         }
         Mail::to($request->input('email'))->send(new ContactMe($request->all()));
-        return response()->json(['status' => 'success', 'message' => 'Your message has been sent successfully! We will get back to you soon.']);
     }
 }
