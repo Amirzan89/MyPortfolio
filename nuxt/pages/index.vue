@@ -329,15 +329,12 @@
             width: 90%;
             height: 230px;
         }
-        /* // import axios from 'axios'; */
-        /* // import Cookies from 'js-cookie'; */
     }
 </style>
 <script setup>
-import { eventBus } from '~/app/eventBus';
 import PopupComponent from '~/components/Popup.vue';
+import { eventBus } from '~/app/eventBus';
 const nuxtApp = useNuxtApp();
-console.log(nuxtApp);
 const axios = nuxtApp.$axios;
 const publicConfig = useRuntimeConfig().public;
 definePageMeta({
@@ -350,7 +347,7 @@ useAsyncData(async () => {
     const res = await axios.get(publicConfig.baseURL + '/', {
         headers: {
             'Accept': 'application/json',
-        }
+        },
     });
     local.fetchedViewData = res.data.viewData;
 });
@@ -442,6 +439,7 @@ const sendEmail = async(event) => {
         return;
     }
     eventBus.emit('showLoading');
+    await axios.get('/sanctum/csrf-cookie');
     const res = await axios.post(publicConfig.baseURL + '/contact/email', {
         name: input.name,
         subject: input.subject,
@@ -453,7 +451,6 @@ const sendEmail = async(event) => {
         eventBus.emit('showGreenPopup', res.message);
     }else if(res.status === 'error'){
         eventBus.emit('closeLoading');
-        console.log(res);
         eventBus.emit('showRedPopup', res.message);
     }
 }

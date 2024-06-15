@@ -218,6 +218,7 @@ class HomeController extends Controller
         ]);
     }
     public function sendContact(Request $request){
+        return response()->json(['status'=>'success', 'message'=>'ws kenekkk']);
         $validator = Validator::make($request->all(), [
             'email'=>'required|email',
             'name'=>'required',
