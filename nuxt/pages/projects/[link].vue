@@ -288,7 +288,9 @@
     }
 </style>
 <script setup>
+import { ref } from "vue";
 import CarouselSlide from '~/composition/CarouselSlide';
+import { useNotFoundStore } from '~/store/NotFound';
 import { projectDetailPage } from '../composition/home';
 const publicConfig = useRuntimeConfig().public;
 const route = useRoute();
@@ -317,7 +319,8 @@ useAsyncData(async () => {
         local.fetchedOtherProject = res.data.other;
     }else{
         if(res.code && res.code === 404){
-            // navigateTo('/');
+            useNotFoundStore().setIsNotFound(true);
+            useNotFoundStore().setMessageNotFound('Project Adios', '/projects');
         }
     }
 });
