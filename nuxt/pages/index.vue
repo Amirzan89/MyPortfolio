@@ -54,7 +54,7 @@
             <template v-for="(item, index) in local.fetchedViewData" :key="index">
                 <li class="cardI list-none relative" ref="cardRefs">
                     <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 text-primary_text dark:text-primary_dark_text hover:text-white dark:hover:text-white hover:bg-primary dark:hover:bg-primary_dark flex flex-col rounded-xl">
-                        <img :src="publicConfig.baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3 h-40">
+                        <img :src="baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3 h-40">
                         <h3 class="relative left-5 mt-4 text-xl font-semibold w-max">{{ item.nama }}</h3>
                         <span class="relative left-5 mt-5 mb-10 w-max">{{ item.category }}</span>
                     </NuxtLink>
@@ -335,23 +335,16 @@
 import PopupComponent from '~/components/Popup.vue';
 import { eventBus } from '~/app/eventBus';
 import { indexPage, contactMe } from '../composition/home';
-const nuxtApp = useNuxtApp();
-const axios = nuxtApp.$axios;
-const publicConfig = useRuntimeConfig().public;
+const baseURL = useRuntimeConfig().public.baseURL;
 definePageMeta({
     layout: 'home',
 });
 useHead({
     title:'Welcome | Amirzan Portfolio'
 });
-await useAsyncData(async () => {
-    const res = await indexPage(axios);
-    console.log(res);
-    console.log('ws bar');
-    console.log(res.data.viewData);
+useAsyncData(async () => {
+    const res = await indexPage();
     local.fetchedViewData = res.data.viewData;
-    console.log('ws kenek');
-    console.log(local.fetchedViewData);
 });
 const local = reactive({
     fetchedViewData: null,
@@ -441,7 +434,7 @@ const sendEmail = async(event) => {
         return;
     }
     eventBus.emit('showLoading');
-    let contactRes = await contactMe(axios, {
+    let contactRes = await contactMe({
         name: input.name,
         subject: input.subject,
         email: input.email,

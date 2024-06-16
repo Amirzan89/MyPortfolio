@@ -288,8 +288,8 @@
     }
 </style>
 <script setup>
-import axios from 'axios';
 import CarouselSlide from '~/composition/CarouselSlide';
+import { projectDetailPage } from '../composition/home';
 const publicConfig = useRuntimeConfig().public;
 const route = useRoute();
 definePageMeta({
@@ -308,16 +308,18 @@ useHead({
     title: route.params.link + ' | Amirzan Portfolio'
 });
 useAsyncData(async () => {
-    const res = await axios.get(publicConfig.baseURL + '/projects/' + route.params.link, {
-        headers: {
-            'Accept': 'application/json',
+    const res = await projectDetailPage(route.params.link);
+    if(res.status == 'success'){
+        local.fetchedDetailProject = res.data.detailProject;
+        local.formattedDeskripsi = local.fetchedDetailProject.deskripsi.split('\n').map(item => {
+            return item.trim()!== ''? `<p>${item}</p>` : '<br>';
+        }).join('');
+        local.fetchedOtherProject = res.data.other;
+    }else{
+        if(res.code && res.code === 404){
+            // navigateTo('/');
         }
-    });
-    local.fetchedDetailProject = res.data.detailProject;
-    local.formattedDeskripsi = local.fetchedDetailProject.deskripsi.split('\n').map(item => {
-        return item.trim()!== ''? `<p>${item}</p>` : '<br>';
-    }).join('');
-    local.fetchedOtherProject = res.data.other;
+    }
 });
 const local = reactive({
     fetchedDetailProject: null,

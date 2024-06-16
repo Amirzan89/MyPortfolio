@@ -7,7 +7,7 @@
             <template v-for="(item, index) in local.fetchedViewData" :key="index">
                 <li class="cardI list-none relative" ref="cardRefs">
                     <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 hover:bg-primary dark:hover:bg-primary_dark flex flex-col rounded-xl text-primary_text dark:text-primary_dark_text hover:text-white dark:hover:text-white">
-                        <img :src="publicConfig.baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3 h-40">
+                        <img :src="baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3 h-40">
                         <h3 class="relative left-5 mt-4 text-xl font-semibold w-max">{{ item.nama }}</h3>
                         <span class="relative left-5 mt-5 mb-10 w-max flex-1">{{ item.category }}</span>
                     </NuxtLink>
@@ -254,8 +254,8 @@
     }
 </style>
 <script setup>
-import axios from 'axios';
-const publicConfig = useRuntimeConfig().public;
+import { projectPage } from '../composition/home';
+const baseURL = useRuntimeConfig().public.baseURL;
 definePageMeta({
     name: 'Projects',
     layout: 'home',
@@ -264,11 +264,7 @@ useHead({
     title:'My Project | Amirzan Portfolio'
 });
 useAsyncData(async () => {
-    const res = await axios.get(publicConfig.baseURL + '/projects', {
-        headers: {
-            'Accept': 'application/json',
-        }
-    });
+    const res = await projectPage();
     local.fetchedViewData = res.data.viewData;
 });
 const local = reactive({
