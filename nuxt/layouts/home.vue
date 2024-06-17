@@ -1,7 +1,6 @@
 <template>
     <template v-if="useNotFoundStore().isNotFound">
         <NotFoundComponent/>
-        <!-- <slot/> -->
     </template>
     <template v-else>
     <HeaderComponent></HeaderComponent>

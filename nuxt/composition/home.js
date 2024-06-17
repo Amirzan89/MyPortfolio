@@ -37,20 +37,19 @@ export async function contactMe(data, retryCount = 0){
 }
 export async function projectPage(retryCount = 0){
     try{
-        const response = await axios.get('/projects');
-        return { status:'success', message: response.data.message};
+        const response = await axios.get('/projects', {
+            headers: {
+                'Accept': 'application/json',
+            },
+        });
+        return { status:'success', data: response.data, message: response.data.message};
     }catch(err){
-        if (err.response){
-            if(err.response.status === 404){
-                navigateTo('/projects');
-            }
-            if(err.response.status === 419) {
-                if (retryCount < 3) {
-                    await fetchCsrfToken();
-                    return projectDetailPage(link, retryCount + 1);
-                } else {
-                    return { status: 'error', message: 'Request failed' };
-                }
+        if (err.response && err.response.status === 419) {
+            if (retryCount < 3) {
+                await fetchCsrfToken();
+                return projectPage(retryCount + 1);
+            } else {
+                return { status: 'error', message: 'Request failed' };
             }
         }
         return { status:'error', message: err.response.data.message };
@@ -63,7 +62,7 @@ export async function projectDetailPage(link, retryCount = 0){
                 'Accept': 'application/json',
             },
         });
-        return { status:'success', message: response.data.message};
+        return { status:'success', data: response.data, message: response.data.message};
     }catch(err){
         if (err.response){
             if(err.response.status === 404){

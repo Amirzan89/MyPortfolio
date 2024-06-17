@@ -309,8 +309,8 @@ definePageMeta({
 useHead({
     title: route.params.link + ' | Amirzan Portfolio'
 });
-useAsyncData(async () => {
-    const res = await projectDetailPage(route.params.link);
+useLazyAsyncData(async () => {
+    const res = await  projectDetailPage(route.params.link);
     if(res.status == 'success'){
         local.fetchedDetailProject = res.data.detailProject;
         local.formattedDeskripsi = local.fetchedDetailProject.deskripsi.split('\n').map(item => {
@@ -319,9 +319,10 @@ useAsyncData(async () => {
         local.fetchedOtherProject = res.data.other;
     }else{
         if(res.code && res.code === 404){
-            useNotFoundStore().setIsNotFound(true);
-            useNotFoundStore().setMessageNotFound('Project Adios', '/projects');
-        }
+            useNotFoundStore().setIsNotFound(true, '/projects');
+            useNotFoundStore().setMessageNotFound('Project Adios');
+            return;
+        }   
     }
 });
 const local = reactive({
