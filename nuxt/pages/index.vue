@@ -332,6 +332,7 @@
     }
 </style>
 <script setup>
+import { ref } from "vue";
 import PopupComponent from '~/components/Popup.vue';
 import { eventBus } from '~/app/eventBus';
 import { indexPage, contactMe } from '../composition/home';

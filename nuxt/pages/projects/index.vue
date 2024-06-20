@@ -254,6 +254,7 @@
     }
 </style>
 <script setup>
+import { ref } from "vue";
 import { projectPage } from '../composition/home';
 const baseURL = useRuntimeConfig().public.baseURL;
 definePageMeta({
@@ -271,6 +272,16 @@ const local = reactive({
     fetchedViewData: null,
 });
 const cardRefs = ref([]);
+watch(() => local.fetchedViewData, () => {
+    if (local?.fetchedViewData !== undefined && typeof local.fetchedViewData === 'object' && Array.isArray(local.fetchedViewData) && Object.keys(local.fetchedViewData).length > 0) {
+        nextTick(() => {
+            local.fetchedViewData.forEach((item, index) => {
+                let card = cardRefs.value[index];
+                handleLoading(card);
+            });
+        });
+    }
+}, { immediate:true });
 const handleLoading = (card) => {
     const image = card.querySelector('img');
     image.addEventListener('load', () => {
@@ -290,14 +301,4 @@ const handleLoading = (card) => {
         }
     }
 }
-watch(() => local.fetchedViewData, () => {
-    if (local?.fetchedViewData !== undefined && typeof local.fetchedViewData === 'object' && Array.isArray(local.fetchedViewData) && Object.keys(local.fetchedViewData).length > 0) {
-        nextTick(() => {
-            local.fetchedViewData.forEach((item, index) => {
-                let card = cardRefs.value[index];
-                handleLoading(card);
-            });
-        });
-    }
-}, { immediate:true });
 </script>

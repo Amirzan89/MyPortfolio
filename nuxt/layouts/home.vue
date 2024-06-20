@@ -1,9 +1,9 @@
 <template>
-    <template v-if="useNotFoundStore().isNotFound">
+    <template v-if="useNotFoundStore().isNotFound" >
         <NotFoundComponent/>
     </template>
     <template v-else>
-    <HeaderComponent></HeaderComponent>
+        <HeaderComponent></HeaderComponent>
         <!-- main -->
         <main class="bg-white dark:bg-dark_bg">
             <slot/>

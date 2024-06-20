@@ -8,8 +8,7 @@
 <script setup>
 import { useNotFoundStore } from '~/store/NotFound';
 const backPage = async () => {
-    const link = useNotFoundStore().linkBack;
-    await navigateTo(link);
+    await navigateTo(useNotFoundStore().linkBack);
     useNotFoundStore().resetState();
 }
 </script>

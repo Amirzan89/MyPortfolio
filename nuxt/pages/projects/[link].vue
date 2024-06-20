@@ -288,7 +288,7 @@
     }
 </style>
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import CarouselSlide from '~/composition/CarouselSlide';
 import { useNotFoundStore } from '~/store/NotFound';
 import { projectDetailPage } from '../composition/home';
@@ -298,39 +298,18 @@ definePageMeta({
     name: 'ProjectsDetail',
     layout: 'home',
     validate: async(route) => { 
-        return true;
-        // if(route.params.link === ''){
-        //     navigateTo('/projects');
-        // }else{
-        //     return true;
-        // }
+        if(route.params.link === '/'){
+                navigateTo('/projects');
+        }else{
+            return true;
+        }
     }
 });
+const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 useHead({
-    title: route.params.link + ' | Amirzan Portfolio'
-});
-useLazyAsyncData(async () => {
-    const res = await  projectDetailPage(route.params.link);
-    if(res.status == 'success'){
-        local.fetchedDetailProject = res.data.detailProject;
-        local.formattedDeskripsi = local.fetchedDetailProject.deskripsi.split('\n').map(item => {
-            return item.trim()!== ''? `<p>${item}</p>` : '<br>';
-        }).join('');
-        local.fetchedOtherProject = res.data.other;
-    }else{
-        if(res.code && res.code === 404){
-            useNotFoundStore().setIsNotFound(true, '/projects');
-            useNotFoundStore().setMessageNotFound('Project Adios');
-            return;
-        }   
-    }
-});
-const local = reactive({
-    fetchedDetailProject: null,
-    fetchedOtherProject: null,
-    thumbnail: '',
-    carouselSlide: null,
-    formattedDeskripsi:'',
+    title: capitalizeFirstLetter(route.params.link) + ' | Amirzan Portfolio'
 });
 const techStack = {
     'laravel': {
@@ -359,12 +338,29 @@ const techStack = {
         name: 'nuxt'
     },
 };
-
-const deskripsiRef = ref(null);
+const local = reactive({
+    fetchedDetailProject: null,
+    fetchedOtherProject: null,
+    thumbnail: '',
+    carouselSlide: null,
+    formattedDeskripsi:'',
+});
 const carouselRef = ref(null);
 const caItemRef = ref([]);
 const slideRef = ref([]);
 const cardRefs = ref([]);
+useLazyAsyncData(async () => {
+    const res = await projectDetailPage(route.params.link);
+    if(res.status == 'success'){
+        local.fetchedDetailProject = res.data.detailProject;
+        local.formattedDeskripsi = local.fetchedDetailProject.deskripsi.split('\n').map(item => {
+            return item.trim()!== ''? `<p>${item}</p>` : '<br>';
+        }).join('');
+        local.fetchedOtherProject = res.data.other;
+    } else {
+        useNotFoundStore().setIsNotFound(true, '/projects','Data not found');
+    }
+});
 const handleLoading = (card) => {
     const image = card.querySelector('img');
     image.addEventListener('load', () => {
@@ -384,20 +380,6 @@ const handleLoading = (card) => {
         }
     }
 }
-const filteredTechStack = computed(() => {
-    if (!local.fetchedDetailProject || local.fetchedDetailProject == null) {
-        return [];
-    }
-    const result = [];
-    local.fetchedDetailProject?.tech_stack?.split(',').map((item)=>{
-        return item.trim();
-    }).forEach(tech => {
-        if (techStack[tech]) {
-            result.push(techStack[tech]);
-        }
-    });
-    return result;
-});
 watch(() => local.fetchedDetailProject, () => {
     if (local?.fetchedDetailProject !== undefined && local.fetchedDetailProject !== null && typeof local.fetchedDetailProject === 'object' && !Array.isArray(local.fetchedDetailProject) && Object.keys(local.fetchedDetailProject).length > 0) {
         local.thumbnail = local.fetchedDetailProject.thumbnail;
@@ -417,17 +399,31 @@ watch(() => local.fetchedOtherProject, () => {
         });
     }
 }, { immediate:true });
-const changeImg = (index) => {
-    for(let i = 0; i < slideRef.value.length; i++){
-        if(index == i){
-            slideRef.value[index].classList.remove('hover:border-red-500');
-            slideRef.value[index].classList.add('border-red-500');
-        }else{
-            slideRef.value[i].classList.remove('border-red-500');
-            slideRef.value[i].classList.add('hover:border-red-500');
-        }
+const filteredTechStack = computed(() => {
+    if (!local.fetchedDetailProject || local.fetchedDetailProject == null) {
+        return [];
     }
-    local.carouselSlide.changeCarousel(index);
-}
-slideRef.value = computed(() => local.carouselSlide.itemReff);
+    const result = [];
+    local.fetchedDetailProject?.tech_stack?.split(',').map((item)=>{
+        return item.trim();
+    }).forEach(tech => {
+        if (techStack[tech]) {
+            result.push(techStack[tech]);
+        }
+    });
+    return result;
+});
+// const changeImg = (index) => {
+//     for(let i = 0; i < slideRef.value.length; i++){
+//         if(index == i){
+//             slideRef.value[index].classList.remove('hover:border-red-500');
+//             slideRef.value[index].classList.add('border-red-500');
+//         }else{
+//             slideRef.value[i].classList.remove('border-red-500');
+//             slideRef.value[i].classList.add('hover:border-red-500');
+//         }
+//     }
+//     local.carouselSlide.changeCarousel(index);
+// }
+// slideRef.value = computed(() => local.carouselSlide.itemReff);
 </script>
