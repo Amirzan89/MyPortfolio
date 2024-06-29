@@ -74,14 +74,14 @@ class HomeController extends Controller
     {
         return [
             [
-                'nama' => 'Smarttrashku',
-                'deskripsi' => '',
+                'nama' => 'SmartTrashKu',
+                'deskripsi' => 'A comprehensive application system featuring a web-based admin interface and a user-friendly mobile app. Admins manage articles through the web application, while users access articles via the mobile app.',
                 'category' => 'Team Project',
                 'tech_stack' => 'laravel, bootstrap',
                 'link' => 'smarttrashku',
                 'link_project'=> 'https://smarttrashku.amirzanfikri.my.id',
-                'thumbnail' => '',
-                'foto' => [''],
+                'thumbnail' => 'smarttrashku/thumbnail.png',
+                'foto' => ['smarttrashku/thumbnail.png', 'smarttrashku/daftar_artikel.png', 'smarttrashku/detail_artikel.png', 'smarttrashku/login.png', 'smarttrashku/dashboard.png', 'smarttrashku/device.png', 'smarttrashku/edukasi.png', 'smarttrashku/laporan.png'],
             ],
             [
                 'nama' => 'Nganjuk Elok',
@@ -90,29 +90,29 @@ class HomeController extends Controller
                 'tech_stack' => 'laravel, bootstrap',
                 'link' => 'elok',
                 'link_project'=> 'https://elok.amirzanfikri.my.id',
-                'thumbnail' => '',
-                'foto' => [''],
+                'thumbnail' => 'elok/thumbnail.png',
+                'foto' => ['elok/'],
             ],
             [
                 'nama' => 'EduAksi',
-                'deskripsi' => '',
+                'deskripsi' => 'A comprehensive application system featuring a web-based admin interface and a user-friendly mobile app. Admins manage articles through the web application, while users access articles via the mobile app.',
                 'category' => 'Team Project',
                 'tech_stack' => 'laravel, bootstrap',
                 'link' => 'eduaksi',
                 'link_project'=> 'https://eduaksi.amirzanfikri.my.id',
-                'thumbnail' => '',
-                'foto' => [''],
+                'thumbnail' => 'eduaksi/thumbnail.png',
+                'foto' => ['eduaksi/thumbnail.png', 'eduaksi/login.png', 'eduaksi/artikels.png', 'eduaksi/detail_artikel.png', 'eduaksi/dashboard.png', 'eduaksi/profile.png'],
             ],
-            [
-                'nama' => 'Project S5',
-                'deskripsi' => '',
-                'category' => 'Team Project',
-                'tech_stack' => 'laravel, tailwind, vue, nuxt',
-                'link' => 'iot',
-                'link_project'=> 'https://eduaksi.amirzanfikri.my.id',
-                'thumbnail' => '',
-                'foto' => [''],
-            ],
+            // [
+            //     'nama' => 'Project S5',
+            //     'deskripsi' => '',
+            //     'category' => 'Team Project',
+            //     'tech_stack' => 'laravel, tailwind, vue, nuxt',
+            //     'link' => 'iot',
+            //     'link_project'=> 'https://eduaksi.amirzanfikri.my.id',
+            //     'thumbnail' => '',
+            //     'foto' => [''],
+            // ],
             // [
             //     'nama' => 'IkiShares',
             //     'deskripsi' => '',
@@ -153,7 +153,8 @@ class HomeController extends Controller
         }
     }
     public function home(Request $request){
-        $projects = $this->datatestingProjects();
+        // $projects = $this->dataTestingProjects();
+        $projects = $this->dataProjects();
         shuffle($projects);
         $projects = array_slice($projects, 0, 3);
         $dataShow = [
@@ -165,7 +166,8 @@ class HomeController extends Controller
         return $this->getView('home');
     }
     public function projects(Request $request){
-        $projects = $this->dataTestingProjects();
+        // $projects = $this->dataTestingProjects();
+        $projects = $this->dataProjects();
         // $projects = array_merge(...array_fill(0, 5, $projects)); // make copy
         shuffle($projects);
         $dataShow = [
@@ -177,15 +179,14 @@ class HomeController extends Controller
         return $this->getView();
     }
     public function detailProject(Request $request, $link){
-        $projects = $this->dataTestingProjects();
+        // $projects = $this->dataTestingProjects();
+        $projects = $this->dataProjects();
         $others = [];
         $found = null;
         foreach($projects as $item){
             if($item['link'] == $link){
-                unset($item['link']);
                 $found = $item;
             }else{
-                unset($item['link']);
                 $others[] = $item;
             }
         }
@@ -218,8 +219,6 @@ class HomeController extends Controller
         ]);
     }
     public function sendContact(Request $request){
-        abort(404);
-        return;
         $validator = Validator::make($request->all(), [
             'email'=>'required|email',
             'name'=>'required',

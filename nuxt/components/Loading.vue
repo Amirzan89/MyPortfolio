@@ -1,6 +1,6 @@
 <template>
     <div v-if="showPreloader" class="fixed z-100 w-full h-full top-0 left-0">
-        <div class="bg w-full h-full bg-blue-300/20"></div>
+        <div class="bg w-full h-full bg-blue-300/20 dark:"></div>
         <div class="inline-block absolute w-40 h-40 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
             <div class="absolute left-2 w-10 bg-white custom-animation custom-animation-delay-long"></div>
             <div class="absolute left-18 w-10 bg-white custom-animation custom-animation-delay-short"></div>

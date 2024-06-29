@@ -2,13 +2,17 @@
     <section class="w-full" style="padding-top: 70px;">
         <div class="relative left-1/2 -translate-x-1/2 flex flex-row gap-10 w-11/12 items-start">
             <div class="carousel flex overflow-x-scroll relative whitespace-nowrap flex-1" ref="carouselRef">
+                <swiper>
+                    <swiper-slide></swiper-slide>
+                </swiper>
                 <img :src="publicConfig.baseURL + '/img/project/' + local.fetchedDetailProject?.foto[0]" alt="" ref="caItemRef" class="object-contain rounded-xl">
                 <!-- <template v-for="(item, index) in local.fetchedDetailProject?.foto" :key="index">
                     <img :src="publicConfig.baseURL + '/img/project/' + item" alt="" ref="caItemRef" style="transition: 1s;" class="object-contain w-100">
                 </template> -->
             </div>
             <div class="flex flex-col flex-1 text-primary_text dark:text-primary_dark_text">
-                <div class="" v-html="local.formattedDeskripsi"></div>
+                <h1 class="text-5xl font-semibold">{{ capitalizeFirstLetter(local.fetchedDetailProject?.nama) }}</h1>
+                <div class="mt-5 font-normal" v-html="local.formattedDeskripsi"></div>
                 <div class="flex flex-row gap-5 mt-5">
                     <template v-for="(item, index) in filteredTechStack" :key="index">
                         <a :href=item.href target="_blank" class="flex items-center justify-center w-max">
@@ -16,7 +20,7 @@
                         </a>
                     </template>
                 </div>
-                <a :href="local.fetchedDetailProject?.link_project" target="_blank" class="ml-5 mt-10 w-60 h-15 rounded-xl bg-primary dark:bg-primary_dark  text-white flex items-center justify-center text-4xl font-semibold">Demo Project</a>
+                <a :href="local.fetchedDetailProject?.link_project" target="_blank" class="ml-5 mt-10 w-35 h-11 rounded-lg bg-primary dark:bg-primary_dark text-white flex items-center justify-center text-2xl font-semibold">Preview</a>
             </div>
         </div>
         <!-- <div class="flex justify-center gap-4">
@@ -27,7 +31,7 @@
     </section>
     <section style="padding-top: 70px;" class="otherss">
         <div class="flex relative left-1/2 -translate-x-1/2 justify-between items-center text-primary_text dark:text-primary_dark_text">
-            <span class="text-3xl relative font-semibold">Other projects</span>
+            <span class="text-2xl relative font-semibold">Other projects</span>
             <NuxtLink to="/projects" class="text-xl flex gap-2 items-center hover:text-red-500">
                 <span>Others</span>
                 <FontAwesomeIcon icon="fa-solid fa-arrow-right-long" class="text-2xl"/>
@@ -37,7 +41,7 @@
             <template v-for="(item, index) in local.fetchedOtherProject" :key="index">
                 <li class="cardI list-none relative" ref="cardRefs">
                     <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 hover:bg-primary dark:hover:bg-primary_dark flex flex-col rounded-xl text-primary_text dark:text-primary_dark_text hover:text-white dark:hover:text-white">
-                        <img :src="publicConfig.baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3">
+                        <img :src="publicConfig.baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 rounded-xl mt-3">
                         <h3 class="relative left-5 mt-4 text-xl font-semibold w-max">{{ item.nama }}</h3>
                         <span class="relative left-5 mt-5 mb-10 w-max">{{ item.category }}</span>
                     </NuxtLink>
@@ -289,6 +293,7 @@
 </style>
 <script setup>
 import { ref, watch } from "vue";
+import { Swiper, SwiperSlide } from 'swiper/vue';
 import CarouselSlide from '~/composition/CarouselSlide';
 import { useNotFoundStore } from '~/store/NotFound';
 import { projectDetailPage } from '../composition/home';
@@ -305,8 +310,9 @@ definePageMeta({
         }
     }
 });
-const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+const capitalizeFirstLetter = (inp) => {
+    if(inp == null) return '';
+    return inp.charAt(0).toUpperCase() + inp.slice(1);
 }
 useHead({
     title: capitalizeFirstLetter(route.params.link) + ' | Amirzan Portfolio'
@@ -357,6 +363,7 @@ useLazyAsyncData(async () => {
             return item.trim()!== ''? `<p>${item}</p>` : '<br>';
         }).join('');
         local.fetchedOtherProject = res.data.other;
+        console.log(local.fetchedOtherProject);
     } else {
         useNotFoundStore().setIsNotFound(true, '/projects','Data not found');
     }

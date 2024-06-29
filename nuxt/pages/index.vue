@@ -31,7 +31,7 @@
                     <a href="https://vuejs.org" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/vue.svg" class="max-w-sm object-fill w-11"/></a>
                     <a href="https://nuxt.com" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/nuxtjs.svg" class="max-w-sm object-fill w-13"/></a>
                 </div>
-                <a href="/cv" target="_blank" class="w-60 h-15 bg-primary dark:bg-primary_dark rounded-2xl flex justify-center items-center ml-7 text-white font-semibold text-4xl mt-10">Preview CV</a>
+                <a :href="baseURL + '/cv'" target="_blank" class="w-50 h-13 bg-primary dark:bg-primary_dark rounded-xl flex justify-center items-center ml-7 text-white font-semibold text-3xl mt-10">Preview CV</a>
             </div>
         </div>
     </section>
@@ -53,8 +53,8 @@
         <ul class="relative left-1/2 -translate-x-1/2 flex mt-5 mb-10 flex-wrap gap-5">
             <template v-for="(item, index) in local.fetchedViewData" :key="index">
                 <li class="cardI list-none relative" ref="cardRefs">
-                    <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link+'a' }}" class="mb-2 text-primary_text dark:text-primary_dark_text hover:text-white dark:hover:text-white hover:bg-primary dark:hover:bg-primary_dark flex flex-col rounded-xl">
-                        <img :src="baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 object-cover rounded-lg mt-3 h-40">
+                    <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 text-primary_text dark:text-primary_dark_text hover:text-white dark:hover:text-white hover:bg-primary dark:hover:bg-primary_dark flex flex-col rounded-xl">
+                        <img :src="baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 rounded-lg mt-3 h-40">
                         <h3 class="relative left-5 mt-4 text-xl font-semibold w-max">{{ item.nama }}</h3>
                         <span class="relative left-5 mt-5 mb-10 w-max">{{ item.category }}</span>
                     </NuxtLink>
@@ -332,10 +332,11 @@
     }
 </style>
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import PopupComponent from '~/components/Popup.vue';
 import { eventBus } from '~/app/eventBus';
 import { indexPage, contactMe } from '../composition/home';
+const route = useRoute();
 const baseURL = useRuntimeConfig().public.baseURL;
 definePageMeta({
     layout: 'home',
@@ -361,6 +362,9 @@ const inpName = ref(null);
 const inpSubject = ref(null);
 const inpEmail = ref(null);
 const inpMessage = ref(null);
+onMounted(() => {
+    if (route.hash) document.querySelector(route.hash)?.scrollIntoView({ behavior: "smooth" });
+});
 const handleLoading = (card) => {
     const image = card.querySelector('img');
     image.addEventListener('load', () => {
