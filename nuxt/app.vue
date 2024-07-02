@@ -17,3 +17,10 @@
         }
     }
 </style>
+<script setup>
+import { useDarkModeStore } from '~/store/DarkMode';
+const darkModeStore = useDarkModeStore();
+onMounted(() => {
+    darkModeStore.initializeDarkMode();
+});
+</script>

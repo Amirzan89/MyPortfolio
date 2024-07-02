@@ -62,7 +62,6 @@ const changeActive = (item) => {
     isActive[item] = true;
 };
 onMounted(() => {
-    darkModeStore.initializeDarkMode();
     const index = linkHref.indexOf(route.hash);
     isActive[index === -1 ? 0 : index] = true;
 });

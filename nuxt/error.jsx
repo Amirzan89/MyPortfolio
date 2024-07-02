@@ -16,7 +16,6 @@ export default defineComponent({
                                     <h1 class="text-9xl font-semibold text-primary_text dark:text-primary_dark_text">Error {error.value?.statusCode}</h1>
                                     <p class="text-6xl font-semibold text-primary_text dark:text-primary_dark_text">Page Not Found</p>
                                 </div>
-                                {/* <a href="/" class="w-70 h-15 bg-second dark:bg-primary_dark_text rounded-xl cursor-pointer text-white dark:text-dark_bg text-5xl flex justify-center items-center" style="border-radius: 20px;">Back </a> */}
                                 <NuxtLink to="/" class="w-70 h-15 bg-second dark:bg-primary_dark_text rounded-xl cursor-pointer text-white dark:text-dark_bg text-5xl flex justify-center items-center" style="border-radius: 20px;">Back </NuxtLink>
                             </div>
                         </div>
