@@ -31,7 +31,10 @@
                     <a href="https://vuejs.org" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/vue.svg" class="max-w-sm object-fill w-11"/></a>
                     <a href="https://nuxt.com" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/nuxtjs.svg" class="max-w-sm object-fill w-13"/></a>
                 </div>
-                <a :href="baseURL + '/cv'" target="_blank" class="w-50 h-13 bg-primary dark:bg-primary_dark rounded-xl flex justify-center items-center ml-7 text-white font-semibold text-3xl mt-10">Preview CV</a>
+                <a :href="baseURL + '/cv'" target="_blank" class="w-60 h-20 bg-primary dark:bg-primary_dark rounded-2xl flex justify-center items-center ml-7 text-white font-semibold text-3xl mt-10 gap-2">
+                    <img src="~assets/icon/cv.svg" class="max-w-sm object-cover rounded-lg w-15"/>
+                    <p class="block">Preview CV</p>
+                </a>
             </div>
         </div>
     </section>
@@ -74,21 +77,21 @@
             <form id="contact" class="relative w-150 mx-auto h-2/4 flex flex-col gap-5 align-center pointer-events-auto">
                 <span class="text-white text-5xl mx-auto">Contact Me !</span>
                 <div class="mx-auto mt-3 w-full">
-                    <input type="text" placeholder="Email Address" class="w-full h-14 rounded-xl pl-5 text-2xl input border-4 focus:outline-none focus:border-5 transition duration-400 ease-in-out" ref="inpEmail" v-model="input.email" @input="inpChange('email')">
+                    <input type="text" placeholder="Email Address" class="w-full h-14 rounded-xl pl-5 text-2xl input hover:border-orange-500 dark:hover:border-blue-600 border-4 focus:outline-none focus:border-5 focus:border-orange-500 dark:focus:border-blue-600 transition duration-400 ease-in-out" ref="inpEmail" v-model="input.email" @input="inpChange('email')">
                     <!-- <span v-if="isErrorEmail" class="ml-3 mt-2 text-red-500 font-semibold text-lg cursor-default">{{ errEmail }}</span> -->
                 </div>
                 <div class="mx-auto w-full h-18 flex flex-row gap-4">
                     <div class="h-full flex-1">
-                        <input type="text" placeholder="Full Name" class="w-full h-3/4 rounded-xl pl-4 text-xl input border-4 hover:border-blue-600 focus:outline-none focus:border-5 focus:border-blue-600 transition duration-400 ease-in-out" ref="inpName" v-model="input.name" @input="inpChange('name')">
+                        <input type="text" placeholder="Full Name" class="w-full h-3/4 rounded-xl pl-4 text-xl input border-4 hover:border-orange-500 dark:hover:border-blue-600 focus:outline-none focus:border-5 focus:border-orange-500 dark:focus:border-blue-600 transition duration-400 ease-in-out" ref="inpName" v-model="input.name" @input="inpChange('name')">
                         <!-- <span v-if="isErrorName" class="ml-3 mt-1 text-red-500 font-semibold text-lg cursor-default">{{ errName }}</span> -->
                     </div>
                     <div class="h-full flex-1">
-                        <input type="text" placeholder="Subject" class="w-full h-3/4 rounded-xl pl-4 text-xl input border-4 hover:border-blue-600 focus:outline-none focus:border-5 focus:border-blue-600 transition duration-400 ease-in-out" ref="inpSubject" v-model="input.subject" @input="inpChange('subject')">
+                        <input type="text" placeholder="Subject" class="w-full h-3/4 rounded-xl pl-4 text-xl input border-4 hover:border-orange-500 dark:hover:border-blue-600 focus:outline-none focus:border-5 focus:border-orange-500 dark:focus:border-blue-600 transition duration-400 ease-in-out" ref="inpSubject" v-model="input.subject" @input="inpChange('subject')">
                         <!-- <span v-if="isErrorSubject" class="ml-3 mt-1 text-red-500 font-semibold text-lg cursor-default">{{ errSubject }}</span> -->
                     </div>
                 </div>
                 <div class="mx-auto w-full h-50">
-                    <textarea cols="" rows="" class="w-full h-full pl-4 rounded-xl pt-3 text-lg input border-4 hover:border-blue-600 focus:outline-none focus:border-5 focus:border-blue-600 resize-none transition duration-400 ease-in-out" placeholder="Your Message" ref="inpMessage" v-model="input.message" @input="inpChange('message')"></textarea>
+                    <textarea cols="" rows="" class="w-full h-full pl-4 rounded-xl pt-3 text-lg input border-4 hover:border-orange-500 dark:hover:border-blue-600 focus:outline-none focus:border-5 focus:border-orange-500 dark:focus:border-blue-600 resize-none transition duration-400 ease-in-out" placeholder="Your Message" ref="inpMessage" v-model="input.message" @input="inpChange('message')"></textarea>
                 </div>
                 <div class="mx-auto w-full mt-10">
                     <button value="Send Message" class="w-2/5 h-13 bg-second dark:bg-primary_dark_text rounded-xl relative left-2/4 -translate-x-2/4 cursor-pointer text-white dark:text-dark_bg font-semibold text-3xl" @click.prevent="sendEmail"> Contact Me</button>
@@ -100,6 +103,9 @@
     <!-- end contact -->
 </template>
 <style scoped>
+    a{
+        transition: color 0.1s ease-in;
+    }
     #project > div, ul{
         width: 92%;
     }
@@ -396,21 +402,21 @@ watch(() => local.fetchedViewData, () => {
 }, { immediate:true });
 const inpChange = (cond) => {
     switch(cond){
+        case 'email':
+            inpEmail.value.classList.remove('border-popup_error','hover:border-popup_error','focus:border-popup_error');
+            inpEmail.value.classList.add('border-orange-500', 'hover:border-orange-500', 'dark:border-blue-600', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
+        break;
         case 'name':
             inpName.value.classList.remove('border-popup_error','hover:border-popup_error','focus:border-popup_error');
-            inpName.value.classList.add('border-black','hover:border-black','focus:border-black');
+            inpName.value.classList.add('border-orange-500', 'hover:border-orange-500', 'dark:border-blue-600', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
         break;
         case 'subject':
             inpSubject.value.classList.remove('border-popup_error','hover:border-popup_error','focus:border-popup_error');
-            inpSubject.value.classList.add('border-black','hover:border-black','focus:border-black');
-        break;
-        case 'email':
-            inpEmail.value.classList.remove('border-popup_error','hover:border-popup_error','focus:border-popup_error');
-            inpEmail.value.classList.add('border-black','hover:border-black','focus:border-black');
+            inpSubject.value.classList.add('border-orange-500', 'hover:border-orange-500', 'dark:border-blue-600', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
         break;
         case 'message':
             inpMessage.value.classList.remove('border-popup_error','hover:border-popup_error','focus:border-popup_error');
-            inpMessage.value.classList.add('border-black','hover:border-black','focus:border-black');
+            inpMessage.value.classList.add('border-orange-500', 'hover:border-orange-500', 'dark:border-blue-600', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
         break;
     }
 };
@@ -418,19 +424,19 @@ const sendEmail = async(event) => {
     event.preventDefault();
     let errMessage = '';
     if(input.name === null || input.name === ''){
-        inpName.value.classList.remove('border-black','hover:border-black','focus:border-black');
+        inpName.value.classList.remove('hover:border-orange-500', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
         inpName.value.classList.add('border-popup_error','hover:border-popup_error','focus:border-popup_error');
         errMessage = 'Email must filled !';
     }else if(input.subject === null || input.subject === ''){
-        inpSubject.value.classList.remove('border-black','hover:border-black','focus:border-black');
+        inpSubject.value.classList.remove('hover:border-orange-500', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
         inpSubject.value.classList.add('border-popup_error','hover:border-popup_error','focus:border-popup_error');
         errMessage = 'Subject must filled !';
     }else if(input.email === null || input.email === ''){
-        inpEmail.value.classList.remove('border-black','hover:border-black','focus:border-black');
+        inpEmail.value.classList.remove('hover:border-orange-500', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
         inpEmail.value.classList.add('border-popup_error','hover:border-popup_error','focus:border-popup_error');
         errMessage = 'Email must filled !';
     }else if(input.message === null || input.message === ''){
-        inpMessage.value.classList.remove('border-black','hover:border-black','focus:border-black');
+        inpMessage.value.classList.remove('hover:border-orange-500', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
         inpMessage.value.classList.add('border-popup_error','hover:border-popup_error','focus:border-popup_error');
         errMessage = 'Subject must filled !';
     }

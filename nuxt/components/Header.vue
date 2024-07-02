@@ -39,6 +39,11 @@
     </header>
     <!-- end header -->
 </template>
+<style scoped>
+    a{
+        transition: color 0.2s ease-in;
+    }
+</style>
 <script setup>
 import { useDarkModeStore } from '~/store/DarkMode';
 const route = useRoute();

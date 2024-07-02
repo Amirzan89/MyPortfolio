@@ -7,7 +7,8 @@ export default defineNuxtConfig({
     },
     runtimeConfig:{
         public: {
-            baseURL: process.env.APP_URL || 'http://localhost:9000',
+            // baseURL: process.env.APP_URL || 'https://amirzanfikri.my.id',
+            baseURL: process.env.APP_URL || 'http://localhost:8000',
         },
     },
     ssr: false,
