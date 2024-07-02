@@ -19,7 +19,7 @@
     <!--  About -->
     <section id="about" class="relative left-1/2 -translate-x-1/2 flex justify-center mt-30" style="padding-top: 70px;">
         <div class="content w-7/8 flex flex-row cursor-default text-xl text-primary_text dark:text-primary_dark_text gap-10">
-            <img src="~assets/images/testing.png" class="max-w-sm object-cover rounded-lg w-200 h-100"/>
+            <!-- <img src="~assets/images/testing.png" class="max-w-sm object-cover rounded-lg w-200 h-100"/> -->
             <div class="flex flex-col">
                 <p class="text-normal text-2xl">
                     Hello there i'm web developer on laravel and vue. I offer expertise in website development, responsive design, front end using tailwind css & vue js or back end using laravel. I am committed to delivering high-quality work and collaborating with clients to create effective and functional websites that meet their needs. With a strong attention to detail and a passion for learning and staying up-to-date with industry trends, I am excited to work with you on your web development projects.
@@ -426,7 +426,7 @@ const sendEmail = async(event) => {
     if(input.name === null || input.name === ''){
         inpName.value.classList.remove('hover:border-orange-500', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
         inpName.value.classList.add('border-popup_error','hover:border-popup_error','focus:border-popup_error');
-        errMessage = 'Email must filled !';
+        errMessage = 'Name must filled !';
     }else if(input.subject === null || input.subject === ''){
         inpSubject.value.classList.remove('hover:border-orange-500', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
         inpSubject.value.classList.add('border-popup_error','hover:border-popup_error','focus:border-popup_error');
@@ -438,7 +438,7 @@ const sendEmail = async(event) => {
     }else if(input.message === null || input.message === ''){
         inpMessage.value.classList.remove('hover:border-orange-500', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
         inpMessage.value.classList.add('border-popup_error','hover:border-popup_error','focus:border-popup_error');
-        errMessage = 'Subject must filled !';
+        errMessage = 'Message must filled !';
     }
     if(errMessage != ''){
         eventBus.emit('showRedPopup', errMessage);

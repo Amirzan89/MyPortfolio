@@ -293,10 +293,14 @@
 </style>
 <script setup>
 import { ref, watch } from "vue";
-import { Swiper, SwiperSlide } from 'swiper/vue';
 import CarouselSlide from '~/composition/CarouselSlide';
 import { useNotFoundStore } from '~/store/NotFound';
 import { projectDetailPage } from '../composition/home';
+import laravelIcon from '~/assets/icon/laravel.svg';
+import bootstrapicon from '~/assets/icon/bootstrap.svg';
+import tailwindicon from '~/assets/icon/tailwind.svg';
+import vueicon from '~/assets/icon/vue.svg';
+import nuxtIcon from '~/assets/icon/nuxtjs.svg';
 const publicConfig = useRuntimeConfig().public;
 const route = useRoute();
 definePageMeta({
@@ -320,27 +324,27 @@ useHead({
 const techStack = {
     'laravel': {
         href: 'https://laravel.com',
-        src: '/_nuxt/assets/icon/laravel.svg',
+        src: laravelIcon,
         name: 'laravel'
     },
     'bootstrap': {
         href: 'https://getbootstrap.com/',
-        src: '/_nuxt/assets/icon/bootstrap.svg',
+        src: bootstrapicon,
         name: 'bootstrap'
     },
     'tailwind': {
         href: 'https://tailwind.com',
-        src: '/_nuxt/assets/icon/tailwind.svg',
+        src: tailwindicon,
         name: 'tailwind'
     },
     'vue': {
         href: 'https://vue.com',
-        src: '/_nuxt/assets/icon/vue.svg',
+        src: vueicon,
         name: 'vue'
     },
     'nuxt': {
         href: 'https://nuxt.com',
-        src: '/_nuxt/assets/icon/nuxt.svg',
+        src: nuxtIcon,
         name: 'nuxt'
     },
 };
@@ -363,7 +367,6 @@ useLazyAsyncData(async () => {
             return item.trim()!== ''? `<p>${item}</p>` : '<br>';
         }).join('');
         local.fetchedOtherProject = res.data.other;
-        console.log(local.fetchedOtherProject);
     } else {
         useNotFoundStore().setIsNotFound(true, '/projects','Data not found');
     }

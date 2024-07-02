@@ -4,7 +4,7 @@ const fetchCsrfToken = async () => {
 }
 export async function indexPage(){
     try{
-        const response = await axios.get('/', {
+        const response = await axios.get(`/?_=${Date.now()}`, {
             headers: {
                 'Accept': 'application/json',
             },
@@ -37,7 +37,7 @@ export async function contactMe(data, retryCount = 0){
 }
 export async function projectPage(retryCount = 0){
     try{
-        const response = await axios.get('/projects', {
+        const response = await axios.get(`/projects?_=${Date.now()}`, {
             headers: {
                 'Accept': 'application/json',
             },
@@ -57,7 +57,7 @@ export async function projectPage(retryCount = 0){
 }
 export async function projectDetailPage(link, retryCount = 0){
     try{
-        const response = await axios.get('/projects/' + link,{
+        const response = await axios.get(`/projects/${link}?_=${Date.now()}`,{
             headers: {
                 'Accept': 'application/json',
             },

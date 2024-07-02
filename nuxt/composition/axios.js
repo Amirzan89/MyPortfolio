@@ -10,7 +10,6 @@ const instance = axios.create({
     baseURL: baseURL,
     withCredentials: true
 });
-
 instance.interceptors.request.use(async (requestConfig) => {
     let token = Cookies.get('XSRF-TOKEN');
     if (!token) {
