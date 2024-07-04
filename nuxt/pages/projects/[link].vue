@@ -2,9 +2,6 @@
     <section class="w-full" style="padding-top: 70px;">
         <div class="relative left-1/2 -translate-x-1/2 flex flex-row gap-10 w-11/12 items-start">
             <div class="carousel flex overflow-x-scroll relative whitespace-nowrap flex-1" ref="carouselRef">
-                <swiper>
-                    <swiper-slide></swiper-slide>
-                </swiper>
                 <img :src="publicConfig.baseURL + '/img/project/' + local.fetchedDetailProject?.foto[0]" alt="" ref="caItemRef" class="object-contain rounded-xl">
                 <!-- <template v-for="(item, index) in local.fetchedDetailProject?.foto" :key="index">
                     <img :src="publicConfig.baseURL + '/img/project/' + item" alt="" ref="caItemRef" style="transition: 1s;" class="object-contain w-100">
@@ -56,243 +53,19 @@
     </section>
 </template>
 <style scoped>
-    .carousel::-webkit-scrollbar {
-        width: 0px;
-        height: 0px;
+    .page-enter-active,
+    .page-leave-active {
+        transition: all 0.4s;
     }
-    section > div, ul{
-        width: 92%;
-    }
-    .cardI{
-        width: 46.2%;
-    }
-    .cardI div div{
-        margin-top: 12px;
-        width: 90%;
-        height: 100px;
-    }
-    .cardI div h3{
-        margin-top: 12px;
-        width: 50%;
-        height: 32px;
-    }
-    .cardI div span{
-        margin-top: 20px;
-        width: 30%;
-        height: 28px;
-    }
-    .cardI a img{
-        margin-top: 16px;
-        width: 90%;
-        height: 70px;
-    }
-    @media (min-width: 360px) {
-        /* :root {
-            --phone: 360px;
-        } */
-        section > div, ul{
-            width: 92%;
-        }
-        .cardI{
-            width: 46.2%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 100px;
-        }
-        .cardI div h3{
-            margin-top: 12px;
-            width: 50%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 20px;
-            width: 30%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 90px;
-        }
-    }
-    @media (min-width: 640px) {
-        /* :root {
-            --sm: 640px;
-        } */
-        section > div, ul{
-            width: 90%;
-        }
-        .cardI{
-            width: 48%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 140px;
-        }
-        .cardI div h3{
-            margin-top: 12px;
-            width: 60%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 16px;
-            width: 40%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 130px;
-        }
-    }
-    @media (min-width: 768px) {
-        /* :root {
-            --md: 768px;
-        } */
-        section > div, ul{
-            width: 90%;
-        }
-        .cardI{
-            width: 48%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 190px;
-        }
-        .cardI div h3{
-            margin-top: 12px;
-            width: 55%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 15px;
-            width: 35%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 180px;
-        }
-    }
-    @media (min-width: 1024px) {
-        /* :root {
-            --lg: 1024px;
-        } */
-        section > div, ul{
-            width: 90%;
-        }
-        .cardI{
-            width: 31.5%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 155px;
-        }
-        .cardI div h3{
-            margin-top: 12px;
-            width: 60%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 20px;
-            width: 40%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 150px;
-        }
-    }
-    @media (min-width: 1280px) {
-        /* :root {
-            --xl: 1280px;
-        } */
-        section > div, ul{
-            width: 90%;
-        }
-        .cardI{
-            width: 32%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 190px;
-        }
-        .cardI div h3{
-            margin-top: 10px;
-            width: 50%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 14px;
-            width: 30%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 185px;
-        }
-    }
-    @media (min-width: 1536px) {
-        /* :root {
-            --2xl: 1536px;
-        } */
-        section > div, ul{
-            width: 90%;
-        }
-        .cardI{
-            width: 32.3%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 240px;
-        }
-        .cardI div h3{
-            margin-top: 12px;
-            width: 50%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 20px;
-            width: 30%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 230px;
-        }
+    .page-enter-from,
+    .page-leave-to {
+        opacity: 0;
+        filter: blur(1rem);
     }
 </style>
 <script setup>
 import { ref, watch } from "vue";
+import '~/assets/css/detailProject.css';
 import CarouselSlide from '~/composition/CarouselSlide';
 import { useNotFoundStore } from '~/store/NotFound';
 import { projectDetailPage } from '../composition/home';

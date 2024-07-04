@@ -3,7 +3,7 @@ import notFoundImage from '~/assets/images/pages/notfound.png';
 export default defineComponent({
     setup(props) {
         const darkModeStore = useDarkModeStore();
-        darkModeStore.initializeDarkMode();
+        darkModeStore.initializeDarkMode(0.35);
         const error = useError();
         if(error.value?.statusCode){
             return () => {

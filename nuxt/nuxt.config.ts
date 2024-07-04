@@ -12,13 +12,17 @@ export default defineNuxtConfig({
         },
     },
     ssr: false,
-    css: ['~/assets/css/tailwind.css', '~/assets/css/global.css', '@fortawesome/fontawesome-svg-core/styles.css'],
+    css: ['~/assets/css/tailwind.css', '~/assets/css/global.css', '~/assets/css/transitions.css', '@fortawesome/fontawesome-svg-core/styles.css'],
     postcss: {
         plugins: {
             tailwindcss: {},
             autoprefixer: {},
         },
     },
+    app: {
+        pageTransition: false,
+        layoutTransition: false
+    },    
     components: [
         {
             path: '~/components',

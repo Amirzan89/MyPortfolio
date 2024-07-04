@@ -1,6 +1,6 @@
 <template>
     <!-- Hero section -->
-    <section id="me" class="w-full bg-cover h-screen relative flex items-center text-primary_text dark:text-primary_dark_text" style="">
+    <section id="me" class="w-full bg-cover h-screen relative flex items-center text-primary_text dark:text-primary_dark_text">
         <div class="relative w-7/8 mx-auto flex flex-row  justify-between items-center py-5" style="width: 90%;">
             <div class="flex justify-center flex-col relative">
                 <h3 class="text-2xl font-bold">Hi I'm Amirzan Fikri</h3>
@@ -10,7 +10,7 @@
                     <a href="https://www.linkedin.com/in/amirzan-fikri" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-linkedin" class="text-6xl text-blue-500"/></a>
                     <a href="https://upwork.com/freelancers/amirzanf" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-square-upwork" class="text-6xl text-green-700 dark:text-green-500"/></a>
                 </div>
-                <a href="#contact" class="w-60 h-15 bg-primary dark:bg-primary_dark rounded-2xl flex justify-center items-center ml-7 mt-20 text-white font-semibold text-4xl">Contact Me</a>
+                <a href="#contact" class="w-60 h-15 bg-primary dark:bg-primary_dark rounded-2xl flex justify-center items-center ml-7 mt-20 text-white font-semibold text-4xl" style="transition: transform 2s linear 1s;">Contact Me</a>
             </div>
             <img src="~assets/images/testing.png" class="max-w-sm object-cover rounded-lg w-200 h-100"/>
         </div>
@@ -31,8 +31,8 @@
                     <a href="https://vuejs.org" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/vue.svg" class="max-w-sm object-fill w-11"/></a>
                     <a href="https://nuxt.com" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/nuxtjs.svg" class="max-w-sm object-fill w-13"/></a>
                 </div>
-                <a :href="baseURL + '/cv'" target="_blank" class="w-60 h-20 bg-primary dark:bg-primary_dark rounded-2xl flex justify-center items-center ml-7 text-white font-semibold text-3xl mt-10 gap-2">
-                    <img src="~assets/icon/cv.svg" class="max-w-sm object-cover rounded-lg w-15"/>
+                <a :href="baseURL + '/cv'" target="_blank" class="w-60 h-20 bg-primary dark:bg-primary_dark rounded-2xl flex justify-center items-center ml-7 text-white font-semibold text-3xl mt-10 gap-2 buttonLink" style="transition: all 5s linear 1s;">
+                    <img src="~assets/icon/cv.svg" class="max-w-sm object-cover rounded-lg w-14"/>
                     <p class="block">Preview CV</p>
                 </a>
             </div>
@@ -103,6 +103,19 @@
     <!-- end contact -->
 </template>
 <style scoped>
+    /* for transition */
+    #me a,
+    #about a.buttonLink{
+        translate: 0% 100%;
+    }
+    section.show h3,
+    section.show h1,
+    section.show p,
+    section.show a,
+    section.show button{
+        translate: 0% 0% !important;
+    }
+    /* for styling */
     a{
         transition: color 0.1s ease-in;
     }
@@ -363,13 +376,28 @@ const input = reactive({
     email: '',
     message: '',
 });
+const showSection = ref(0);
+const sectionID = ['me', 'about', 'project', 'contact'];
 const cardRefs = ref([]);
 const inpName = ref(null);
 const inpSubject = ref(null);
 const inpEmail = ref(null);
 const inpMessage = ref(null);
+const sectionObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        // showSection.value = sectionID.indexOf(entry.target.id);
+        // console.log('valluee',showSection.value)
+        entry.target.classList.toggle('show', entry.isIntersecting);
+    })
+},{
+    threshold: 0.2,
+    rootMargin: '-250px'
+});
 onMounted(() => {
     if (route.hash) document.querySelector(route.hash)?.scrollIntoView({ behavior: "smooth" });
+    document.querySelectorAll('section').forEach((item, index) => {
+        sectionObs.observe(item);
+    })
 });
 const handleLoading = (card) => {
     const image = card.querySelector('img');
@@ -404,41 +432,66 @@ const inpChange = (cond) => {
     switch(cond){
         case 'email':
             inpEmail.value.classList.remove('border-popup_error','hover:border-popup_error','focus:border-popup_error');
-            inpEmail.value.classList.add('border-orange-500', 'hover:border-orange-500', 'dark:border-blue-600', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
+            inpEmail.value.classList.add('border-orange-500', 'hover:border-orange-500', 'focus:border-orange-500', 'dark:border-blue-600', 'dark:hover:border-blue-600', 'dark:focus:border-blue-600');
         break;
         case 'name':
             inpName.value.classList.remove('border-popup_error','hover:border-popup_error','focus:border-popup_error');
-            inpName.value.classList.add('border-orange-500', 'hover:border-orange-500', 'dark:border-blue-600', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
+            inpName.value.classList.add('border-orange-500', 'hover:border-orange-500', 'focus:border-orange-500', 'dark:border-blue-600', 'dark:hover:border-blue-600', 'dark:focus:border-blue-600');
         break;
         case 'subject':
             inpSubject.value.classList.remove('border-popup_error','hover:border-popup_error','focus:border-popup_error');
-            inpSubject.value.classList.add('border-orange-500', 'hover:border-orange-500', 'dark:border-blue-600', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
+            inpSubject.value.classList.add('border-orange-500', 'hover:border-orange-500', 'focus:border-orange-500', 'dark:border-blue-600', 'dark:hover:border-blue-600', 'dark:focus:border-blue-600');
         break;
         case 'message':
             inpMessage.value.classList.remove('border-popup_error','hover:border-popup_error','focus:border-popup_error');
-            inpMessage.value.classList.add('border-orange-500', 'hover:border-orange-500', 'dark:border-blue-600', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
+            inpMessage.value.classList.add('border-orange-500', 'hover:border-orange-500', 'focus:border-orange-500', 'dark:border-blue-600', 'dark:hover:border-blue-600', 'dark:focus:border-blue-600');
         break;
     }
+    if(input.name === null || input.name === ''){
+        inpName.value.classList.remove('border-orange-500', 'dark:border-blue-600');
+    }
+    if(input.subject === null || input.subject === ''){
+        inpSubject.value.classList.remove('border-orange-500', 'dark:border-blue-600');
+    }
+    if(input.email === null || input.email === ''){
+        inpEmail.value.classList.remove('border-orange-500', 'dark:border-blue-600');
+    }
+    if(input.message === null || input.message === ''){
+        inpMessage.value.classList.remove('border-orange-500', 'dark:border-blue-600');
+    }
+};
+const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
 };
 const sendEmail = async(event) => {
     event.preventDefault();
     let errMessage = '';
-    if(input.name === null || input.name === ''){
-        inpName.value.classList.remove('hover:border-orange-500', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
-        inpName.value.classList.add('border-popup_error','hover:border-popup_error','focus:border-popup_error');
-        errMessage = 'Name must filled !';
-    }else if(input.subject === null || input.subject === ''){
-        inpSubject.value.classList.remove('hover:border-orange-500', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
-        inpSubject.value.classList.add('border-popup_error','hover:border-popup_error','focus:border-popup_error');
-        errMessage = 'Subject must filled !';
-    }else if(input.email === null || input.email === ''){
-        inpEmail.value.classList.remove('hover:border-orange-500', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
+    if(input.email === null || input.email === ''){
+        inpEmail.value.classList.remove('border-orange-500', 'hover:border-orange-500', 'focus:border-orange-500', 'dark:border-blue-600', 'dark:hover:border-blue-600', 'dark:focus:border-blue-600');
         inpEmail.value.classList.add('border-popup_error','hover:border-popup_error','focus:border-popup_error');
-        errMessage = 'Email must filled !';
-    }else if(input.message === null || input.message === ''){
-        inpMessage.value.classList.remove('hover:border-orange-500', 'dark:hover:border-blue-600', 'focus:border-orange-500', 'dark:focus:border-blue-600');
+        if (!errMessage) errMessage = 'Email must filled !';
+    }else{
+        if (!isValidEmail(input.email)) {
+            inpEmail.value.classList.remove('border-orange-500', 'hover:border-orange-500', 'focus:border-orange-500', 'dark:border-blue-600', 'dark:hover:border-blue-600', 'dark:focus:border-blue-600');
+            inpEmail.value.classList.add('border-popup_error','hover:border-popup_error','focus:border-popup_error');
+            if (!errMessage) errMessage = 'Invalid Email!';
+        }
+    }
+    if(input.name === null || input.name === ''){
+        inpName.value.classList.remove('border-orange-500', 'hover:border-orange-500', 'focus:border-orange-500', 'dark:border-blue-600', 'dark:hover:border-blue-600', 'dark:focus:border-blue-600');
+        inpName.value.classList.add('border-popup_error','hover:border-popup_error','focus:border-popup_error');
+        if (!errMessage) errMessage = 'Name must filled !';
+    }
+    if(input.subject === null || input.subject === ''){
+        inpSubject.value.classList.remove('border-orange-500', 'hover:border-orange-500', 'focus:border-orange-500', 'dark:border-blue-600', 'dark:hover:border-blue-600', 'dark:focus:border-blue-600');
+        inpSubject.value.classList.add('border-popup_error','hover:border-popup_error','focus:border-popup_error');
+        if (!errMessage) errMessage = 'Subject must filled !';
+    }
+    if(input.message === null || input.message === ''){
+        inpMessage.value.classList.remove('border-orange-500', 'hover:border-orange-500', 'focus:border-orange-500', 'dark:border-blue-600', 'dark:hover:border-blue-600', 'dark:focus:border-blue-600');
         inpMessage.value.classList.add('border-popup_error','hover:border-popup_error','focus:border-popup_error');
-        errMessage = 'Message must filled !';
+        if (!errMessage) errMessage = 'Message must filled !';
     }
     if(errMessage != ''){
         eventBus.emit('showRedPopup', errMessage);

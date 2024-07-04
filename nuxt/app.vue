@@ -4,8 +4,11 @@
     </NuxtLayout>
 </template>
 <style>
+    :root{
+        --darkMode: none;
+    }
     header, main, footer, button{
-        transition: background-color 0.4s ease-in-out;
+        transition: var(--darkMode);
     }
     .items-loading{
         background: linear-gradient(135deg, #b9b9b9 0%, #cdcdcd 52%, #fff 52%, #fff 54%, #cdcdcd 54%, #b9b9b9 100%);
@@ -21,6 +24,13 @@
 import { useDarkModeStore } from '~/store/DarkMode';
 const darkModeStore = useDarkModeStore();
 onMounted(() => {
-    darkModeStore.initializeDarkMode();
+    darkModeStore.initializeDarkMode(0.35);
+});
+darkModeStore.$subscribe((mutation, state) => {
+    if (state.preDarkMode) {
+        document.documentElement.style.setProperty('--darkMode', `background-color ${state.transitionTime}s ease-in-out`);
+    }else{
+        document.documentElement.style.setProperty('--darkMode', 'none');
+    }
 });
 </script>
