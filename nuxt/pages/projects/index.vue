@@ -255,7 +255,8 @@
 </style>
 <script setup>
 import { ref, watch } from "vue";
-import { projectPage } from '../composition/home';
+import { projectPage } from '../composables/api/home';
+import animationsComposable from '../composables/animations/projects/index';
 const route = useRoute();
 const baseURL = useRuntimeConfig().public.baseURL;
 definePageMeta({
@@ -273,6 +274,13 @@ const local = reactive({
     fetchedViewData: null,
 });
 const cardRefs = ref([]);
+const gsapAnimations = ref(null);
+onMounted(() => {
+    gsapAnimations.value = animationsComposable();
+});
+onUnmounted(() => {
+    gsapAnimations.value?.kill()
+});
 watch(() => local.fetchedViewData, () => {
     if (local?.fetchedViewData !== undefined && typeof local.fetchedViewData === 'object' && Array.isArray(local.fetchedViewData) && Object.keys(local.fetchedViewData).length > 0) {
         nextTick(() => {

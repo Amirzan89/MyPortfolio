@@ -7,8 +7,8 @@ export default defineNuxtConfig({
     },
     runtimeConfig:{
         public: {
-            baseURL: process.env.APP_URL || 'https://amirzanfikri.my.id',
-            // baseURL: process.env.APP_URL || 'http://localhost:8000',
+            // baseURL: process.env.APP_URL || 'https://amirzanfikri.my.id',
+            baseURL: process.env.APP_URL || 'http://localhost:8000',
         },
     },
     ssr: false,
@@ -30,6 +30,11 @@ export default defineNuxtConfig({
         }
     ],
     modules: [
-        '@pinia/nuxt',
+        '@pinia/nuxt', '@hypernym/nuxt-gsap',
     ],
+    gsap:{
+        extraPlugins:{
+            scrollTrigger: true,
+        }
+    }
 })

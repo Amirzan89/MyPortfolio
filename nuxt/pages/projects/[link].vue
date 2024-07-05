@@ -66,9 +66,10 @@
 <script setup>
 import { ref, watch } from "vue";
 import '~/assets/css/detailProject.css';
-import CarouselSlide from '~/composition/CarouselSlide';
 import { useNotFoundStore } from '~/store/NotFound';
-import { projectDetailPage } from '../composition/home';
+import CarouselSlide from '~/composables/CarouselSlide';
+import { projectDetailPage } from '../composables/api/home';
+import animationsComposable from '../composables/animations/projects/detail';
 import laravelIcon from '~/assets/icon/laravel.svg';
 import bootstrapicon from '~/assets/icon/bootstrap.svg';
 import tailwindicon from '~/assets/icon/tailwind.svg';
@@ -143,6 +144,13 @@ useLazyAsyncData(async () => {
     } else {
         useNotFoundStore().setIsNotFound(true, '/projects','Data not found');
     }
+});
+const gsapAnimations = ref(null);
+onMounted(() => {
+    gsapAnimations.value = animationsComposable();
+});
+onUnmounted(() => {
+    gsapAnimations.value?.kill()
 });
 const handleLoading = (card) => {
     const image = card.querySelector('img');

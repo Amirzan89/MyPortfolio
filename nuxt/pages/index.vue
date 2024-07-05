@@ -10,7 +10,7 @@
                     <a href="https://www.linkedin.com/in/amirzan-fikri" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-linkedin" class="text-6xl text-blue-500"/></a>
                     <a href="https://upwork.com/freelancers/amirzanf" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-square-upwork" class="text-6xl text-green-700 dark:text-green-500"/></a>
                 </div>
-                <a href="#contact" class="w-60 h-15 bg-primary dark:bg-primary_dark rounded-2xl flex justify-center items-center ml-7 mt-20 text-white font-semibold text-4xl" style="transition: transform 2s linear 1s;">Contact Me</a>
+                <a href="#contact" id="btnContact" class="w-60 h-15 bg-primary dark:bg-primary_dark rounded-2xl flex justify-center items-center ml-7 mt-20 text-white font-semibold text-4xl">Contact Me</a>
             </div>
             <img src="~assets/images/testing.png" class="max-w-sm object-cover rounded-lg w-200 h-100"/>
         </div>
@@ -31,7 +31,7 @@
                     <a href="https://vuejs.org" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/vue.svg" class="max-w-sm object-fill w-11"/></a>
                     <a href="https://nuxt.com" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/nuxtjs.svg" class="max-w-sm object-fill w-13"/></a>
                 </div>
-                <a :href="baseURL + '/cv'" target="_blank" class="w-60 h-20 bg-primary dark:bg-primary_dark rounded-2xl flex justify-center items-center ml-7 text-white font-semibold text-3xl mt-10 gap-2 buttonLink" style="transition: all 5s linear 1s;">
+                <a :href="baseURL + '/cv'" target="_blank" class="w-60 h-20 bg-primary dark:bg-primary_dark rounded-2xl flex justify-center items-center ml-7 text-white font-semibold text-3xl mt-10 gap-2 buttonLink">
                     <img src="~assets/icon/cv.svg" class="max-w-sm object-cover rounded-lg w-14"/>
                     <p class="block">Preview CV</p>
                 </a>
@@ -104,17 +104,6 @@
 </template>
 <style scoped>
     /* for transition */
-    #me a,
-    #about a.buttonLink{
-        translate: 0% 100%;
-    }
-    section.show h3,
-    section.show h1,
-    section.show p,
-    section.show a,
-    section.show button{
-        translate: 0% 0% !important;
-    }
     /* for styling */
     a{
         transition: color 0.1s ease-in;
@@ -354,7 +343,8 @@
 import { ref, watch } from "vue";
 import PopupComponent from '~/components/Popup.vue';
 import { eventBus } from '~/app/eventBus';
-import { indexPage, contactMe } from '../composition/home';
+import { indexPage, contactMe } from '../composables/api/home';
+import animationsComposable from '../composables/animations/index';
 const route = useRoute();
 const baseURL = useRuntimeConfig().public.baseURL;
 definePageMeta({
@@ -376,28 +366,17 @@ const input = reactive({
     email: '',
     message: '',
 });
-const showSection = ref(0);
-const sectionID = ['me', 'about', 'project', 'contact'];
 const cardRefs = ref([]);
 const inpName = ref(null);
 const inpSubject = ref(null);
 const inpEmail = ref(null);
 const inpMessage = ref(null);
-const sectionObs = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        // showSection.value = sectionID.indexOf(entry.target.id);
-        // console.log('valluee',showSection.value)
-        entry.target.classList.toggle('show', entry.isIntersecting);
-    })
-},{
-    threshold: 0.2,
-    rootMargin: '-250px'
-});
+const gsapAnimations = ref(null);
 onMounted(() => {
-    if (route.hash) document.querySelector(route.hash)?.scrollIntoView({ behavior: "smooth" });
-    document.querySelectorAll('section').forEach((item, index) => {
-        sectionObs.observe(item);
-    })
+    gsapAnimations.value = animationsComposable();
+});
+onUnmounted(() => {
+    gsapAnimations.value?.kill()
 });
 const handleLoading = (card) => {
     const image = card.querySelector('img');
