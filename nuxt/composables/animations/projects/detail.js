@@ -1,16 +1,25 @@
+import { ref } from 'vue';
 import { getGsap } from '../../config';
 import { header } from './../header';
 export default () => {
     const gsap = getGsap();
-    return gsap.context(() => {
-        // header();
+    const gsapContext = ref(null);
+    const isAnimateComplete = ref(false);
+    gsapContext.value =  gsap.context(() => {
+        const tl = gsap.timeline({
+            onComplete: () => {
+                isAnimateComplete.value = true;
+            }
+        });
+        header(tl);
 
-        // const secMe = gsap.utils.selector('section#me div');
-
-        // const secAbout = gsap.utils.selector('section#about');
-
-        // const secProject = gsap.utils.selector('section#project');
-
-        // const secContact = gsap.utils.selector('section#contact');
+        const sec = gsap.utils.selector('section');
+        tl.from(sec('div:not(.card-loading) span'), {
+            x: '-100%',
+            duration: 1.5,
+            opacity: 0,
+        });
+        return tl;
     });
+    return { gsapContext, isAnimateComplete }
 }

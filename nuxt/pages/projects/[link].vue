@@ -149,10 +149,11 @@ useLazyAsyncData(async () => {
 });
 const ctx = ref(null);
 onMounted(() => {
-    ctx.value = animationsComposable();
+    const { gsapContext } = animationsComposable();
+    ctx.value = gsapContext.value;
 });
 onUnmounted(() => {
-    // ctx.value?.kill()
+    ctx.value?.kill()
 });
 const handleLoading = (card) => {
     const image = card.querySelector('img');

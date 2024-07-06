@@ -141,10 +141,14 @@ const inpEmail = ref(null);
 const inpMessage = ref(null);
 const ctx = ref(null);
 onMounted(() => {
-    ctx.value = animationsComposable();
+    const { gsapContext, isAnimateComplete } = animationsComposable();
+    ctx.value = gsapContext.value;
+    if(isAnimateComplete.value){
+        if (route.hash) document.querySelector(route.hash)?.scrollIntoView({ behavior: "smooth" });
+    }
 });
 onUnmounted(() => {
-    // ctx.value?.kill();
+    ctx.value?.kill();
 });
 const handleLoading = (card) => {
     const image = card.querySelector('img');
@@ -168,6 +172,16 @@ const handleLoading = (card) => {
 watch(() => local.fetchedViewData, () => {
     if (local?.fetchedViewData !== undefined && typeof local.fetchedViewData === 'object' && Array.isArray(local.fetchedViewData) && Object.keys(local.fetchedViewData).length > 0) {
         nextTick(() => {
+            const { $gsap } = useNuxtApp();
+            $gsap.from(cardRefs.value, {
+                opacity: 0,
+                y:'50%',
+                duration: 1.5,
+                stagger:{
+                    from: 'start',
+                    each: 0.3,
+                }
+            });
             local.fetchedViewData.forEach((item, index) => {
                 let card = cardRefs.value[index];
                 handleLoading(card);

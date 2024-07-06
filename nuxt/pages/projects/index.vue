@@ -47,10 +47,11 @@ const local = reactive({
 const cardRefs = ref([]);
 const ctx = ref(null);
 onMounted(() => {
-    ctx.value = animationsComposable();
+    const { gsapContext } = animationsComposable();
+    ctx.value = gsapContext.value;
 });
 onUnmounted(() => {
-    // ctx.value?.kill();
+    ctx.value?.kill()
 });
 watch(() => local.fetchedViewData, () => {
     if (local?.fetchedViewData !== undefined && typeof local.fetchedViewData === 'object' && Array.isArray(local.fetchedViewData) && Object.keys(local.fetchedViewData).length > 0) {
