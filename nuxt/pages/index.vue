@@ -1,343 +1,111 @@
 <template>
-    <!-- Hero section -->
-    <section id="me" class="w-full bg-cover h-screen relative flex items-center text-primary_text dark:text-primary_dark_text">
-        <div class="relative w-7/8 mx-auto flex flex-row  justify-between items-center py-5" style="width: 90%;">
-            <div class="flex justify-center flex-col relative">
-                <h3 class="text-2xl font-bold">Hi I'm Amirzan Fikri</h3>
-                <h1 class="text-6xl font-semibold mt-5">Full stack Laravel developer</h1>
-                <div class="flex gap-5 mt-2 ml-2">
-                    <a href="https://github.com/Amirzan89" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-github" class="text-6xl text-black dark:text-white"/></a>
-                    <a href="https://www.linkedin.com/in/amirzan-fikri" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-linkedin" class="text-6xl text-blue-500"/></a>
-                    <a href="https://upwork.com/freelancers/amirzanf" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-square-upwork" class="text-6xl text-green-700 dark:text-green-500"/></a>
+    <div>
+        <!-- Hero section -->
+        <section id="me" class="w-full bg-cover h-screen relative flex items-center text-primary_text dark:text-primary_dark_text">
+            <div class="relative w-7/8 mx-auto flex flex-row  justify-between items-center py-5" style="width: 90%;">
+                <div class="flex justify-center flex-col relative">
+                    <h3 class="text-2xl font-bold">Hi I'm Amirzan Fikri</h3>
+                    <h1 class="text-6xl font-semibold mt-5">Full stack Laravel developer</h1>
+                    <div class="flex gap-5 mt-2 ml-2">
+                        <a href="https://github.com/Amirzan89" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-github" class="text-6xl text-black dark:text-white"/></a>
+                        <a href="https://www.linkedin.com/in/amirzan-fikri" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-linkedin" class="text-6xl text-blue-500"/></a>
+                        <a href="https://upwork.com/freelancers/amirzanf" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-square-upwork" class="text-6xl text-green-700 dark:text-green-500"/></a>
+                    </div>
+                    <a href="#contact" id="btnContact" class="w-60 h-15 bg-primary dark:bg-primary_dark rounded-2xl flex justify-center items-center ml-7 mt-20 text-white font-semibold text-4xl">Contact Me</a>
                 </div>
-                <a href="#contact" id="btnContact" class="w-60 h-15 bg-primary dark:bg-primary_dark rounded-2xl flex justify-center items-center ml-7 mt-20 text-white font-semibold text-4xl">Contact Me</a>
+                <img src="~assets/images/testing.png" class="max-w-sm object-cover rounded-lg w-200 h-100"/>
             </div>
-            <img src="~assets/images/testing.png" class="max-w-sm object-cover rounded-lg w-200 h-100"/>
-        </div>
-    </section>
-    <!-- end hero section -->
-    <!--  About -->
-    <section id="about" class="relative left-1/2 -translate-x-1/2 flex justify-center mt-30" style="padding-top: 70px;">
-        <div class="content w-7/8 flex flex-row cursor-default text-xl text-primary_text dark:text-primary_dark_text gap-10">
-            <!-- <img src="~assets/images/testing.png" class="max-w-sm object-cover rounded-lg w-200 h-100"/> -->
-            <div class="flex flex-col">
-                <p class="text-normal text-2xl">
-                    Hello there i'm web developer on laravel and vue. I offer expertise in website development, responsive design, front end using tailwind css & vue js or back end using laravel. I am committed to delivering high-quality work and collaborating with clients to create effective and functional websites that meet their needs. With a strong attention to detail and a passion for learning and staying up-to-date with industry trends, I am excited to work with you on your web development projects.
-                </p>
-                <div class="flex flex-row gap-5 mt-2 ml-5">
-                    <a href="https://laravel.com" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/laravel.svg" class="max-w-sm object-cover w-11"/></a>
-                    <a href="https://getbootstrap.com/" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/bootstrap.svg" class="max-w-sm object-cover w-15"/></a>
-                    <a href="https://tailwindcss.com" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/tailwind.svg" class="max-w-sm object-fill w-13"/></a>
-                    <a href="https://vuejs.org" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/vue.svg" class="max-w-sm object-fill w-11"/></a>
-                    <a href="https://nuxt.com" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/nuxtjs.svg" class="max-w-sm object-fill w-13"/></a>
+        </section>
+        <!-- end hero section -->
+        <!--  About -->
+        <section id="about" class="relative left-1/2 -translate-x-1/2 flex justify-center mt-30" style="padding-top: 70px;">
+            <div class="content w-7/8 flex flex-row cursor-default text-xl text-primary_text dark:text-primary_dark_text gap-10">
+                <!-- <img src="~assets/images/testing.png" class="max-w-sm object-cover rounded-lg w-200 h-100"/> -->
+                <div class="flex flex-col">
+                    <p class="text-normal text-2xl">
+                        Hello there i'm web developer on laravel and vue. I offer expertise in website development, responsive design, front end using tailwind css & vue js or back end using laravel. I am committed to delivering high-quality work and collaborating with clients to create effective and functional websites that meet their needs. With a strong attention to detail and a passion for learning and staying up-to-date with industry trends, I am excited to work with you on your web development projects.
+                    </p>
+                    <div class="flex flex-row gap-5 mt-2 ml-5">
+                        <a href="https://laravel.com" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/laravel.svg" class="max-w-sm object-cover w-11"/></a>
+                        <a href="https://getbootstrap.com/" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/bootstrap.svg" class="max-w-sm object-cover w-15"/></a>
+                        <a href="https://tailwindcss.com" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/tailwind.svg" class="max-w-sm object-fill w-13"/></a>
+                        <a href="https://vuejs.org" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/vue.svg" class="max-w-sm object-fill w-11"/></a>
+                        <a href="https://nuxt.com" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/nuxtjs.svg" class="max-w-sm object-fill w-13"/></a>
+                    </div>
+                    <a :href="baseURL + '/cv'" id="btnCV" target="_blank" class="w-60 h-20 bg-primary dark:bg-primary_dark rounded-2xl flex justify-center items-center ml-7 text-white font-semibold text-3xl mt-10 gap-2 buttonLink">
+                        <img src="~assets/icon/cv.svg" class="max-w-sm object-cover rounded-lg w-14"/>
+                        <p class="block">Preview CV</p>
+                    </a>
                 </div>
-                <a :href="baseURL + '/cv'" target="_blank" class="w-60 h-20 bg-primary dark:bg-primary_dark rounded-2xl flex justify-center items-center ml-7 text-white font-semibold text-3xl mt-10 gap-2 buttonLink">
-                    <img src="~assets/icon/cv.svg" class="max-w-sm object-cover rounded-lg w-14"/>
-                    <p class="block">Preview CV</p>
-                </a>
             </div>
-        </div>
-    </section>
-    <!-- end about -->
-    <!-- deliver -->
-    <!-- <section>
-        <div>what can i do</div>
-    </section> -->
-    <!-- end deliver -->
-    <!-- project -->
-    <section id="project" class="mt-10 flex flex-col" style="padding-top: 70px;">
-        <div class="flex relative left-1/2 -translate-x-1/2 justify-between items-center text-primary_text dark:text-primary_dark_text">
-            <span class="text-3xl relative font-semibold">Projects</span>
-            <NuxtLink to="/projects" class="text-xl flex gap-2 items-center hover:text-red-500">
-                <span>Others</span>
-                <FontAwesomeIcon icon="fa-solid fa-arrow-right-long" class="text-2xl"/> 
-            </NuxtLink>
-        </div>
-        <ul class="relative left-1/2 -translate-x-1/2 flex mt-5 mb-10 flex-wrap gap-5">
-            <template v-for="(item, index) in local.fetchedViewData" :key="index">
-                <li class="cardI list-none relative" ref="cardRefs">
-                    <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 text-primary_text dark:text-primary_dark_text hover:text-white dark:hover:text-white hover:bg-primary dark:hover:bg-primary_dark flex flex-col rounded-xl">
-                        <img :src="baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 rounded-lg mt-3 h-40">
-                        <h3 class="relative left-5 mt-4 text-xl font-semibold w-max">{{ item.nama }}</h3>
-                        <span class="relative left-5 mt-5 mb-10 w-max">{{ item.category }}</span>
-                    </NuxtLink>
-                    <div class="card-loading absolute top-0 left-0 flex flex-col bg-transparent w-full">
-                        <div class="rounded-md relative left-1/2 -translate-x-1/2 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
-                        <h3 class="rounded-md relative left-5 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
-                        <span class="relative left-5 mb-10 rounded-md items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
+        </section>
+        <!-- end about -->
+        <!-- deliver -->
+        <!-- <section>
+            <div>what can i do</div>
+        </section> -->
+        <!-- end deliver -->
+        <!-- project -->
+        <section id="project" class="mt-10 flex flex-col" style="padding-top: 70px;">
+            <div class="flex relative left-1/2 -translate-x-1/2 justify-between items-center text-primary_text dark:text-primary_dark_text">
+                <span class="text-3xl relative font-semibold">Projects</span>
+                <NuxtLink to="/projects" class="text-xl flex gap-2 items-center hover:text-red-500">
+                    <span>Others</span>
+                    <FontAwesomeIcon icon="fa-solid fa-arrow-right-long" class="text-2xl"/> 
+                </NuxtLink>
+            </div>
+            <ul class="relative left-1/2 -translate-x-1/2 flex mt-5 mb-10 flex-wrap gap-5">
+                <template v-for="(item, index) in local.fetchedViewData" :key="index">
+                    <li class="cardI list-none relative" ref="cardRefs">
+                        <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 text-primary_text dark:text-primary_dark_text hover:text-white dark:hover:text-white hover:bg-primary dark:hover:bg-primary_dark flex flex-col rounded-xl">
+                            <img :src="baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 rounded-lg mt-3 h-40">
+                            <h3 class="relative left-5 mt-4 text-xl font-semibold w-max">{{ item.nama }}</h3>
+                            <span class="relative left-5 mt-5 mb-10 w-max">{{ item.category }}</span>
+                        </NuxtLink>
+                        <div class="card-loading absolute top-0 left-0 flex flex-col bg-transparent w-full">
+                            <div class="rounded-md relative left-1/2 -translate-x-1/2 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
+                            <h3 class="rounded-md relative left-5 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
+                            <span class="relative left-5 mb-10 rounded-md items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+        </section>
+        <!-- end project -->
+        <!-- contact -->
+        <section class="mt-10  w-full h-200 bg-primary-200 pb-5" style="padding-top: 70px;">
+            <div class="w-200 relative top-2/4 -translate-y-2/4 left-2/4 -translate-x-2/4 p-8 bg-primary dark:bg-primary_dark backdrop-filter backdrop-blur-lg rounded-2xl">
+                <form id="contact" class="relative w-150 mx-auto h-2/4 flex flex-col gap-5 align-center pointer-events-auto">
+                    <span class="text-white text-5xl mx-auto">Contact Me !</span>
+                    <div class="mx-auto mt-3 w-full">
+                        <input type="text" placeholder="Email Address" class="w-full h-14 rounded-xl pl-5 text-2xl input hover:border-orange-500 dark:hover:border-blue-600 border-4 focus:outline-none focus:border-5 focus:border-orange-500 dark:focus:border-blue-600 transition duration-400 ease-in-out" ref="inpEmail" v-model="input.email" @input="inpChange('email')">
+                        <!-- <span v-if="isErrorEmail" class="ml-3 mt-2 text-red-500 font-semibold text-lg cursor-default">{{ errEmail }}</span> -->
                     </div>
-                </li>
-            </template>
-        </ul>
-    </section>
-    <!-- end project -->
-    <!-- contact -->
-    <section class="mt-10  w-full h-200 bg-primary-200 pb-5" style="padding-top: 70px;">
-        <div class="w-200 relative top-2/4 -translate-y-2/4 left-2/4 -translate-x-2/4 p-8 bg-primary dark:bg-primary_dark backdrop-filter backdrop-blur-lg rounded-2xl">
-            <form id="contact" class="relative w-150 mx-auto h-2/4 flex flex-col gap-5 align-center pointer-events-auto">
-                <span class="text-white text-5xl mx-auto">Contact Me !</span>
-                <div class="mx-auto mt-3 w-full">
-                    <input type="text" placeholder="Email Address" class="w-full h-14 rounded-xl pl-5 text-2xl input hover:border-orange-500 dark:hover:border-blue-600 border-4 focus:outline-none focus:border-5 focus:border-orange-500 dark:focus:border-blue-600 transition duration-400 ease-in-out" ref="inpEmail" v-model="input.email" @input="inpChange('email')">
-                    <!-- <span v-if="isErrorEmail" class="ml-3 mt-2 text-red-500 font-semibold text-lg cursor-default">{{ errEmail }}</span> -->
-                </div>
-                <div class="mx-auto w-full h-18 flex flex-row gap-4">
-                    <div class="h-full flex-1">
-                        <input type="text" placeholder="Full Name" class="w-full h-3/4 rounded-xl pl-4 text-xl input border-4 hover:border-orange-500 dark:hover:border-blue-600 focus:outline-none focus:border-5 focus:border-orange-500 dark:focus:border-blue-600 transition duration-400 ease-in-out" ref="inpName" v-model="input.name" @input="inpChange('name')">
-                        <!-- <span v-if="isErrorName" class="ml-3 mt-1 text-red-500 font-semibold text-lg cursor-default">{{ errName }}</span> -->
+                    <div class="mx-auto w-full h-18 flex flex-row gap-4">
+                        <div class="h-full flex-1">
+                            <input type="text" placeholder="Full Name" class="w-full h-3/4 rounded-xl pl-4 text-xl input border-4 hover:border-orange-500 dark:hover:border-blue-600 focus:outline-none focus:border-5 focus:border-orange-500 dark:focus:border-blue-600 transition duration-400 ease-in-out" ref="inpName" v-model="input.name" @input="inpChange('name')">
+                            <!-- <span v-if="isErrorName" class="ml-3 mt-1 text-red-500 font-semibold text-lg cursor-default">{{ errName }}</span> -->
+                        </div>
+                        <div class="h-full flex-1">
+                            <input type="text" placeholder="Subject" class="w-full h-3/4 rounded-xl pl-4 text-xl input border-4 hover:border-orange-500 dark:hover:border-blue-600 focus:outline-none focus:border-5 focus:border-orange-500 dark:focus:border-blue-600 transition duration-400 ease-in-out" ref="inpSubject" v-model="input.subject" @input="inpChange('subject')">
+                            <!-- <span v-if="isErrorSubject" class="ml-3 mt-1 text-red-500 font-semibold text-lg cursor-default">{{ errSubject }}</span> -->
+                        </div>
                     </div>
-                    <div class="h-full flex-1">
-                        <input type="text" placeholder="Subject" class="w-full h-3/4 rounded-xl pl-4 text-xl input border-4 hover:border-orange-500 dark:hover:border-blue-600 focus:outline-none focus:border-5 focus:border-orange-500 dark:focus:border-blue-600 transition duration-400 ease-in-out" ref="inpSubject" v-model="input.subject" @input="inpChange('subject')">
-                        <!-- <span v-if="isErrorSubject" class="ml-3 mt-1 text-red-500 font-semibold text-lg cursor-default">{{ errSubject }}</span> -->
+                    <div class="mx-auto w-full h-50">
+                        <textarea cols="" rows="" class="w-full h-full pl-4 rounded-xl pt-3 text-lg input border-4 hover:border-orange-500 dark:hover:border-blue-600 focus:outline-none focus:border-5 focus:border-orange-500 dark:focus:border-blue-600 resize-none transition duration-400 ease-in-out" placeholder="Your Message" ref="inpMessage" v-model="input.message" @input="inpChange('message')"></textarea>
                     </div>
-                </div>
-                <div class="mx-auto w-full h-50">
-                    <textarea cols="" rows="" class="w-full h-full pl-4 rounded-xl pt-3 text-lg input border-4 hover:border-orange-500 dark:hover:border-blue-600 focus:outline-none focus:border-5 focus:border-orange-500 dark:focus:border-blue-600 resize-none transition duration-400 ease-in-out" placeholder="Your Message" ref="inpMessage" v-model="input.message" @input="inpChange('message')"></textarea>
-                </div>
-                <div class="mx-auto w-full mt-10">
-                    <button value="Send Message" class="w-2/5 h-13 bg-second dark:bg-primary_dark_text rounded-xl relative left-2/4 -translate-x-2/4 cursor-pointer text-white dark:text-dark_bg font-semibold text-3xl" @click.prevent="sendEmail"> Contact Me</button>
-                </div>
-            </form>
-        </div>
-    </section>
-    <PopupComponent></PopupComponent>
-    <!-- end contact -->
+                    <div class="mx-auto w-full mt-10">
+                        <button value="Send Message" class="w-2/5 h-13 bg-second dark:bg-primary_dark_text rounded-xl relative left-2/4 -translate-x-2/4 cursor-pointer text-white dark:text-dark_bg font-semibold text-3xl" @click.prevent="sendEmail"> Contact Me</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <PopupComponent></PopupComponent>
+        <!-- end contact -->
+    </div>
 </template>
 <style scoped>
-    /* for transition */
-    /* for styling */
-    a{
-        transition: color 0.1s ease-in;
-    }
-    #project > div, ul{
-        width: 92%;
-    }
-    .cardI{
-        width: 46.2%;
-    }
-    .cardI div div{
-        margin-top: 12px;
-        width: 90%;
-        height: 100px;
-    }
-    .cardI div h3{
-        margin-top: 12px;
-        width: 50%;
-        height: 32px;
-    }
-    .cardI div span{
-        margin-top: 20px;
-        width: 30%;
-        height: 28px;
-    }
-    .cardI a img{
-        margin-top: 16px;
-        width: 90%;
-        height: 70px;
-    }
-    @media (min-width: 360px) {
-        /* :root {
-            --phone: 360px;
-        } */
-        #project > div, ul{
-            width: 92%;
-        }
-        .cardI{
-            width: 46.2%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 100px;
-        }
-        .cardI div h3{
-            margin-top: 12px;
-            width: 50%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 20px;
-            width: 30%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 90px;
-        }
-    }
-    @media (min-width: 640px) {
-        /* :root {
-            --sm: 640px;
-        } */
-        #project > div, ul{
-            width: 90%;
-        }
-        .cardI{
-            width: 48%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 140px;
-        }
-        .cardI div h3{
-            margin-top: 12px;
-            width: 60%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 16px;
-            width: 40%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 130px;
-        }
-    }
-    @media (min-width: 768px) {
-        /* :root {
-            --md: 768px;
-        } */
-        #project > div, ul{
-            width: 90%;
-        }
-        .cardI{
-            width: 48%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 190px;
-        }
-        .cardI div h3{
-            margin-top: 12px;
-            width: 55%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 15px;
-            width: 35%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 180px;
-        }
-    }
-    @media (min-width: 1024px) {
-        /* :root {
-            --lg: 1024px;
-        } */
-        #project > div, ul{
-            width: 90%;
-        }
-        .cardI{
-            width: 31.5%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 155px;
-        }
-        .cardI div h3{
-            margin-top: 12px;
-            width: 60%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 20px;
-            width: 40%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 150px;
-        }
-    }
-    @media (min-width: 1280px) {
-        /* :root {
-            --xl: 1280px;
-        } */
-        #project > div, ul{
-            width: 90%;
-        }
-        .cardI{
-            width: 32%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 190px;
-        }
-        .cardI div h3{
-            margin-top: 10px;
-            width: 50%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 14px;
-            width: 30%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 185px;
-        }
-    }
-    @media (min-width: 1536px) {
-        /* :root {
-            --2xl: 1536px;
-        } */
-        #project > div, ul{
-            width: 90%;
-        }
-        .cardI{
-            width: 32.3%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 240px;
-        }
-        .cardI div h3{
-            margin-top: 12px;
-            width: 50%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 20px;
-            width: 30%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 230px;
-        }
-    }
+@import '~/assets/css/index.css';
 </style>
 <script setup>
 import { ref, watch } from "vue";
@@ -371,12 +139,12 @@ const inpName = ref(null);
 const inpSubject = ref(null);
 const inpEmail = ref(null);
 const inpMessage = ref(null);
-const gsapAnimations = ref(null);
+const ctx = ref(null);
 onMounted(() => {
-    gsapAnimations.value = animationsComposable();
+    ctx.value = animationsComposable();
 });
 onUnmounted(() => {
-    gsapAnimations.value?.kill()
+    // ctx.value?.kill();
 });
 const handleLoading = (card) => {
     const image = card.querySelector('img');

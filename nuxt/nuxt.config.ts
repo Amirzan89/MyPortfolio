@@ -12,7 +12,7 @@ export default defineNuxtConfig({
         },
     },
     ssr: false,
-    css: ['~/assets/css/tailwind.css', '~/assets/css/global.css', '~/assets/css/transitions.css', '@fortawesome/fontawesome-svg-core/styles.css'],
+    css: ['~/assets/css/tailwind.css', '~/assets/css/global.css', '@fortawesome/fontawesome-svg-core/styles.css'],
     postcss: {
         plugins: {
             tailwindcss: {},
@@ -20,9 +20,8 @@ export default defineNuxtConfig({
         },
     },
     app: {
-        pageTransition: false,
-        layoutTransition: false
-    },    
+        // pageTransition: { name: 'page', mode: 'out-in' },
+    },
     components: [
         {
             path: '~/components',

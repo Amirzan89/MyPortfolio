@@ -22,236 +22,7 @@
     </section>
 </template>
 <style scoped>
-    section > div, ul{
-        width: 92%;
-    }
-    .cardI{
-        width: 46.2%;
-    }
-    .cardI div div{
-        margin-top: 12px;
-        width: 90%;
-        height: 100px;
-    }
-    .cardI div h3{
-        margin-top: 12px;
-        width: 50%;
-        height: 32px;
-    }
-    .cardI div span{
-        margin-top: 20px;
-        width: 30%;
-        height: 28px;
-    }
-    .cardI a img{
-        margin-top: 16px;
-        width: 90%;
-        height: 70px;
-    }
-    @media (min-width: 360px) {
-        /* :root {
-            --phone: 360px;
-        } */
-        section > div, ul{
-            width: 92%;
-        }
-        .cardI{
-            width: 46.2%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 100px;
-        }
-        .cardI div h3{
-            margin-top: 12px;
-            width: 50%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 20px;
-            width: 30%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 90px;
-        }
-    }
-    @media (min-width: 640px) {
-        /* :root {
-            --sm: 640px;
-        } */
-        section > div, ul{
-            width: 90%;
-        }
-        .cardI{
-            width: 48%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 140px;
-        }
-        .cardI div h3{
-            margin-top: 12px;
-            width: 60%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 16px;
-            width: 40%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 130px;
-        }
-    }
-    @media (min-width: 768px) {
-        /* :root {
-            --md: 768px;
-        } */
-        section > div, ul{
-            width: 90%;
-        }
-        .cardI{
-            width: 48%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 190px;
-        }
-        .cardI div h3{
-            margin-top: 12px;
-            width: 55%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 15px;
-            width: 35%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 180px;
-        }
-    }
-    @media (min-width: 1024px) {
-        /* :root {
-            --lg: 1024px;
-        } */
-        section > div, ul{
-            width: 90%;
-        }
-        .cardI{
-            width: 31.5%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 155px;
-        }
-        .cardI div h3{
-            margin-top: 12px;
-            width: 60%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 20px;
-            width: 40%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 150px;
-        }
-    }
-    @media (min-width: 1280px) {
-        /* :root {
-            --xl: 1280px;
-        } */
-        section > div, ul{
-            width: 90%;
-        }
-        .cardI{
-            width: 32%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 190px;
-        }
-        .cardI div h3{
-            margin-top: 10px;
-            width: 50%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 14px;
-            width: 30%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 185px;
-        }
-    }
-    @media (min-width: 1536px) {
-        /* :root {
-            --2xl: 1536px;
-        } */
-        section > div, ul{
-            width: 90%;
-        }
-        .cardI{
-            width: 32.3%;
-        }
-        .cardI div div{
-            margin-top: 12px;
-            height: 240px;
-        }
-        .cardI div h3{
-            margin-top: 12px;
-            width: 50%;
-            height: 32px;
-        }
-        .cardI div span{
-            margin-top: 20px;
-            width: 30%;
-            height: 28px;
-        }
-        .cardI a img{
-            margin-top: 16px;
-            width: 90%;
-            height: 70px;
-        }
-        .cardI a img{
-            width: 90%;
-            height: 230px;
-        }
-    }
+@import '~/assets/css/projects.css';
 </style>
 <script setup>
 import { ref, watch } from "vue";
@@ -274,16 +45,26 @@ const local = reactive({
     fetchedViewData: null,
 });
 const cardRefs = ref([]);
-const gsapAnimations = ref(null);
+const ctx = ref(null);
 onMounted(() => {
-    gsapAnimations.value = animationsComposable();
+    ctx.value = animationsComposable();
 });
 onUnmounted(() => {
-    gsapAnimations.value?.kill()
+    // ctx.value?.kill();
 });
 watch(() => local.fetchedViewData, () => {
     if (local?.fetchedViewData !== undefined && typeof local.fetchedViewData === 'object' && Array.isArray(local.fetchedViewData) && Object.keys(local.fetchedViewData).length > 0) {
         nextTick(() => {
+            const { $gsap } = useNuxtApp();
+            $gsap.from(cardRefs.value, {
+                opacity: 0,
+                y:'70%',
+                duration: 1.5,
+                stagger:{
+                    from: 'start',
+                    each: 0.3,
+                }
+            });
             local.fetchedViewData.forEach((item, index) => {
                 let card = cardRefs.value[index];
                 handleLoading(card);

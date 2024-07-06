@@ -1,40 +1,15 @@
-// import { getGsap } from '../../config';
-// export default () => {
-//     const gsap = getGsap();
-//     return gsap.context(() => {
-//         const header = gsap.utils.selector('header');
-//         gsap.from(header('a'), {
-//             y:'-100%',
-//             opacity: 0,
-//             duration: 1,
-//         });
+import { getGsap } from '../../config';
+import { header } from './../header';
+export default () => {
+    const gsap = getGsap();
+    return gsap.context(() => {
+        header();
 
-//         const secMe = gsap.utils.selector('section#me');
-//         gsap.from(secMe(['h1', '']), {
-//             x:'-100%',
-//             opacity: 0,
-//             duration: 1,
-//         });
-
-//         const secAbout = gsap.utils.selector('section#about');
-//         // gsap.from(secAbout('h3'), {
-//         //     x:'-100%',
-//         //     opacity: 0,
-//         //     duration: 1,
-//         // });
-
-//         const secProject = gsap.utils.selector('section#project');
-//         // gsap.from(secProject('h3'), {
-//         //     x:'-100%',
-//         //     opacity: 0,
-//         //     duration: 1,
-//         // });
-
-//         const secContact = gsap.utils.selector('section#contac');
-//         // gsap.from(secContact('h3'), {
-//         //     x:'-100%',
-//         //     opacity: 0,
-//         //     duration: 1,
-//         // });
-//     });
-// }
+        const sec = gsap.utils.selector('section');
+        // gsap.from(sec('div:not(.card-loading) span'), {
+        //     x: '-100%',
+        //     duration: 1.5,
+        //     opacity: 0,
+        // });
+    });
+}

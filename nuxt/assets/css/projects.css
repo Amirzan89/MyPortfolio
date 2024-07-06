@@ -1,9 +1,5 @@
 /* transition */
 /* styling */
-.carousel::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
-}
 section > div, ul{
     width: 92%;
 }

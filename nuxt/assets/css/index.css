@@ -1,10 +1,9 @@
 /* transition */
 /* styling */
-.carousel::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
+a{
+    transition: color 0.1s ease-in;
 }
-section > div, ul{
+#project > div, ul{
     width: 92%;
 }
 .cardI{
@@ -34,7 +33,7 @@ section > div, ul{
     /* :root {
         --phone: 360px;
     } */
-    section > div, ul{
+    #project > div, ul{
         width: 92%;
     }
     .cardI{
@@ -68,7 +67,7 @@ section > div, ul{
     /* :root {
         --sm: 640px;
     } */
-    section > div, ul{
+    #project > div, ul{
         width: 90%;
     }
     .cardI{
@@ -102,7 +101,7 @@ section > div, ul{
     /* :root {
         --md: 768px;
     } */
-    section > div, ul{
+    #project > div, ul{
         width: 90%;
     }
     .cardI{
@@ -136,7 +135,7 @@ section > div, ul{
     /* :root {
         --lg: 1024px;
     } */
-    section > div, ul{
+    #project > div, ul{
         width: 90%;
     }
     .cardI{
@@ -170,7 +169,7 @@ section > div, ul{
     /* :root {
         --xl: 1280px;
     } */
-    section > div, ul{
+    #project > div, ul{
         width: 90%;
     }
     .cardI{
@@ -204,7 +203,7 @@ section > div, ul{
     /* :root {
         --2xl: 1536px;
     } */
-    section > div, ul{
+    #project > div, ul{
         width: 90%;
     }
     .cardI{
