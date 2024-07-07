@@ -73,9 +73,9 @@
         </section>
         <!-- end project -->
         <!-- contact -->
-        <section class="mt-10  w-full h-200 bg-primary-200 pb-5" style="padding-top: 70px;">
+        <section id="contact" class="mt-10  w-full h-200 pb-5" style="padding-top: 70px;">
             <div class="w-200 relative top-2/4 -translate-y-2/4 left-2/4 -translate-x-2/4 p-8 bg-primary dark:bg-primary_dark backdrop-filter backdrop-blur-lg rounded-2xl">
-                <form id="contact" class="relative w-150 mx-auto h-2/4 flex flex-col gap-5 align-center pointer-events-auto">
+                <form class="relative w-150 mx-auto h-2/4 flex flex-col gap-5 align-center pointer-events-auto">
                     <span class="text-white text-5xl mx-auto">Contact Me !</span>
                     <div class="mx-auto mt-3 w-full">
                         <input type="text" placeholder="Email Address" class="w-full h-14 rounded-xl pl-5 text-2xl input hover:border-orange-500 dark:hover:border-blue-600 border-4 focus:outline-none focus:border-5 focus:border-orange-500 dark:focus:border-blue-600 transition duration-400 ease-in-out" ref="inpEmail" v-model="input.email" @input="inpChange('email')">
@@ -175,8 +175,14 @@ watch(() => local.fetchedViewData, () => {
             const { $gsap } = useNuxtApp();
             $gsap.from(cardRefs.value, {
                 opacity: 0,
-                y:'50%',
-                duration: 1.5,
+                y:'20%',
+                delay: 0.3,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: 'section#project',
+                    start: 'top 60%',
+                    end: 'top none',
+                },
                 stagger:{
                     from: 'start',
                     each: 0.3,

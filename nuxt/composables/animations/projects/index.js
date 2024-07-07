@@ -1,6 +1,7 @@
 import { ref } from 'vue';
 import { getGsap } from '../../config';
 import { header } from './../header';
+import { footer } from './../footer';
 export default () => {
     const gsap = getGsap();
     const gsapContext = ref(null);
@@ -11,7 +12,7 @@ export default () => {
                 isAnimateComplete.value = true;
             }
         });
-        header(tl);
+        header();
 
         const sec = gsap.utils.selector('section');
         tl.from(sec('div:not(.card-loading) span'), {
@@ -19,6 +20,7 @@ export default () => {
             duration: 1.5,
             opacity: 0,
         });
+        footer();
         return tl;
     });
     return { gsapContext, isAnimateComplete }
