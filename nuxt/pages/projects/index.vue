@@ -26,9 +26,8 @@
 </style>
 <script setup>
 import { ref, watch } from "vue";
-import { projectPage } from '../composables/api/home';
+import { useFetchDataStore } from "~/store/FetchData";
 import animationsComposable from '../composables/animations/projects/index';
-const route = useRoute();
 const baseURL = useRuntimeConfig().public.baseURL;
 definePageMeta({
     name: 'Projects',
@@ -38,7 +37,7 @@ useHead({
     title:'My Project | Amirzan Portfolio'
 });
 useAsyncData(async () => {
-    const res = await  projectPage();
+    const res = await useFetchDataStore().fetchData();
     local.fetchedViewData = res.data.viewData;
 });
 const local = reactive({
@@ -46,6 +45,9 @@ const local = reactive({
 });
 const cardRefs = ref([]);
 const ctx = ref(null);
+onBeforeRouteLeave(() => {
+    isDoneFetch.value = false;
+});
 onMounted(() => {
     const { gsapContext } = animationsComposable();
     ctx.value = gsapContext.value;

@@ -111,7 +111,7 @@
 import { ref, watch } from "vue";
 import PopupComponent from '~/components/Popup.vue';
 import { eventBus } from '~/app/eventBus';
-import { indexPage, contactMe } from '../composables/api/home';
+import { useFetchDataStore } from "~/store/FetchData";
 import animationsComposable from '../composables/animations/index';
 const route = useRoute();
 const baseURL = useRuntimeConfig().public.baseURL;
@@ -122,7 +122,7 @@ useHead({
     title:'Welcome | Amirzan Portfolio'
 });
 useAsyncData(async () => {
-    const res = await indexPage();
+    const res = await useFetchDataStore().fetchData();
     local.fetchedViewData = res.data.viewData;
 });
 const local = reactive({

@@ -47,8 +47,8 @@
     }
 </style>
 <script setup>
-import { useDarkModeStore } from '~/store/DarkMode';
 import { reactive } from "vue";
+import { useDarkModeStore } from '~/store/DarkMode';
 const route = useRoute();
 const linkHref = ['#me', '#about', '#project', '#contact'];
 const isActive = reactive([false, false, false, false]);

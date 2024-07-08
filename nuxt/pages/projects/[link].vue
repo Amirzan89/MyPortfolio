@@ -56,35 +56,26 @@
 </template>
 <style scoped>
     @import '~/assets/css/detailProject.css';
-    .page-enter-active,
-    .page-leave-active {
-        transition: all 0.4s;
-    }
-    .page-enter-from,
-    .page-leave-to {
-        opacity: 0;
-        filter: blur(1rem);
-    }
 </style>
 <script setup>
 import { ref, watch } from "vue";
 import { useNotFoundStore } from '~/store/NotFound';
+import { useFetchDataStore } from "~/store/FetchData";
 import CarouselSlide from '~/composables/CarouselSlide';
-import { projectDetailPage } from '../composables/api/home';
 import animationsComposable from '../composables/animations/projects/detail';
 import laravelIcon from '~/assets/icon/laravel.svg';
 import bootstrapicon from '~/assets/icon/bootstrap.svg';
 import tailwindicon from '~/assets/icon/tailwind.svg';
 import vueicon from '~/assets/icon/vue.svg';
 import nuxtIcon from '~/assets/icon/nuxtjs.svg';
-const publicConfig = useRuntimeConfig().public;
 const route = useRoute();
+const publicConfig = useRuntimeConfig().public;
 definePageMeta({
     name: 'ProjectsDetail',
     layout: 'home',
     validate: async(route) => { 
         if(route.params.link === '/'){
-                navigateTo('/projects');
+            navigateTo('/projects');
         }else{
             return true;
         }
@@ -136,7 +127,7 @@ const caItemRef = ref([]);
 const slideRef = ref([]);
 const cardRefs = ref([]);
 useLazyAsyncData(async () => {
-    const res = await projectDetailPage(route.params.link);
+    const res = await useFetchDataStore().fetchData();
     if(res.status == 'success'){
         local.fetchedDetailProject = res.data.detailProject;
         local.formattedDeskripsi = local.fetchedDetailProject.deskripsi.split('\n').map(item => {
@@ -153,7 +144,7 @@ onMounted(() => {
     ctx.value = gsapContext.value;
 });
 onUnmounted(() => {
-    ctx.value?.kill()
+    // ctx.value?.kill()
 });
 const handleLoading = (card) => {
     const image = card.querySelector('img');

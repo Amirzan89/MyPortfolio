@@ -6,6 +6,10 @@ export function header(){
     tl.from(header('h1, a, button'), {
         y:'-100%',
         opacity: 0,
-        duration: 1,
+        delay:0.65,
+        stagger: {
+            from: 'start',
+            each: 0.2,
+        },
     }, 0);
 }

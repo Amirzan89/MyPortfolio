@@ -3,14 +3,19 @@
         <NotFoundComponent/>
     </template>
     <template v-else>
-        <HeaderComponent></HeaderComponent>
-        <!-- main -->
-        <main class="bg-white dark:bg-dark_bg">
-            <slot/>
-        </main>
-        <!-- end main -->
-        <Loading></Loading>
-        <FooterComponent></FooterComponent>
+        <template v-if="useFetchDataStore().processFetch.isDone == 'success' || useFetchDataStore().processFetch.isDone == 'loading'">
+            <HeaderComponent></HeaderComponent>
+            <!-- main -->
+            <main class="bg-white dark:bg-dark_bg">
+                <slot/>
+            </main>
+            <!-- end main -->
+            <Loading></Loading>
+            <FooterComponent></FooterComponent>
+        </template>
+        <template v-else-if="useFetchDataStore().processFetch.isDone  == 'error'">
+            <NotFoundComponent/>
+        </template>
     </template>
 </template>
 <style>
@@ -39,4 +44,5 @@ import FooterComponent from '~/components/Footer.vue';
 import Loading from '~/components/Loading.vue';
 import NotFoundComponent from '~/components/NotFound.vue';
 import { useNotFoundStore } from '~/store/NotFound';
+import { useFetchDataStore } from '~/store/FetchData';
 </script>
