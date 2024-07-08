@@ -23,8 +23,10 @@
 <script setup>
 import { useDarkModeStore } from '~/store/DarkMode';
 const darkModeStore = useDarkModeStore();
-onMounted(() => {
+onBeforeMount(() => {
     darkModeStore.initializeDarkMode(0.35);
+})
+onMounted(() => {
 });
 darkModeStore.$subscribe((mutation, state) => {
     if (state.preDarkMode) {
