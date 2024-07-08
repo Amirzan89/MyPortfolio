@@ -56,7 +56,7 @@ export const useFetchDataStore = defineStore('fetchData', {
                     }
                 });
             }
-            this.isDoneFetch = { isDone:'loading', message: ''};
+            this.processFetch = { isDone:'loading', message: ''};
         },
     },
 });

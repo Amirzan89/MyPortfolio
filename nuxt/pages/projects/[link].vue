@@ -126,6 +126,7 @@ const carouselRef = ref(null);
 const caItemRef = ref([]);
 const slideRef = ref([]);
 const cardRefs = ref([]);
+const ctx = ref(null);
 useLazyAsyncData(async () => {
     const res = await useFetchDataStore().fetchData();
     if(res.status == 'success'){
@@ -138,7 +139,9 @@ useLazyAsyncData(async () => {
         useNotFoundStore().setIsNotFound(true, '/projects','Data not found');
     }
 });
-const ctx = ref(null);
+onBeforeRouteUpdate(() => {
+    useFetchDataStore().resetFetchData();
+});
 onMounted(() => {
     const { gsapContext } = animationsComposable();
     ctx.value = gsapContext.value;

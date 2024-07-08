@@ -36,24 +36,24 @@ definePageMeta({
 useHead({
     title:'My Project | Amirzan Portfolio'
 });
-useAsyncData(async () => {
-    const res = await useFetchDataStore().fetchData();
-    local.fetchedViewData = res.data.viewData;
-});
 const local = reactive({
     fetchedViewData: null,
 });
 const cardRefs = ref([]);
 const ctx = ref(null);
-onBeforeRouteLeave(() => {
-    isDoneFetch.value = false;
+useAsyncData(async () => {
+    const res = await useFetchDataStore().fetchData();
+    local.fetchedViewData = res.data.viewData;
+});
+onBeforeRouteUpdate(() => {
+    useFetchDataStore().resetFetchData();
 });
 onMounted(() => {
-    const { gsapContext } = animationsComposable();
-    ctx.value = gsapContext.value;
+    // const { gsapContext } = animationsComposable();
+    // ctx.value = gsapContext.value;
 });
 onUnmounted(() => {
-    ctx.value?.kill()
+    // ctx.value?.kill()
 });
 watch(() => local.fetchedViewData, () => {
     if (local?.fetchedViewData !== undefined && typeof local.fetchedViewData === 'object' && Array.isArray(local.fetchedViewData) && Object.keys(local.fetchedViewData).length > 0) {

@@ -121,10 +121,6 @@ definePageMeta({
 useHead({
     title:'Welcome | Amirzan Portfolio'
 });
-useAsyncData(async () => {
-    const res = await useFetchDataStore().fetchData();
-    local.fetchedViewData = res.data.viewData;
-});
 const local = reactive({
     fetchedViewData: null,
 });
@@ -140,6 +136,13 @@ const inpSubject = ref(null);
 const inpEmail = ref(null);
 const inpMessage = ref(null);
 const ctx = ref(null);
+useAsyncData(async () => {
+    const res = await useFetchDataStore().fetchData();
+    local.fetchedViewData = res.data.viewData;
+});
+onBeforeRouteUpdate(() => {
+    useFetchDataStore().resetFetchData();
+});
 onMounted(() => {
     const { gsapContext, isAnimateComplete } = animationsComposable();
     ctx.value = gsapContext.value;
