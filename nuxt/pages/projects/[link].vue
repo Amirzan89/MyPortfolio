@@ -2,12 +2,14 @@
     <div>
         <section class="w-full" style="padding-top: 70px;">
             <div class="relative left-1/2 -translate-x-1/2 flex flex-row gap-10 w-11/12 items-start">
-                <div class="carousel flex overflow-x-scroll relative whitespace-nowrap flex-1" ref="carouselRef">
+                <CarouselImageComponent :images="getImages()"
+                />
+                <!-- <div class="carousel flex overflow-x-scroll relative whitespace-nowrap flex-1" ref="carouselRef">
                     <img :src="publicConfig.baseURL + '/img/project/' + local.fetchedDetailProject?.foto[0]" alt="" ref="caItemRef" class="object-contain rounded-xl">
-                    <!-- <template v-for="(item, index) in local.fetchedDetailProject?.foto" :key="index">
+                    <template v-for="(item, index) in local.fetchedDetailProject?.foto" :key="index">
                         <img :src="publicConfig.baseURL + '/img/project/' + item" alt="" ref="caItemRef" style="transition: 1s;" class="object-contain w-100">
-                    </template> -->
-                </div>
+                    </template>
+                </div> -->
                 <div class="flex flex-col flex-1 text-primary_text dark:text-primary_dark_text">
                     <h1 class="text-5xl font-semibold">{{ capitalizeFirstLetter(local.fetchedDetailProject?.nama) }}</h1>
                     <div class="mt-5 font-normal" v-html="local.formattedDeskripsi"></div>
@@ -61,7 +63,7 @@
 import { ref, watch } from "vue";
 import { useNotFoundStore } from '~/store/NotFound';
 import { useFetchDataStore } from "~/store/FetchData";
-import CarouselSlide from '~/composables/CarouselSlide';
+import CarouselImageComponent from '~/components/CarouselImage.vue';
 import animationsComposable from '../composables/animations/projects/detail';
 import laravelIcon from '~/assets/icon/laravel.svg';
 import bootstrapicon from '~/assets/icon/bootstrap.svg';
@@ -119,7 +121,7 @@ const local = reactive({
     fetchedDetailProject: null,
     fetchedOtherProject: null,
     thumbnail: '',
-    carouselSlide: null,
+    carouselImage: [],
     formattedDeskripsi:'',
 });
 const carouselRef = ref(null);
@@ -136,7 +138,7 @@ useLazyAsyncData(async () => {
         }).join('');
         local.fetchedOtherProject = res.data.other;
     } else {
-        useNotFoundStore().setIsNotFound(true, '/projects','Data not found');
+        useNotFoundStore().setIsNotFound(true, '/projects','Projects not found');
     }
 });
 onBeforeRouteUpdate(() => {
@@ -147,8 +149,12 @@ onMounted(() => {
     ctx.value = gsapContext.value;
 });
 onUnmounted(() => {
-    // ctx.value?.kill()
+    ctx.value?.kill()
 });
+watch(() => route.params.link, () => {
+    const { gsapContext } = animationsComposable();
+    ctx.value = gsapContext.value;
+})
 const handleLoading = (card) => {
     const image = card.querySelector('img');
     image.addEventListener('load', () => {
@@ -172,8 +178,10 @@ watch(() => local.fetchedDetailProject, () => {
     if (local?.fetchedDetailProject !== undefined && local.fetchedDetailProject !== null && typeof local.fetchedDetailProject === 'object' && !Array.isArray(local.fetchedDetailProject) && Object.keys(local.fetchedDetailProject).length > 0) {
         local.thumbnail = local.fetchedDetailProject.thumbnail;
         nextTick(() => {
-            // local.carouselSlide = new CarouselSlide(carouselRef.value, caItemRef.value, slideRef.value);
-            // local.carouselSlide.initCarousel();
+            const link = publicConfig.baseURL + '/img/project/';
+            local.carouselImage = local.fetchedDetailProject.foto.map((item) => {
+                return link + item;
+            });
         });
     }
 }, { immediate:true });
@@ -201,6 +209,11 @@ const filteredTechStack = computed(() => {
     });
     return result;
 });
+const getImages = () => {
+    if(local.carouselImage != []){
+        return local.carouselImage;
+    }
+}
 // const changeImg = (index) => {
 //     for(let i = 0; i < slideRef.value.length; i++){
 //         if(index == i){

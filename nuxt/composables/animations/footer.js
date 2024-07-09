@@ -5,14 +5,13 @@ export function footer(){
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: 'footer',
-            // start: 'top bottom',
             start: () => {
                 if(fullPath === '/'){
                     return 'top 75%';
                 }else if(fullPath === '/projects'){
-                    return 'top bottom';
+                    return 'top 120%';
                 }else{
-                    return 'top 75%';
+                    return 'top bottom';
                 }
             },
             end: 'top none',

@@ -1,15 +1,15 @@
 <template>
     <section style="padding-top: 70px;" class="relative min-h-screen">
         <div class="flex relative left-1/2 -translate-x-1/2 justify-between items-center">
-            <span class="text-3xl relative font-semibold text-primary_text dark:text-primary_dark_text">Projects</span>
+            <span class="phone:text-md sm:text-lg md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl text-4xl relative font-semibold text-primary_text dark:text-primary_dark_text">Projects</span>
         </div>
         <ul class="relative left-1/2 -translate-x-1/2 flex mt-5 mb-10 flex-wrap gap-5">
             <template v-for="(item, index) in local.fetchedViewData" :key="index">
                 <li class="cardI list-none relative" ref="cardRefs">
                     <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 hover:bg-primary dark:hover:bg-primary_dark flex flex-col rounded-xl text-primary_text dark:text-primary_dark_text hover:text-white dark:hover:text-white">
                         <img :src="baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 rounded-lg mt-3 h-40">
-                        <h3 class="relative left-5 mt-4 text-xl font-semibold w-max">{{ item.nama }}</h3>
-                        <span class="relative left-5 mt-5 mb-10 w-max flex-1">{{ item.category }}</span>
+                        <h3 class="relative left-5 mt-4 phone:text-sm sm:text-lg md:text-md lg:text-lg text-xl font-semibold w-max">{{ item.nama }}</h3>
+                        <span class="relative left-5 mt-5 mb-10 w-max phone:text-sm md:text-md lg:text-lg xl:text-xl 2xl:text-2xl flex-1">{{ item.category }}</span>
                     </NuxtLink>
                     <div class="card-loading absolute top-0 left-0 flex flex-col bg-transparent w-full">
                         <div class="rounded-md relative left-1/2 -translate-x-1/2 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
@@ -49,11 +49,11 @@ onBeforeRouteUpdate(() => {
     useFetchDataStore().resetFetchData();
 });
 onMounted(() => {
-    // const { gsapContext } = animationsComposable();
-    // ctx.value = gsapContext.value;
+    const { gsapContext } = animationsComposable();
+    ctx.value = gsapContext.value;
 });
 onUnmounted(() => {
-    // ctx.value?.kill()
+    ctx.value?.kill()
 });
 watch(() => local.fetchedViewData, () => {
     if (local?.fetchedViewData !== undefined && typeof local.fetchedViewData === 'object' && Array.isArray(local.fetchedViewData) && Object.keys(local.fetchedViewData).length > 0) {

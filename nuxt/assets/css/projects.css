@@ -1,5 +1,8 @@
 /* transition */
 /* styling */
+section{
+    padding-top: var(--paddTop);
+}
 section > div, ul{
     width: 92%;
 }

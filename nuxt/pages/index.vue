@@ -4,21 +4,23 @@
         <section id="me" class="w-full bg-cover h-screen relative flex items-center text-primary_text dark:text-primary_dark_text">
             <div class="relative w-7/8 mx-auto flex flex-row  justify-between items-center py-5" style="width: 90%;">
                 <div class="flex justify-center flex-col relative">
-                    <h3 class="text-2xl font-bold">Hi I'm Amirzan Fikri</h3>
-                    <h1 class="text-6xl font-semibold mt-5">Full stack Laravel developer</h1>
-                    <div class="flex gap-5 mt-2 ml-2">
-                        <a href="https://github.com/Amirzan89" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-github" class="text-6xl text-black dark:text-white"/></a>
-                        <a href="https://www.linkedin.com/in/amirzan-fikri" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-linkedin" class="text-6xl text-blue-500"/></a>
-                        <a href="https://upwork.com/freelancers/amirzanf" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-square-upwork" class="text-6xl text-green-700 dark:text-green-500"/></a>
+                    <h3 class="phone:text-xs sm:text-sm md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl text-4xl phone:font-medium lg:font-bold">Hi I'm Amirzan Fikri</h3>
+                    <h1 class="phone:text-base sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-7xl font-semibold lg:mt-2">Full stack Laravel developer</h1>
+                    <div class="flex phone:gap-2 md::gap-4 lg:gap-5 2xl:gap-7 mt-2 ml-2">
+                        <a href="https://github.com/Amirzan89" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-github" class="phone:text-lg sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-7xl text-black dark:text-white"/></a>
+                        <a href="https://www.linkedin.com/in/amirzan-fikri" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-linkedin" class="phone:text-lg sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-7xl text-blue-500"/></a>
+                        <a href="https://upwork.com/freelancers/amirzanf" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-square-upwork" class="phone:text-lg sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-7xl text-green-700 dark:text-green-500"/></a>
                     </div>
-                    <a href="#contact" id="btnContact" class="w-60 h-15 bg-primary dark:bg-primary_dark rounded-2xl flex justify-center items-center ml-7 mt-20 text-white font-semibold text-4xl">Contact Me</a>
+                    <a href="#contact" id="btnContact" class="phone:w-25 sm:w-30 md:w-37 lg:w-45 xl:w-57 2xl:w-60 phone:h-6 sm:h-7 md:h-10 lg:h-12 xl:h-14 2xl:h-17 bg-primary dark:bg-primary_dark phone:rounded-md md:rounded-xl xl:rounded-2xl flex justify-center items-center ml-7 phone:mt-5 xl:mt-10 2xl:mt-12 text-white phone:font-medium font-semibold phone:text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">Contact Me</a>
                 </div>
-                <img src="~assets/images/testing.png" class="max-w-sm object-cover rounded-lg w-200 h-100"/>
+                <img src="~assets/images/testing.png" class="max-w-sm object-cover rounded-lg phone:w-40 sm:w-50 md:w-70 lg:w-70 xl:w-100 2xl:w-200 
+                phone:h-40 sm:h-55 md:h-70 lg:h-60 xl:h-100
+                "/>
             </div>
         </section>
         <!-- end hero section -->
         <!--  About -->
-        <section id="about" class="relative left-1/2 -translate-x-1/2 flex justify-center mt-30" style="padding-top: 70px;">
+        <section id="about" class="relative left-1/2 -translate-x-1/2 flex justify-center mt-30">
             <div class="content w-7/8 flex flex-row cursor-default text-xl text-primary_text dark:text-primary_dark_text gap-10">
                 <!-- <img src="~assets/images/testing.png" class="max-w-sm object-cover rounded-lg w-200 h-100"/> -->
                 <div class="flex flex-col">
@@ -46,7 +48,7 @@
         </section> -->
         <!-- end deliver -->
         <!-- project -->
-        <section id="project" class="mt-10 flex flex-col" style="padding-top: 70px;">
+        <section id="project" class="mt-10 flex flex-col">
             <div class="flex relative left-1/2 -translate-x-1/2 justify-between items-center text-primary_text dark:text-primary_dark_text">
                 <span class="text-3xl relative font-semibold">Projects</span>
                 <NuxtLink to="/projects" class="text-xl flex gap-2 items-center hover:text-red-500">
@@ -73,7 +75,7 @@
         </section>
         <!-- end project -->
         <!-- contact -->
-        <section id="contact" class="mt-10  w-full h-200 pb-5" style="padding-top: 70px;">
+        <section id="contact" class="mt-10  w-full h-200 pb-5">
             <div class="w-200 relative top-2/4 -translate-y-2/4 left-2/4 -translate-x-2/4 p-8 bg-primary dark:bg-primary_dark backdrop-filter backdrop-blur-lg rounded-2xl">
                 <form class="relative w-150 mx-auto h-2/4 flex flex-col gap-5 align-center pointer-events-auto">
                     <span class="text-white text-5xl mx-auto">Contact Me !</span>

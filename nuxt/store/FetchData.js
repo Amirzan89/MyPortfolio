@@ -15,7 +15,7 @@ export const useFetchDataStore = defineStore('fetchData', {
                 const routePath = useRoute().fullPath;
                 if(this.cache){
                     for (const item of this.cache) {
-                        if (item.url === routePath) return { status: 'uccess', data: item.data };
+                        if (item.url === routePath) return { status: 'success', data: item.data };
                     }
                 }
                 const res = await axios.get(`${routePath}?_=${Date.now()}`, {

@@ -3,8 +3,11 @@ import Cookies from 'js-cookie';
 let baseURL = '';
 try{
     baseURL = useRuntimeConfig().public.baseURL;
+    // console.log('ws kenkk', baseURL)
 }catch(err){
-    baseURL = 'http://localhost:8000';
+    // baseURL = 'http://localhost:8000';
+    baseURL = 'https://amirzanfikri.my.id';
+    // console.log('gk keekkk', baseURL)
 }
 const instance = axios.create({
     baseURL: baseURL,
