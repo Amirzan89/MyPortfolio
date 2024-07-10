@@ -11,12 +11,15 @@ export default {
   ],
   theme: {
     screens:{
-      'phone': '360px',
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
-      'xl': '1280px',
-      '2xl': '1536px',
+      '3xsphone': '320px', // iPhone 5/SE, small Android devices
+      '2xsphone': '375px', // iPhone 8, medium Android devices
+      'xsphone': '400px',  // smaller phones, phablets
+      'phone': '480px', // larger phones
+      'sm': '640px', // small tablets
+      'md': '768px', // medium tablets, laptops
+      'lg': '1024px', // larger laptops, desktops
+      'xl': '1280px', // large desktops
+      '2xl': '1536px', // extra large desktops
     },
     extend: {
       colors: {
@@ -43,7 +46,9 @@ export default {
       spacing: {
         '1/10':'10%',
         '1/8':'12.5%',
+        '1/7':'14.28%',
         '1/6':'16.6%',
+        '1/5':'20%',
         '7/8':'87.5%',
         '1.5': '0.375rem',
         '3': '0.75rem',
@@ -55,17 +60,25 @@ export default {
         '21': '5.25rem',
         '22': '5.5rem',
         '25': '6.25rem',
+        '27': '6.75rem',
         '30': '7.5rem',
+        '33': '8.25rem',
         '35': '8.75rem',
         '37': '9.25rem',
+        '38': '9.5rem',
         '40': '10.00rem',
+        '42': '10.50rem',
         '45': '11.25rem',
+        '47': '11.75rem',
         '50': '12.5rem',
         '55': '13.75rem',
         '57': '14.25rem',
         '60': '17.5rem',
+        '65': '18.75rem',
+        '67': '19.25rem',
         '70': '20rem',
         '75': '21.75rem',
+        '77': '22.25rem',
         '90': '22.5rem',
         '95': '23.75rem',
         '100': '25rem',
@@ -113,8 +126,12 @@ export default {
         '5': '5px',
         '6': '6px',
         '7': '7px',
+        '8': '8px',
         '9': '9px',
         '10': '10px',
+      },
+      margin:{
+
       },
       fontSize:{
         '2xs': ['0.625rem', { lineHeight:'0.875rem'}],

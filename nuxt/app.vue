@@ -29,8 +29,11 @@ const darkModeStore = useDarkModeStore();
 const fullConfig = resolveConfig(tailwindConfig);
 let screenCon = null;
 const dynamicPad = {
-    'phone':'30px',
-    'sm':'40px',
+    '3xsphone':'40px',
+    '2xsphone':'40px',
+    'xsphone':'40px',
+    'phone':'40px',
+    'sm':'45px',
     'md':'50px',
     'lg':'60px',
     'xl':'70px',

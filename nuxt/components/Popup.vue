@@ -1,21 +1,18 @@
 <template>
-    <div v-if="local.state === 'green'" class="w-80 h-15 fixed right-1 bottom-1 text-lg font-normal" ref="greenPopup">
-        <div class="w-full h-full absolute  rounded-2xl" @click="closePopup('red',true)" style="background: #ECFFEB;border: 2px #01B701 solid;"></div>
-        <div class="absolute w-8 h-8 top-1/2 -translate-y-1/2 rounded-full" style="left: 5%; background: #bcffb7;">
-            <div class="absolute w-8 h-8 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full" style="border: 2px #01B701 solid;"></div>
-            <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-lg font-bold text-green-500"><img :src="publicConfig.baseURL + '/img/icon/check.svg'" alt="" class="w-full h-full"></span>
+    <div v-if="local.state === 'green'" class="z-50 3xsphone:w-50 sm:w-60 lg:w-70 xl:w-80 3xsphone:h-12 lg:h-14 xl:h-15 fixed 3xsphone:right-1 right-5 3xsphone:bottom-2 bottom-5 text-lg font-normal" ref="greenPopup">
+        <div class="w-full h-full absolute 3xsphone:rounded-lg md:rounded-xl xl:rounded-xl" @click="closePopup('red',true)" style="background: #ECFFEB;border: 2px #01B701 solid;"></div>
+        <div class="absolute 3xsphone:w-5 phone:w-6 xl:w-9 3xsphone:h-5 phone:h-6 xl:h-9 top-1/2 -translate-y-1/2 rounded-full" style="left: 5%; background: #bcffb7;">
+            <div class="absolute 3xsphone:w-5 phone:w-6 xl:w-9 3xsphone:h-5 phone:h-6 xl:h-9 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full" style="border: 2px #01B701 solid;"></div>
+            <FontAwesomeIcon icon="fa-solid fa-check" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 3xsphone:text-sm xsphone:text-xs phone:text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl 2xl:text-2xl text-green-700"/>
         </div>
-        <span class="top-1/2 -translate-y-1/2 absolute text-2xl font-semibold cursor-pointer text-green-500" style="right: 5%;" @click="closePopup('red',true)">X</span>
-        <label class="absolute top-1/2 -translate-y-1/2 text-lg font-medium leading-7 whitespace-normal break-keep text-green-500" style="left: 22%;">{{  local.message }}</label>
+        <FontAwesomeIcon icon="fa-solid fa-xmark" class="absolute top-1/2 -translate-y-1/2 3xsphone:text-lg md:text-xl lg:text-2xl xl:text-3xl text-green-500 cursor-pointer" style="right: 5%;"/>
+        <label class="absolute top-1/2 3xsphone:left-1/5 md:left-1/6 lg:left-1/7 xl:left-1/6 2xl:left-1/5 -translate-y-1/2 3xsphone:text-sm lg:text-sm xl:text-lg font-medium leading-7 whitespace-normal break-keep text-green-500">{{  local.message }}</label>
     </div>
-    <div v-else-if="local.state === 'red'" class="w-80 h-15 fixed right-5 bottom-5 text-lg font-normal" ref="redPopup">
-        <div class="w-full h-full absolute  rounded-2xl" @click="closePopup('red',true)" style="background: #FFE1E1;border: 2px #FF0000 solid;"></div>
-        <div class="absolute w-8 h-8 top-1/2 -translate-y-1/2 rounded-full" style="left: 5%;">
-            <div class="absolute w-8 h-8 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full" style="border: 2px #FF0000 solid;"></div>
-            <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-lg font-bold text-red-500">!</span>
-        </div>
-        <span class="top-1/2 -translate-y-1/2 absolute text-2xl font-semibold cursor-pointer text-red-500" style="right: 5%;" @click="closePopup('red',true)">X</span>
-        <label class="absolute top-1/2 -translate-y-1/2 text-lg font-medium leading-7 whitespace-normal break-keep text-red-500" style="left: 22%;">{{  local.message }}</label>
+    <div v-else-if="local.state === 'red'" class="z-50 3xsphone:w-50 sm:w-60 lg:w-70 xl:w-80 3xsphone:h-12 lg:h-14 xl:h-15 fixed 3xsphone:right-1 right-5 3xsphone:bottom-2 xl:bottom-5 text-lg font-normal" ref="redPopup">
+        <div class="w-full h-full absolute 3xsphone:rounded-lg xl:rounded-xl" @click="closePopup('red',true)" style="background: #FFE1E1;border: 2px #FF0000 solid;"></div>
+        <FontAwesomeIcon icon="fa-regular fa-circle-xmark" class="absolute top-1/2 -translate-y-1/2 3xsphone:text-xl md:text-2xl xl:text-3xl 2xl:text-4xl text-red-500" style="left: 5%;"/>
+        <FontAwesomeIcon icon="fa-solid fa-xmark" class="absolute top-1/2 -translate-y-1/2 3xsphone:text-lg md:text-xl lg:text-2xl xl:text-3xl text-red-500 cursor-pointer" style="right: 5%;"/>
+        <label class="absolute top-1/2 3xsphone:left-1/5 md:left-1/6 lg:left-1/7 xl:left-1/6 2xl:left-1/5 -translate-y-1/2 3xsphone:text-sm lg:text-sm xl:text-lg font-medium leading-7 whitespace-normal break-keep text-red-500">{{  local.message }}</label>
     </div>
 </template>
 <style scoped>
