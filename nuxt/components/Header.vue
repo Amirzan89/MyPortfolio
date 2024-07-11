@@ -1,7 +1,7 @@
 <template>
     <!-- header -->
     <header class="sticky top-0 pointer-events-auto flex items-center justify-center bg-white dark:bg-dark_bg">
-        <div class="flex flex-row 3xsphone:w-11/12 xl:w-7/8 justify-between items-center">
+        <div class="flex flex-row 3xsphone:w-11/12 justify-between items-center">
             <h1 v-if="route.path == '/'" class="3xsphone:text-sm sm:text-xl md:text-2xl xl:text-4xl 2xl:text-5xl text-6xl text-primary dark:text-primary_dark_text font-bold">AmFik</h1>
             <NuxtLink v-else to="/" class="3xsphone:text-sm sm:text-xl md:text-2xl xl:text-4xl 2xl:text-5xl text-6xl text-primary dark:text-primary_dark_text font-bold">AmFik</NuxtLink>
             <div class="flex flex-row 3xsphone:gap-2 sm:gap-5 md:gap-10">

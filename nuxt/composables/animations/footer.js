@@ -7,11 +7,21 @@ export function footer(){
         scrollTrigger: {
             trigger: 'footer',
             start: () => {
-                if(fullPath === '/' || fullPath === '/projects'){
+                if(fullPath === '/'){
                     if(screenSize.value >= 1500){
                         return 'top 75%';
                     }else if(screenSize.value >= 1000){
                         return 'top 120%';
+                    }else if(screenSize.value >= 500){
+                        return 'top 130%';
+                    }else if(screenSize.value >= 320){
+                        return '-20% 110%';
+                    }
+                }else if(fullPath === '/projects'){
+                    if(screenSize.value >= 1500){
+                        return 'top 95%';
+                    }else if(screenSize.value >= 1000){
+                        return 'top 100%';
                     }else if(screenSize.value >= 500){
                         return 'top 130%';
                     }else if(screenSize.value >= 320){

@@ -96,8 +96,9 @@ export default () => {
             opacity: 0,
             duration: 1.3,
         }, 0);
-        tl3.from(secProject('a'), {
+        tl3.from(secProject('a#btnOthers'), {
             x:'100%',
+            display:'none',
             opacity: 0,
             duration: 1.3,
         }, 0);

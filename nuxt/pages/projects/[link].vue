@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <section class="w-full" style="padding-top: 70px;">
+    <div class="h-screen">
+        <section class="">
             <div class="relative left-1/2 -translate-x-1/2 flex flex-row gap-10 w-11/12 items-start">
                 <CarouselImageComponent :images="getImages()"
                 />
@@ -11,16 +11,16 @@
                     </template>
                 </div> -->
                 <div class="flex flex-col flex-1 text-primary_text dark:text-primary_dark_text">
-                    <h1 class="text-5xl font-semibold">{{ capitalizeFirstLetter(local.fetchedDetailProject?.nama) }}</h1>
-                    <div class="mt-5 font-normal" v-html="local.formattedDeskripsi"></div>
-                    <div class="flex flex-row gap-5 mt-5">
+                    <h1 class="3xsphone:text-sm xsphone:text-base phone:text-lg sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-semibold">{{ capitalizeFirstLetter(local.fetchedDetailProject?.nama) }}</h1>
+                    <div class="3xsphone:text-3xs phone:text-2xs sm:text-xs md:text-sm lg:text-base xl:text-lg 2xl:text-xl 3xsphone:mt-1 phone:mt-3 sm:mt-5 font-normal" v-html="local.formattedDeskripsi"></div>
+                    <div class="flex flex-row gap-5 3xsphone:mt-1 xl:mt-3">
                         <template v-for="(item, index) in filteredTechStack" :key="index">
                             <a :href=item.href target="_blank" class="flex items-center justify-center w-max">
-                                <img :src=item.src class="max-w-sm object-cover w-13"/>
+                                <img :src=item.src :class="`max-w-sm object-cover ${item.width}`"/>
                             </a>
                         </template>
                     </div>
-                    <a :href="local.fetchedDetailProject?.link_project" target="_blank" class="ml-5 mt-10 w-35 h-11 rounded-lg bg-primary dark:bg-primary_dark text-white flex items-center justify-center text-2xl font-semibold">Preview</a>
+                    <a :href="local.fetchedDetailProject?.link_project" target="_blank" class="3xsphone:ml-1 md:ml-3 2xl:ml-5 3xsphone:mt-2 2xsphone:mt-3 md:mt-5 xl:mt-7 2xl:mt-10 3xsphone:w-14 xsphone:w-17 phone:w-20 sm:w-22 md:w-27 lg:w-30 xl:w-37 3xsphone:h-4 xsphone:h-6 sm:h-7 md:h-8 lg:h-9 xl:h-12 3xsphone:rounded-sm xsphone:rounded-md xl:rounded-lg bg-primary dark:bg-primary_dark text-white flex items-center justify-center 3xsphone:text-2xs xsphone:text-xs phone:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 3xsphone:font-medium md:font-semibold">Preview</a>
                 </div>
             </div>
             <!-- <div class="flex justify-center gap-4">
@@ -29,21 +29,21 @@
                 </template>
             </div> -->
         </section>
-        <section style="padding-top: 70px;" class="otherss">
+        <section>
             <div class="flex relative left-1/2 -translate-x-1/2 justify-between items-center text-primary_text dark:text-primary_dark_text">
-                <span class="text-2xl relative font-semibold">Other projects</span>
-                <NuxtLink to="/projects" class="text-xl flex gap-2 items-center hover:text-red-500">
+                <span class="3xsphone:text-2xs 2xsphone:text-xs phone:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl relative font-semibold">Projects</span>
+                <NuxtLink id="btnOthers" to="/projects" class="3xsphone:text-2xs 2xsphone:text-xs phone:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl flex gap-2 items-center hover:text-red-500">
                     <span>Others</span>
-                    <FontAwesomeIcon icon="fa-solid fa-arrow-right-long" class="text-2xl"/>
+                    <FontAwesomeIcon icon="fa-solid fa-arrow-right-long" class="3xsphone:text-2xs 2xsphone:text-xs phone:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl"/> 
                 </NuxtLink>
             </div>
-            <ul class="conCard relative left-1/2 -translate-x-1/2 flex mt-5 mb-10 flex-wrap -blue-500 gap-5">
+            <ul class="conCard relative left-1/2 -translate-x-1/2 flex 3xsphone:mt-1 xl:mt-5 flex-wrap -blue-500 gap-5">
                 <template v-for="(item, index) in local.fetchedOtherProject" :key="index">
                     <li class="cardI list-none relative" ref="cardRefs">
-                        <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 hover:bg-primary dark:hover:bg-primary_dark flex flex-col rounded-xl text-primary_text dark:text-primary_dark_text hover:text-white dark:hover:text-white">
-                            <img :src="publicConfig.baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 rounded-xl mt-3">
-                            <h3 class="relative left-5 mt-4 text-xl font-semibold w-max">{{ item.nama }}</h3>
-                            <span class="relative left-5 mt-5 mb-10 w-max">{{ item.category }}</span>
+                        <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 hover:bg-primary dark:hover:bg-primary_dark flex flex-col 3xsphone:rounded-md md:rounded-lg xl:rounded-xl text-primary_text dark:text-primary_dark_text hover:text-white dark:hover:text-white">
+                            <img :src="publicConfig.baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 3xsphone:rounded-md md:rounded-lg 3xsphone:mt-1 md:mt-3 h-40">
+                            <h3 class="relative 3xsphone:left-2 phone:left-3 sm:left-4 md:left-5 lg:left-4 xl:left-5 2xl:left-6 3xsphone:mt-5 xl:mt-7 2xl:mt-10 3xsphone:text-2xs phone:text-sm sm:text-base md:text-xl lg:text-lg xl:text-xl 2xl:text-xl font-semibold w-max">{{ item.nama }}</h3>
+                            <span class="relative 3xsphone:left-2 phone:left-3 sm:left-4 md:left-5 lg:left-4 xl:left-5 2xl:left-6 3xsphone:mt-0.5 md:mt-1 2xl:mt-3 3xsphone:mb-3 md:mb-4 xl:mb-6 3xsphone:text-3xs phone:text-xs sm:text-sm md:text-lg lg:text-base xl:text-lg 2xl:text-xl w-max">{{ item.category }}</span>
                         </NuxtLink>
                         <div class="card-loading absolute top-0 left-0 flex flex-col bg-transparent w-full">
                             <div class="rounded-md relative left-1/2 -translate-x-1/2 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
@@ -94,27 +94,32 @@ const techStack = {
     'laravel': {
         href: 'https://laravel.com',
         src: laravelIcon,
-        name: 'laravel'
+        name: 'laravel',
+        width: '3xsphone:w-3 2xsphone:w-4 xsphone:w-5 phone:w-6 sm:w-6 md:w-7 lg:w-8 xl:w-11',
     },
     'bootstrap': {
         href: 'https://getbootstrap.com/',
         src: bootstrapicon,
-        name: 'bootstrap'
+        name: 'bootstrap',
+        width: '3xsphone:w-4 2xsphone:w-5 xsphone:w-7 phone:w-8 sm:w-8 md:w-9 lg:w-11 xl:w-14 2xl:w-15',
     },
     'tailwind': {
         href: 'https://tailwind.com',
         src: tailwindicon,
-        name: 'tailwind'
+        name: 'tailwind',
+        width: '3xsphone:w-3 2xsphone:w-5 xsphone:w-6 phone:w-7 sm:w-7 md:w-8 lg:w-9 xl:w-12 2xl:w-13',
     },
     'vue': {
         href: 'https://vue.com',
         src: vueicon,
-        name: 'vue'
+        name: 'vue',
+        width: '3xsphone:w-3 2xsphone:w-2 xsphone:w-5 phone:w-6 sm:w-6 md:w-7 lg:w-9 xl:w-11',
     },
     'nuxt': {
         href: 'https://nuxt.com',
         src: nuxtIcon,
-        name: 'nuxt'
+        name: 'nuxt',
+        width: '3xsphone:w-4 2xsphone:w-2 xsphone:w-6 phone:w-7 sm:w-8 md:w-8 lg:w-10 xl:w-12 2xl:w-13',
     },
 };
 const local = reactive({

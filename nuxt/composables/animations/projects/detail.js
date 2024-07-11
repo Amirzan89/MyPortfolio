@@ -15,11 +15,11 @@ export default () => {
         header();
 
         const sec = gsap.utils.selector('section');
-        tl.from(sec('div:not(.card-loading) span'), {
-            x: '-100%',
-            duration: 1.5,
-            opacity: 0,
-        });
+        // tl.from(sec('div:not(.card-loading) span'), {
+        //     x: '-100%',
+        //     duration: 1.5,
+        //     opacity: 0,
+        // });
         footer();
         return tl;
     });
