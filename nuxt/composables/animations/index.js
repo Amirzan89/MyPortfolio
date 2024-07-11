@@ -1,9 +1,10 @@
 import { ref } from 'vue';
-import { getGsap } from '../config';
+import { getGsap, useScreenConfig } from '../config';
 import { header } from './header';
 import { footer } from './footer';
 export default () => {
     const gsap = getGsap();
+    const { screenSize } = useScreenConfig();
     const gsapContext = ref(null);
     const isAnimateComplete = ref(false);
     gsapContext.value =  gsap.context(() => {
@@ -105,7 +106,17 @@ export default () => {
         const tl4 = gsap.timeline({
             scrollTrigger: {
                 trigger: 'section#contact',
-                start: '20% 35%',
+                start: () => {
+                    if(screenSize.value >= 1500){
+                        return '20% 35%';
+                    }else if(screenSize.value >= 1000){
+                        return '30% 40%';
+                    }else if(screenSize.value >= 500){
+                        return '35% 75%';
+                    }else if(screenSize.value >= 320){
+                        return '20% 80%';
+                    }
+                },
                 end: 'top none',
             }
         });

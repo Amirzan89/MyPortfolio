@@ -1,20 +1,34 @@
-import { getGsap } from '../config';
+import { getGsap, useScreenConfig } from '../config';
 export function footer(){
     const fullPath = useRoute().fullPath;
+    const { screenSize } = useScreenConfig();
     const gsap = getGsap();
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: 'footer',
             start: () => {
-                if(fullPath === '/'){
-                    return 'top 75%';
-                }else if(fullPath === '/projects'){
-                    return 'top 120%';
+                if(fullPath === '/' || fullPath === '/projects'){
+                    if(screenSize.value >= 1500){
+                        return 'top 75%';
+                    }else if(screenSize.value >= 1000){
+                        return 'top 120%';
+                    }else if(screenSize.value >= 500){
+                        return 'top 130%';
+                    }else if(screenSize.value >= 320){
+                        return '-20% 110%';
+                    }
                 }else{
-                    return 'top bottom';
+                    if(screenSize.value >= 1500){
+                        return 'top 75%';
+                    }else if(screenSize.value >= 1000){
+                        return 'top 120%';
+                    }else if(screenSize.value >= 500){
+                        return 'top 130%';
+                    }else if(screenSize.value >= 320){
+                        return '-20% 110%';
+                    }
                 }
             },
-            end: 'top none',
         }
     });
     tl.from('footer' , {

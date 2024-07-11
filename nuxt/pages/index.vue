@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Hero section -->
-        <section id="me" class="bg-red-e500 w-full bg-cover 3xsphone:h-90 2xsphone:h-100 xsphone:h-120 phone:h-120 sm:h-125 md:h-screen relative flex items-center text-primary_text dark:text-primary_dark_text">
+        <section id="me" class="bg-red-e500 w-full bg-cover 3xsphone:h-85 2xsphone:h-100 xsphone:h-120 phone:h-120 sm:h-125 md:h-screen relative flex items-center text-primary_text dark:text-primary_dark_text">
             <div class="relative 3xsphone:w-11/12 xl:w-7/8 mx-auto flex flex-row  justify-between items-center py-5" style="width: 90%;">
                 <div class="flex justify-center flex-col relative">
                     <h3 class="3xsphone:text-xs xsphone:text-xs phone:text-sm md:text-xl lg:text-xl xl:text-2xl 2xl:text-3xl text-4xl 3xsphone:font-medium lg:font-bold">Hi I'm Amirzan Fikri</h3>
@@ -11,10 +11,10 @@
                         <a href="https://www.linkedin.com/in/amirzan-fikri" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-linkedin" class="3xsphone:text-lg xsphone:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-7xl text-blue-500"/></a>
                         <a href="https://upwork.com/freelancers/amirzanf" target="_blank" class="flex items-center justify-center"><FontAwesomeIcon icon="fa-brands fa-square-upwork" class="3xsphone:text-lg xsphone:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-7xl text-green-700 dark:text-green-500"/></a>
                     </div>
-                    <a href="#contact" id="btnContact" class="3xsphone:w-25 sm:w-30 md:w-35 lg:w-45 xl:w-57 2xl:w-60 3xsphone:h-6 sm:h-7 md:h-9 lg:h-12 xl:h-14 2xl:h-17 bg-primary dark:bg-primary_dark 3xsphone:rounded-md lg:rounded-xl xl:rounded-2xl flex justify-center items-center 3xsphone:ml-2 lg:ml-7 3xsphone:mt-3 md:mt-8 xl:mt-10 2xl:mt-12 text-white 3xsphone:font-medium font-semibold 3xsphone:text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">Contact Me</a>
+                    <a href="#contact" id="btnContact" class="3xsphone:w-20 sm:w-30 md:w-35 lg:w-45 xl:w-57 2xl:w-60 3xsphone:h-6 sm:h-7 md:h-9 lg:h-12 xl:h-14 2xl:h-17 bg-primary dark:bg-primary_dark 3xsphone:rounded-md lg:rounded-xl xl:rounded-2xl flex justify-center items-center 3xsphone:ml-2 lg:ml-7 3xsphone:mt-3 md:mt-8 xl:mt-10 2xl:mt-12 text-white 3xsphone:font-normal font-semibold 3xsphone:text-xs sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">Contact Me</a>
                 </div>
-                <img src="~assets/images/testing.png" class="max-w-sm object-cover rounded-lg 3xsphone:w-40 sm:w-50 md:w-50 lg:w-70 xl:w-100 2xl:w-200 
-                3xsphone:h-40 sm:h-55 md:h-55 lg:h-60 xl:h-100
+                <img src="~assets/images/testing.png" class="max-w-sm object-cover rounded-lg 3xsphone:w-30 sm:w-50 md:w-50 lg:w-70 xl:w-100 2xl:w-200 
+                3xsphone:h-30 sm:h-55 md:h-55 lg:h-60 xl:h-100
                 "/>
             </div>
         </section>
@@ -29,10 +29,10 @@
                     </p>
                     <div class="flex flex-row gap-5 2xsphone:mt-1 3xsphone:ml-1 sm:ml-3 md:ml-5">
                         <a href="https://laravel.com" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/laravel.svg" class="object-cover 3xsphone:w-3 2xsphone:w-4 xsphone:w-4 phone:w-4 sm:w-5 md:w-7 lg:w-10 xl:w-11"/></a>
-                        <a href="https://getbootstrap.com/" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/bootstrap.svg" class="object-cover 3xsphone:w-5 2xsphone:w-6 xsphone:w-7 phone:w-7 sm:w-8 md:w-10 lg:w-13 xl:w-14 2xl:w-15"/></a>
-                        <a href="https://tailwindcss.com" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/tailwind.svg" class="object-fill 3xsphone:w-5 2xsphone:w-5 xsphone:w-5 phone:w-6 sm:w-6 md:w-8 lg:w-11 xl:w-12 2xl:w-13"/></a>
-                        <a href="https://vuejs.org" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/vue.svg" class="object-fill 3xsphone:w-3 2xsphone:w-3 xsphone:w-4 phone:w-5 sm:w-5 md:w-7 lg:w-10 xl:w-11"/></a>
-                        <a href="https://nuxt.com" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/nuxtjs.svg" class="object-fill 3xsphone:w-4 2xsphone:w-4 xsphone:w-5 phone:w-6 sm:w-6 md:w-8 lg:w-11 xl:w-12 2xl:w-13"/></a>
+                        <a href="https://getbootstrap.com/" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/bootstrap.svg" class="object-cover 3xsphone:w-4 2xsphone:w-6 xsphone:w-7 phone:w-7 sm:w-8 md:w-10 lg:w-13 xl:w-14 2xl:w-15"/></a>
+                        <a href="https://tailwindcss.com" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/tailwind.svg" class="object-fill 3xsphone:w-3 2xsphone:w-5 xsphone:w-5 phone:w-6 sm:w-6 md:w-8 lg:w-11 xl:w-12 2xl:w-13"/></a>
+                        <a href="https://vuejs.org" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/vue.svg" class="object-fill 3xsphone:w-3 2xsphone:w-2 xsphone:w-4 phone:w-5 sm:w-5 md:w-7 lg:w-10 xl:w-11"/></a>
+                        <a href="https://nuxt.com" target="_blank" class="flex items-center justify-center"><img src="~assets/icon/nuxtjs.svg" class="object-fill 3xsphone:w-4 2xsphone:w-2 xsphone:w-5 phone:w-6 sm:w-6 md:w-8 lg:w-11 xl:w-12 2xl:w-13"/></a>
                     </div>
                     <a :href="baseURL + '/cv'" id="btnCV" target="_blank" class="3xsphone:w-17 2xsphone:w-22 xsphone:w-25 phone:w-30 sm:w-32 md:w-40 lg:w-50 xl:w-57 2xl:w-60 3xsphone:h-5 2xsphone:h-7 xsphone:h-8 phone:h-9 sm:h-10 md:h-13 lg:h-18 xl:h-19 2xl:h-20 bg-primary dark:bg-primary_dark 3xsphone:rounded-md 2xsphone:rounded-lg xsphone:rounded-lg md:rounded-xl lg:rounded-2xl flex justify-center items-center 3xsphone:ml-1 phone:ml-3 md:ml-5 lg:ml-7 text-white 3xsphone:font-normal xsphone:font-medium md:font-semibold 3xsphone:text-3xs 2xsphone:text-2xs xsphone:text-xs phone:text-sm sm:text-sm lg:text-xl xl:text-2xl 2xl:text-3xl text-4xl 3xsphone:mt-3 sm:mt-5 md:mt-7 lg:mt-10 3xsphone:gap-0.5 phone:gap-1 md:gap-3 buttonLink">
                         <img src="~assets/icon/cv.svg" class="max-w-sm object-cover 3xsphone:w-3 2xsphone:w-4 xsphone:w-5 phone:w-6 sm:w-7 md:w-8 lg:w-12 xl:w-13 2xl:w-14"/>
@@ -75,7 +75,7 @@
         </section>
         <!-- end project -->
         <!-- contact -->
-        <section id="contact" class="mt-10 w-full 3xsphone:h-200 lg:h-200 pb-5">
+        <section id="contact" class="mt-10 w-full 3xsphone:h-100 lg:h-200 pb-5">
             <div class="3xsphone:w-60 2xsphone:w-70 xsphone:w-80 phone:w-100 sm:w-110 md:w-120 lg:w-150 xl:w-175 2xl:w-200 relative top-2/4 -translate-y-2/4 left-2/4 -translate-x-2/4 3xsphone:px-3 3xsphone:py-2 sm:p-3 md:p-4 lg:p-5 xl:p-6 2xl:p-8 bg-primary dark:bg-primary_dark backdrop-filter backdrop-blur-lg 3xsphone:rounded-xl xl:rounded-2xl">
                 <form class="relative 3xsphone:w-full 2xl:w-150 mx-auto h-2/4 flex flex-col 3xsphone:gap-2 xl:gap-5 align-center pointer-events-auto">
                     <span class="text-white 3xsphone:text-lg 2xsphone:text-lg xsphone:text-lg phone:text-xl sm:text-xl md:text-xl lg:text-3xl xl:text-4xl 2xl:text-5xl mx-auto">Contact Me !</span>
