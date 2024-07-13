@@ -60,7 +60,7 @@ a{
     }
 }
 @media (min-width: 480px) {
-    section > div, ul{
+    #project > div, ul{
         width: 92%;
     }
     .cardI{
