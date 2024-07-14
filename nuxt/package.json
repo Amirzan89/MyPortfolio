@@ -19,6 +19,7 @@
     "@splidejs/vue-splide": "^0.6.12",
     "axios": "^1.6.8",
     "js-cookie": "^3.0.5",
+    "locomotive-scroll": "^4.1.4",
     "nuxt": "^3.11.2",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",

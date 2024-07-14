@@ -150,15 +150,15 @@ onBeforeRouteUpdate(() => {
     useFetchDataStore().resetFetchData();
 });
 onMounted(() => {
-    const { gsapContext } = animationsComposable();
-    ctx.value = gsapContext.value;
+    // const { gsapContext } = animationsComposable();
+    // ctx.value = gsapContext.value;
 });
 onUnmounted(() => {
-    ctx.value?.kill()
+    // ctx.value?.kill()
 });
 watch(() => route.params.link, () => {
-    const { gsapContext } = animationsComposable();
-    ctx.value = gsapContext.value;
+    // const { gsapContext } = animationsComposable();
+    // ctx.value = gsapContext.value;
 })
 const handleLoading = (card) => {
     const image = card.querySelector('img');
