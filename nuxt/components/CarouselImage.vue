@@ -9,7 +9,8 @@
             <button class="bg-red-500 " @click="prevCarousel()"> previous</button>
         </div>
         <!-- <div class="flex gap-1.5 mt-1 w-1/2 scrollable-container" ref="scrollableContainer" @mousedown="handleScrollEvent" @mousemove="handleScrollEvent" @mouseup="handleScrollEvent" @mouseleave="handleScrollEvent"> -->
-        <div class="flex gap-1.5 mt-1 w-1/2 scrollable-container" ref="scrollableContainer">
+        <div class="flex gap-1.5 mt-1 w-1/2 scrollable-container relative" ref="scrollableContainer">
+            <div class="border-white border-2 absolute left-1/2 -translate-x-1/2 h-full" style="width: calc((100% - 2 * 10px) / 3);"></div>
             <template v-for="(item, index) in props.images" :key="index">
                 <img :src="item" alt="" @click="updateImage(item, index)" ref="caItemRef" class="pointer-events-auto object-contain w-1/3 rounded-md border-3 border-transparent hover:border-primary dark:hover:border-primary_dark" draggable="false">
             </template>
@@ -46,17 +47,17 @@ const local = reactive({
 const props = defineProps({
     images:Object,
 });
+// const updateImage = (item, index) => {
+//     mainImageRef.value.src = item;
+//     const cl = $gsap.timeline();
+//     local.isActiveIndex = index;
+// }
 let loop = null;
 onUpdated(() => {
     nextTick(() => {
         loop = horizontalLoop($gsap.utils.toArray(caItemRef.value), {paused: true, draggable: true});
     })
 });
-// const updateImage = (item, index) => {
-//     mainImageRef.value.src = item;
-//     const cl = $gsap.timeline();
-//     local.isActiveIndex = index;
-// }
 const nextCarousel = () => {
     if(loop != null){
         loop.next({duration: 0.4, ease: "power1.inOut"})
@@ -72,22 +73,15 @@ const updateImage = (item, index) => {
     mainImageRef.value.src = item;
 }
 const horizontalLoop = (items, config) => {
-    function getMiddleIndex(currentIndex, totalItems, visibleItems) {
-        console.log('indexx', currentIndex);
-        let middleIndex = (currentIndex + Math.floor(visibleItems / 2)) % totalItems;
-        return middleIndex;
-    }
     function setMiddle(currentIndex, totalItems, visibleItems) {
-        let middleIndex = getMiddleIndex(currentIndex, totalItems, visibleItems);
         items.forEach(box => box.classList.remove("middle-item"));
-        items[middleIndex].classList.add("middle-item");
-        console.log('Setting middle item at index:', middleIndex);
+        items[(currentIndex + Math.floor(visibleItems / 2)) % totalItems].classList.add("middle-item");
+        console.log('Setting middle item at index:', (currentIndex + Math.floor(visibleItems / 2)) % totalItems);
     }
-    // function setMiddle(items, mid) {
-    //     items.forEach((item) => item.classList.remove('middle-item'));
-    //     items[mid].classList.add("middle-item");
-    // }
 	config = config || {};
+    const maxItem = 3; //max item must be show inside container
+    config.alignThreshold = config.alignThreshold || 0.25; // Default to 50% if not specified
+    config.midMarker = config.midMarker || {state:false,color:'black',}; //config for marker
 	let tl = $gsap.timeline({repeat: config.repeat, paused: config.paused, defaults: {ease: "none"}, onReverseComplete: () => tl.totalTime(tl.rawTime() + tl.duration() * 100)}),
 		length = items.length,
 		startX = items[0].offsetLeft,
@@ -131,8 +125,8 @@ const horizontalLoop = (items, config) => {
         vars.overwrite = true;
         return tl.tweenTo(time, vars);
     }
-    tl.next = vars => { toIndex(curIndex + 1, vars) && setMiddle(curIndex + 1, length, 3) };
-    tl.previous = vars => { toIndex(curIndex - 1, vars) && setMiddle((curIndex + 2) - 1, length, 3) };
+    tl.next = vars => { toIndex(curIndex + 1, vars) && setMiddle(curIndex + 1, length, 3)};
+    tl.previous = vars => { toIndex(curIndex - 1, vars) && setMiddle((curIndex + 2) - 1, length, 3)};
     tl.current = () => curIndex;
     tl.toIndex = (index, vars) => toIndex(index, vars);
     tl.updateIndex = () => curIndex = Math.round(tl.progress() * items.length);
@@ -142,7 +136,15 @@ const horizontalLoop = (items, config) => {
         tl.vars.onReverseComplete();
         tl.reverse();
     }
-    if (config.draggable && typeof($Draggable) === "function") {
+    if((typeof(config.midMarker) === 'boolean' && config.midMarker)|| typeof(config.midMarker) === 'object' && config.midMarker.state){
+        console.log('parent', items[0].parentNode)
+        console.log('parent', items[0].parentElement)
+        const parent = items.find((item)=>{
+            return item != null || item != undefined;
+        }).parentNode;
+        let middMarker = parent.createElement("div");
+    }
+    if (config.draggable) {
         let proxy = document.createElement("div"),
             wrap = $gsap.utils.wrap(0, 1),
             ratio, startProgress, draggable, dragSnap, roundFactor,
@@ -164,34 +166,79 @@ const horizontalLoop = (items, config) => {
             },
             onDrag: align,
             onThrowUpdate: align,
-            // inertia: true,
             snap: value => {
                 let n = Math.round(parseFloat(value) / dragSnap) * dragSnap * roundFactor;
                 return (n - n % 1) / roundFactor;
             },
-            onRelease: syncIndex,
-            onThrowComplete: () => $gsap.set(proxy, {x: 0}) && syncIndex() &&
-            setMiddle(items, tl.current() + 2) //Find the middle item and toggle Class
+            onRelease: () => {
+                syncIndex();
+                let dragProgress = (draggable.startX - draggable.endX) * ratio;
+                let triggerThreshold = config.alignThreshold * widths[curIndex];
+                let alignedProgress = startProgress + dragProgress;
+                if (Math.abs(dragProgress) > triggerThreshold) {
+                    let closest = Math.round(alignedProgress / dragSnap) * dragSnap;
+                    alignedProgress = wrap(closest);
+                }
+                $gsap.to(proxy, {
+                    x: 0,
+                    duration: 0.2,
+                    onUpdate: () => tl.progress(alignedProgress),
+                    onComplete: () => {
+                        syncIndex();
+                        $gsap.to(tl, {
+                            time: times[curIndex],
+                            duration: 0.2,
+                            ease: "power1.inOut",
+                            onComplete: () => {
+                                setMiddle(curIndex, length, 3);
+                            }
+                        });
+                    }
+                });
+            }
+            // onRelease: () => {
+            //     syncIndex();
+            //     $gsap.to(proxy, {
+            //         x: Math.round(draggable.endX / dragSnap) * dragSnap,
+            //         duration: 0.2,
+            //         onUpdate: align,
+            //         onComplete: () => {
+            //             $gsap.set(proxy, {x: 0});
+            //             syncIndex();
+            //             $gsap.to(tl, {
+            //                 time: times[curIndex],
+            //                 duration: 0.2,
+            //                 ease: "power1.inOut",
+            //                 onComplete: () => {
+            //                     setMiddle(curIndex, length, 3);
+            //                 }
+            //             });
+            //         }
+            //     });
+            // },
         })[0];
         tl.draggable = draggable;
     }
 	return tl;
 }
+// const visibleItems = 3; // Update as per your visible items count
+// setMiddle(0, boxes.length, visibleItems);
+
 // const handleScrollEvent = (event) => {
-    // const container = scrollableContainer.value;
-    // if (event.type === 'mousedown') {
-    //     local.isDragging = true;
-    //     local.startX = event.pageX - container.offsetLeft;
-    //     local.scrollLeft = container.scrollLeft;
-    //     // container.style.cursor = 'grabbing';
-    // } else if (event.type === 'mousemove' && local.isDragging) {
-    //     event.preventDefault();
-    //     const x = event.pageX - container.offsetLeft;
-    //     const walk = (x - local.startX) * 2; // Multiply by 2 for faster scrolling
-    //     container.scrollLeft = local.scrollLeft - walk;
-    // } else if (event.type === 'mouseup' || event.type === 'mouseleave') {
-    //     local.isDragging = false;
-    //     // container.style.cursor = 'grab';
-    // }
+//     const container = scrollableContainer.value;
+//     if (event.type === 'mousedown') {
+//         local.isDragging = true;
+//         local.startX = event.pageX - container.offsetLeft;
+//         local.scrollLeft = container.scrollLeft;
+//         // container.style.cursor = 'grabbing';
+//     } else if (event.type === 'mousemove' && local.isDragging) {
+//         event.preventDefault();
+//         const x = event.pageX - container.offsetLeft;
+//         const walk = (x - local.startX) * 2; // Multiply by 2 for faster scrolling
+//         container.scrollLeft = local.scrollLeft - walk;
+//     } else if (event.type === 'mouseup' || event.type === 'mouseleave') {
+//         local.isDragging = false;
+//         // container.style.cursor = 'grab';
+//     }
 // }
 </script>
