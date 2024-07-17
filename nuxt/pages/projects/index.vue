@@ -27,7 +27,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useFetchDataStore } from "~/store/FetchData";
-import animationsComposable from '../composables/animations/projects/index';
+import animationsComposable from '~/composables/animations/projects/index';
 const baseURL = useRuntimeConfig().public.baseURL;
 definePageMeta({
     name: 'Projects',

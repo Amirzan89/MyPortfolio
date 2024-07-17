@@ -111,7 +111,8 @@ import { ref, watch } from "vue";
 import PopupComponent from '~/components/Popup.vue';
 import { eventBus } from '~/app/eventBus';
 import { useFetchDataStore } from "~/store/FetchData";
-import animationsComposable from '../composables/animations/index';
+import animationsComposable from '~/composables/animations/index';
+import { contactMe } from "~/composables/api/home";
 const route = useRoute();
 const baseURL = useRuntimeConfig().public.baseURL;
 definePageMeta({

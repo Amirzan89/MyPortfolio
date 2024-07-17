@@ -1,23 +1,29 @@
 <template>
     <div class="sm:mb-4 flex flex-col items-center relative 3xsphone:left-1/2 md:left-0 3xsphone:-translate-x-1/2 md:-translate-x-0 whitespace-nowrap md:flex-1 w-10/12" ref="carouselRef">
-        <!-- <div class="relative">
-            <div class="absolute h-1 bg-black"></div>
-        </div> -->
-        <img :src="props.images[0]" alt="" ref="mainImageRef" class="object-contain 3xsphone:rounded-md sm:rounded-lg md:rounded-xl w-full">
-        <div class="relative flex gap-5">
-            <button class="bg-red-500 " @click="nextCarousel()"> next</button>
-            <button class="bg-red-500 " @click="prevCarousel()"> previous</button>
+        <div class="relative flex 3xsphone:w-40" ref="mainImageLoadingRef" @mouseenter="handleMainImage('enter')" @mouseleave="handleMainImage('leave')">
+            <div ref="arrLeftRef" class="refArr absolute z-10 left-0  flex justify-center items-center h-full w-10" :style="{ backgroundColor: useDarkModeStore().darkMode? 'rgba(0, 0, 0, 0.24)' : 'rgba(0, 0, 0, 0.05)' }">
+                <FontAwesomeIcon icon="fa-solid fa-angle-left" class="3xsphone:text-lg xsphone:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-5xl text-7xl text-primary_text dark:text-primary_dark cursor-pointer" @click="prevCarousel()"/>
+            </div>
+            <img :src="props.images[0]+''" alt="" ref="mainImageRef" class="relative object-contain 3xsphone:rounded-md sm:rounded-lg md:rounded-xl">
+            <div class="card-loading absolute top-0 left-0 flex flex-col bg-red-500 w-full h-full" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
+            <div ref="arrRightRef" class="refArr absolute z-10 right-0 flex justify-center items-center h-full w-10" :style="{ backgroundColor: useDarkModeStore().darkMode? 'rgba(0, 0, 0, 0.24)' : 'rgba(0, 0, 0, 0.05)', transition:'background-color 2s' }">
+                <FontAwesomeIcon icon="fa-solid fa-angle-right" class="3xsphone:text-lg xsphone:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-5xl text-7xl text-primary_text dark:text-primary_dark cursor-pointer" @click="nextCarousel()"/>
+            </div>
         </div>
-        <!-- <div class="flex gap-1.5 mt-1 w-1/2 scrollable-container" ref="scrollableContainer" @mousedown="handleScrollEvent" @mousemove="handleScrollEvent" @mouseup="handleScrollEvent" @mouseleave="handleScrollEvent"> -->
-        <div class="flex gap-1.5 mt-1 w-1/2 scrollable-container relative" ref="scrollableContainer">
-            <div class="border-white border-2 absolute left-1/2 -translate-x-1/2 h-full" style="width: calc((100% - 2 * 10px) / 3);"></div>
+        <ul class="flex gap-1.5 mt-1 w-1/2 scrollable-container relative" ref="scrollableContainer">
             <template v-for="(item, index) in props.images" :key="index">
-                <img :src="item" alt="" @click="updateImage(item, index)" ref="caItemRef" class="pointer-events-auto object-contain w-1/3 rounded-md border-3 border-transparent hover:border-primary dark:hover:border-primary_dark" draggable="false">
+                <!-- <li ref="caItemLoadingRef"> -->
+                    <img :src="item" alt="" @click="updateImage(item, index)" ref="caItemRef" class="pointer-events-auto object-contain w-1/3 rounded-md border-3 border-transparent hover:border-primary dark:hover:border-primary_dark" draggable="false">
+                    <!-- <div class="card-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/> -->
+                <!-- </li> -->
             </template>
-        </div>
+        </ul>
     </div>
 </template>
 <style scoped>
+.refArr{
+    transition: var(--darkMode);
+}
 .middle-item{
     border-color: green;
 }
@@ -34,54 +40,94 @@
 </style>
 <script setup>
 import { ref } from 'vue';
+import { useDarkModeStore } from '~/store/DarkMode';
 const { $gsap, $Draggable } = useNuxtApp();
 const mainImageRef = ref(null);
+const mainImageLoadingRef = ref(null);
 const scrollableContainer = ref(null);
 const caItemRef = ref([]);
-const local = reactive({
-    // isDragging: false,
-    // startX: 0,
-    // scrollLeft: 0,
-    isActiveIndex: 0,
-});
+const caItemLoadingRef = ref([]);
+const arrLeftRef = ref(null);
+const arrRightRef = ref(null);
+const ratioWidth = 16/9;
+const ratioHeight = 9/16;
 const props = defineProps({
     images:Object,
 });
-// const updateImage = (item, index) => {
-//     mainImageRef.value.src = item;
-//     const cl = $gsap.timeline();
-//     local.isActiveIndex = index;
-// }
+const local = reactive({
+    isActiveIndex: 0,
+});
+watch(mainImageLoadingRef, (newValue) => {
+    mainImageLoadingRef.value.style.height = `${getComputedStyle(newValue).width.match(/\d+/g)[0] * ratioHeight}px`;
+    handleLoading(mainImageLoadingRef.value)
+});
 let loop = null;
 onUpdated(() => {
+    if (Array.isArray(caItemLoadingRef.value) && caItemLoadingRef.value.length > 0) {
+        caItemLoadingRef.value.forEach((item, index) => {
+            caItemLoadingRef.value[index].style.height = `${getComputedStyle(item).width.match(/\d+/g)[0] * ratioHeight}px`;
+            handleLoading(item);
+        });
+    }
     nextTick(() => {
         loop = horizontalLoop($gsap.utils.toArray(caItemRef.value), {paused: true, draggable: true});
-    })
+    });
 });
-const nextCarousel = () => {
-    if(loop != null){
-        loop.next({duration: 0.4, ease: "power1.inOut"})
+onMounted(() => {
+    $gsap.set(arrLeftRef.value, {
+        display:'none',
+        opacity: 0,
+        x: '-50%',
+    });
+    $gsap.set(arrRightRef.value, {
+        display:'none',
+        opacity: 0,
+        x: '50%',
+    });
+});
+const handleLoading = (card) => {
+    const image = card.querySelector('img');
+    image.addEventListener('load', () => {
+        const cardLoading = card.querySelector('.card-loading');
+        if (cardLoading) {
+            cardLoading.remove();
+        }
+    });
+    let hasError = false;
+    image.addEventListener('error', () => {
+        hasError = true;
+    });
+    if (hasError && (image.complete || image.naturalWidth === 0)) {
+        const cardLoading = card.querySelector('.card-loading');
+        if (cardLoading) {
+            cardLoading.remove();
+        }
     }
 }
-const prevCarousel = () => {
-    if(loop != null){
-        loop.previous({duration: 0.4, ease: "power1.inOut"})
-    }
-}
+const nextCarousel = () => loop.next({duration: 0.4, ease: "power1.inOut"})
+const prevCarousel = () => loop.previous({duration: 0.4, ease: "power1.inOut"})
 const updateImage = (item, index) => {
-    loop.toIndex(index, {duration: 0.8, ease: "power1.inOut"})
+    loop.toIndex(index, {duration: 0.8, ease: "power1.inOut", cond:'click'})
     mainImageRef.value.src = item;
+}
+const handleMainImage = (cond) => {
+    if (cond === 'enter') {
+        $gsap.to(arrLeftRef.value, { x: '0%', opacity: 1, display:'flex', duration: 0.5 });
+        $gsap.to(arrRightRef.value, { x: '0%', opacity: 1, display:'flex', duration: 0.5 });
+    } else if (cond === 'leave') {
+        $gsap.to(arrLeftRef.value, { x: '-50%', opacity: 0, display:'none', duration: 0.5 });
+        $gsap.to(arrRightRef.value, { x: '50%', opacity: 0, display:'none', duration: 0.5 });
+    }
 }
 const horizontalLoop = (items, config) => {
     function setMiddle(currentIndex, totalItems, visibleItems) {
         items.forEach(box => box.classList.remove("middle-item"));
         items[(currentIndex + Math.floor(visibleItems / 2)) % totalItems].classList.add("middle-item");
-        console.log('Setting middle item at index:', (currentIndex + Math.floor(visibleItems / 2)) % totalItems);
+        mainImageRef.value.src = items[(currentIndex + Math.floor(visibleItems / 2)) % totalItems].src;
     }
 	config = config || {};
-    const maxItem = 3; //max item must be show inside container
-    config.alignThreshold = config.alignThreshold || 0.25; // Default to 50% if not specified
-    config.midMarker = config.midMarker || {state:false,color:'black',}; //config for marker
+    config.maxItem = (Number.isInteger(config.maxItem) && config.maxItem % 2 != 0) ? config.maxItem : 3; //max item must be show inside container
+    config.alignThreshold = config.alignThreshold || 0.5; // Default to 50% if not specified
 	let tl = $gsap.timeline({repeat: config.repeat, paused: config.paused, defaults: {ease: "none"}, onReverseComplete: () => tl.totalTime(tl.rawTime() + tl.duration() * 100)}),
 		length = items.length,
 		startX = items[0].offsetLeft,
@@ -116,19 +162,25 @@ const horizontalLoop = (items, config) => {
         vars = vars || {};
         (Math.abs(index - curIndex) > length / 2) && (index += index > curIndex ? -length : length); // always go in the shortest direction
         let newIndex = $gsap.utils.wrap(0, length, index),
-            time = times[newIndex];
+        time = times[newIndex];
         if (time > tl.time() !== index > curIndex) { // if we're wrapping the timeline's playhead, make the proper adjustments
             vars.modifiers = {time: $gsap.utils.wrap(0, tl.duration())};
             time += tl.duration() * (index > curIndex ? 1 : -1);
         }
         curIndex = newIndex;
         vars.overwrite = true;
-        return tl.tweenTo(time, vars);
+        return tl.tweenTo(time, vars);  
     }
-    tl.next = vars => { toIndex(curIndex + 1, vars) && setMiddle(curIndex + 1, length, 3)};
-    tl.previous = vars => { toIndex(curIndex - 1, vars) && setMiddle((curIndex + 2) - 1, length, 3)};
+    //for static
+    // tl.next = vars => { toIndex(curIndex + 1, vars) && setMiddle(curIndex + 0, length, 3)};
+    // tl.previous = vars => { toIndex(curIndex - 1, vars) && setMiddle((curIndex + 1) - 1, length, 3)};
+
+    //for dynamic
+    tl.next = vars => {toIndex(curIndex + 1, {...vars, cond:'next'}) && setMiddle(curIndex + (config.maxItem - 5) / 2 + 1, length, config.maxItem)};
+    tl.previous = vars => { toIndex(curIndex - 1, {...vars, cond:'prev'}) && setMiddle(curIndex + (config.maxItem - 3) / 2, length, config.maxItem)};
+
     tl.current = () => curIndex;
-    tl.toIndex = (index, vars) => toIndex(index, vars);
+    tl.toIndex = (index, vars) => toIndex(index, {...vars, cond:'click'});
     tl.updateIndex = () => curIndex = Math.round(tl.progress() * items.length);
     tl.times = times;
     tl.progress(1, true).progress(0, true); // pre-render for performance
@@ -136,21 +188,13 @@ const horizontalLoop = (items, config) => {
         tl.vars.onReverseComplete();
         tl.reverse();
     }
-    if((typeof(config.midMarker) === 'boolean' && config.midMarker)|| typeof(config.midMarker) === 'object' && config.midMarker.state){
-        console.log('parent', items[0].parentNode)
-        console.log('parent', items[0].parentElement)
-        const parent = items.find((item)=>{
-            return item != null || item != undefined;
-        }).parentNode;
-        let middMarker = parent.createElement("div");
-    }
     if (config.draggable) {
         let proxy = document.createElement("div"),
             wrap = $gsap.utils.wrap(0, 1),
             ratio, startProgress, draggable, dragSnap, roundFactor,
             align = () => tl.progress(wrap(startProgress + (draggable.startX - draggable.x) * ratio)),
             syncIndex = () => tl.updateIndex();
-        typeof(InertiaPlugin) === "undefined" && console.warn("InertiaPlugin required for momentum-based scrolling and snapping. https://greensock.com/club");
+        // typeof(InertiaPlugin) === "undefined" && console.warn("InertiaPlugin required for momentum-based scrolling and snapping. https://greensock.com/club");
         draggable = $Draggable.create(proxy, {
             trigger: items[0].parentNode,
             type: "x",
@@ -190,32 +234,12 @@ const horizontalLoop = (items, config) => {
                             duration: 0.2,
                             ease: "power1.inOut",
                             onComplete: () => {
-                                setMiddle(curIndex, length, 3);
+                                setMiddle(curIndex, length, config.maxItem);
                             }
                         });
                     }
                 });
             }
-            // onRelease: () => {
-            //     syncIndex();
-            //     $gsap.to(proxy, {
-            //         x: Math.round(draggable.endX / dragSnap) * dragSnap,
-            //         duration: 0.2,
-            //         onUpdate: align,
-            //         onComplete: () => {
-            //             $gsap.set(proxy, {x: 0});
-            //             syncIndex();
-            //             $gsap.to(tl, {
-            //                 time: times[curIndex],
-            //                 duration: 0.2,
-            //                 ease: "power1.inOut",
-            //                 onComplete: () => {
-            //                     setMiddle(curIndex, length, 3);
-            //                 }
-            //             });
-            //         }
-            //     });
-            // },
         })[0];
         tl.draggable = draggable;
     }
@@ -223,22 +247,4 @@ const horizontalLoop = (items, config) => {
 }
 // const visibleItems = 3; // Update as per your visible items count
 // setMiddle(0, boxes.length, visibleItems);
-
-// const handleScrollEvent = (event) => {
-//     const container = scrollableContainer.value;
-//     if (event.type === 'mousedown') {
-//         local.isDragging = true;
-//         local.startX = event.pageX - container.offsetLeft;
-//         local.scrollLeft = container.scrollLeft;
-//         // container.style.cursor = 'grabbing';
-//     } else if (event.type === 'mousemove' && local.isDragging) {
-//         event.preventDefault();
-//         const x = event.pageX - container.offsetLeft;
-//         const walk = (x - local.startX) * 2; // Multiply by 2 for faster scrolling
-//         container.scrollLeft = local.scrollLeft - walk;
-//     } else if (event.type === 'mouseup' || event.type === 'mouseleave') {
-//         local.isDragging = false;
-//         // container.style.cursor = 'grab';
-//     }
-// }
 </script>

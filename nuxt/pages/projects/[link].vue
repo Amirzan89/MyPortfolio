@@ -2,14 +2,7 @@
     <div class="min-h-screen">
         <section>
             <div class="relative left-1/2 -translate-x-1/2 flex 3xsphone:flex-col md:flex-row 3xsphone:gap-3 sm:gap-5 md:gap-10 w-11/12 items-start">
-                <CarouselImageComponent :images="getImages()"
-                />
-                <!-- <div class="carousel flex overflow-x-scroll relative whitespace-nowrap flex-1" ref="carouselRef">
-                    <img :src="publicConfig.baseURL + '/img/project/' + local.fetchedDetailProject?.foto[0]" alt="" ref="caItemRef" class="object-contain rounded-xl">
-                    <template v-for="(item, index) in local.fetchedDetailProject?.foto" :key="index">
-                        <img :src="publicConfig.baseURL + '/img/project/' + item" alt="" ref="caItemRef" style="transition: 1s;" class="object-contain w-100">
-                    </template>
-                </div> -->
+                <CarouselImageComponent :images="getImages()"/>
                 <div class="flex flex-col flex-1 text-primary_text dark:text-primary_dark_text">
                     <h1 class="3xsphone:text-sm xsphone:text-base phone:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-semibold">{{ capitalizeFirstLetter(local.fetchedDetailProject?.nama) }}</h1>
                     <div class="3xsphone:text-3xs phone:text-2xs sm:text-base md:text-sm lg:text-base xl:text-lg 2xl:text-xl 3xsphone:mt-1 phone:mt-3 sm:mt-5 font-normal" v-html="local.formattedDeskripsi"></div>
@@ -20,14 +13,9 @@
                             </a>
                         </template>
                     </div>
-                    <a :href="local.fetchedDetailProject?.link_project" target="_blank" class="3xsphone:ml-1 sm:ml-3 md:ml-3 2xl:ml-5 3xsphone:mt-2 2xsphone:mt-3 md:mt-5 xl:mt-7 2xl:mt-10 3xsphone:w-14 xsphone:w-17 phone:w-20 sm:w-27 md:w-27 lg:w-30 xl:w-37 3xsphone:h-4 xsphone:h-6 sm:h-9 md:h-8 lg:h-9 xl:h-12 3xsphone:rounded-sm xsphone:rounded-md xl:rounded-lg bg-primary dark:bg-primary_dark text-white flex items-center justify-center 3xsphone:text-2xs xsphone:text-xs phone:text-sm sm:text-lg md:text-lg lg:text-xl xl:text-2xl 3xsphone:font-medium md:font-semibold">Preview</a>
+                    <a :href="local.fetchedDetailProject?.link_project" target="_blank" id="btnPreview" class="3xsphone:ml-1 sm:ml-3 md:ml-3 2xl:ml-5 3xsphone:mt-2 2xsphone:mt-3 md:mt-5 xl:mt-7 2xl:mt-10 3xsphone:w-14 xsphone:w-17 phone:w-20 sm:w-27 md:w-27 lg:w-30 xl:w-37 3xsphone:h-4 xsphone:h-6 sm:h-9 md:h-8 lg:h-9 xl:h-12 3xsphone:rounded-sm xsphone:rounded-md xl:rounded-lg bg-primary dark:bg-primary_dark text-white flex items-center justify-center 3xsphone:text-2xs xsphone:text-xs phone:text-sm sm:text-lg md:text-lg lg:text-xl xl:text-2xl 3xsphone:font-medium md:font-semibold">Preview</a>
                 </div>
             </div>
-            <!-- <div class="flex justify-center gap-4">
-                <template v-for="(item, index) in local.fetchedDetailProject?.foto" :key="index">
-                    <img :src="publicConfig.baseURL + '/img/project/' + item" alt="" class="object-cover w-35 rounded-xl hover:border-red-500 border-5 pointer-events-auto cursor-pointer" ref="slideRef" @click="changeImg(index)">
-                </template>
-            </div> -->
         </section>
         <section class="mt-10">
             <div class="flex relative left-1/2 -translate-x-1/2 justify-between items-center text-primary_text dark:text-primary_dark_text">
@@ -64,7 +52,7 @@ import { ref, watch } from "vue";
 import { useNotFoundStore } from '~/store/NotFound';
 import { useFetchDataStore } from "~/store/FetchData";
 import CarouselImageComponent from '~/components/CarouselImage.vue';
-import animationsComposable from '../composables/animations/projects/detail';
+import animationsComposable from '~/composables/animations/projects/detail';
 import laravelIcon from '~/assets/icon/laravel.svg';
 import bootstrapicon from '~/assets/icon/bootstrap.svg';
 import tailwindicon from '~/assets/icon/tailwind.svg';
@@ -150,8 +138,8 @@ onBeforeRouteUpdate(() => {
     useFetchDataStore().resetFetchData();
 });
 onMounted(() => {
-    // const { gsapContext } = animationsComposable();
-    // ctx.value = gsapContext.value;
+    const { gsapContext } = animationsComposable();
+    ctx.value = gsapContext.value;
 });
 onUnmounted(() => {
     // ctx.value?.kill()
