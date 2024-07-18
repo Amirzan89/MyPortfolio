@@ -5,7 +5,7 @@
                 <CarouselImageComponent :images="getImages()"/>
                 <div class="flex flex-col flex-1 text-primary_text dark:text-primary_dark_text">
                     <h1 class="3xsphone:text-sm xsphone:text-base phone:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-semibold">{{ capitalizeFirstLetter(local.fetchedDetailProject?.nama) }}</h1>
-                    <div class="3xsphone:text-3xs phone:text-2xs sm:text-base md:text-sm lg:text-base xl:text-lg 2xl:text-xl 3xsphone:mt-1 phone:mt-3 sm:mt-5 font-normal" v-html="local.formattedDeskripsi"></div>
+                    <p class="3xsphone:text-3xs phone:text-2xs sm:text-base md:text-sm lg:text-base xl:text-lg 2xl:text-xl 3xsphone:mt-1 phone:mt-3 sm:mt-5 font-normal" v-html="local.formattedDeskripsi"/>
                     <div class="flex flex-row 3xsphone:gap-1 sm:gap-3 md:gap-5 3xsphone:mt-1 sm:mt-1 xl:mt-3 ml-3">
                         <template v-for="(item, index) in filteredTechStack" :key="index">
                             <a :href=item.href target="_blank" class="flex items-center justify-center w-max">
@@ -142,12 +142,13 @@ onMounted(() => {
     ctx.value = gsapContext.value;
 });
 onUnmounted(() => {
-    // ctx.value?.kill()
+    ctx.value?.kill()
 });
 watch(() => route.params.link, () => {
-    // const { gsapContext } = animationsComposable();
-    // ctx.value = gsapContext.value;
-})
+    console.log('ganti link')
+    const { gsapContext } = animationsComposable();
+    ctx.value = gsapContext.value;
+});
 const handleLoading = (card) => {
     const image = card.querySelector('img');
     image.addEventListener('load', () => {
@@ -171,6 +172,17 @@ watch(() => local.fetchedDetailProject, () => {
     if (local?.fetchedDetailProject !== undefined && local.fetchedDetailProject !== null && typeof local.fetchedDetailProject === 'object' && !Array.isArray(local.fetchedDetailProject) && Object.keys(local.fetchedDetailProject).length > 0) {
         local.thumbnail = local.fetchedDetailProject.thumbnail;
         nextTick(() => {
+            const { $gsap } = useNuxtApp();
+            $gsap.from('section:nth-child(1) a:not(#btnPreview', {
+                y:'300%',
+                opacity: 0,
+                delay: 2,
+                duration: 1,
+                stagger: {
+                    from: 'start',
+                    each: 0.3,
+                },
+            }, 0);
             const link = publicConfig.baseURL + '/img/project/';
             local.carouselImage = local.fetchedDetailProject.foto.map((item) => {
                 return link + item;
@@ -181,6 +193,22 @@ watch(() => local.fetchedDetailProject, () => {
 watch(() => local.fetchedOtherProject, () => {
     if (local?.fetchedOtherProject !== undefined && local.fetchedOtherProject !== null && typeof local.fetchedOtherProject === 'object' && Array.isArray(local.fetchedOtherProject) && Object.keys(local.fetchedOtherProject).length > 0) {
         nextTick(() => {
+            const { $gsap } = useNuxtApp();
+            $gsap.from(cardRefs.value, {
+                opacity: 0,
+                y:'20%',
+                delay: 0.3,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: 'section:last-child',
+                    start: 'top 60%',
+                    end: 'top none',
+                },
+                stagger:{
+                    from: 'start',
+                    each: 0.3,
+                }
+            });
             local.fetchedOtherProject.forEach((item, index) => {
                 let card = cardRefs.value[index];
                 handleLoading(card);

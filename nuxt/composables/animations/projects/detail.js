@@ -1,9 +1,10 @@
 import { ref } from 'vue';
-import { getGsap } from '../../config';
+import { getGsap, useScreenConfig } from '../../config';
 import { header } from './../header';
 import { footer } from './../footer';
 export default () => {
     const gsap = getGsap();
+    const { screenSize } = useScreenConfig();
     const gsapContext = ref(null);
     const isAnimateComplete = ref(false);
     gsapContext.value =  gsap.context(() => {
@@ -14,34 +15,54 @@ export default () => {
         });
         header();
 
-        const first = gsap.utils.selector('section:nth-child(1) div div');
-        tl.from(first('h1'), {
-            // scrollTrigger:
-        });
-        tl.from(first('div'), {
-            // scrollTrigger:
-        });
-        tl.from(first('a:not(#btnPreview)'), {
-            // scrollTrigger:
-        });
-        tl.from(first('a'), {
-            // scrollTrigger:
-        })
-        const sec = gsap.utils.selector('section:nth-child(2)');
-        // tl.from(sec(''), {
-        //     // scrollTrigger:
-        // });
-        tl.from(sec('a:not(#btnOthers)'), {
-            // scrollTrigger:
-        });
-        // tl.from(sec(''), {
-        //     // scrollTrigger:
-        // });
-        tl.from(sec('div:not(.card-loading) span'), {
-            x: '-100%',
-            duration: 1.5,
+        const first = gsap.utils.selector('section:first-child div');
+        if(screenSize.value >= 768){
+            //for desktop
+            tl.from(first('h1'), {
+                x:'100%',
+                opacity: 0,
+                delay: 0.6,
+                duration:1,
+            }, 0);
+            tl.from(first('p'), {
+                x:'100%',
+                opacity: 0,
+                delay: 0.8,
+                duration:1,
+            }, 0);
+        }else{
+            //for mobile or tablet
+            tl.from(first('h1'), {
+                x:'-100%',
+                opacity: 0,
+                delay: 0.6,
+                duration:1,
+            }, 0);
+            tl.from(first('p'), {
+                x:'-100%',
+                opacity: 0,
+                delay: 0.8,
+                duration:1,
+            }, 0);
+        }
+        tl.from(first('a#btnPreview'), {
+            y:'300%',
             opacity: 0,
-        });
+            delay: 0.8,
+            duration: 1,
+        }, 0);
+        const sec = gsap.utils.selector('section:last-child');
+        tl.from(sec('span'), {
+            x:'-100%',
+            opacity: 0,
+            duration: 1.3,
+        }, 0);
+        tl.from(sec('a#btnOthers'), {
+            x:'100%',
+            display:'none',
+            opacity: 0,
+            duration: 1.3,
+        }, 0);
         footer();
         return tl;
     });

@@ -1,21 +1,23 @@
 <template>
-    <div class="sm:mb-4 flex flex-col items-center relative 3xsphone:left-1/2 md:left-0 3xsphone:-translate-x-1/2 md:-translate-x-0 whitespace-nowrap md:flex-1 w-10/12" ref="carouselRef">
-        <div class="relative flex 3xsphone:w-40" ref="mainImageLoadingRef" @mouseenter="handleMainImage('enter')" @mouseleave="handleMainImage('leave')">
-            <div ref="arrLeftRef" class="refArr absolute z-10 left-0  flex justify-center items-center h-full w-10" :style="{ backgroundColor: useDarkModeStore().darkMode? 'rgba(0, 0, 0, 0.24)' : 'rgba(0, 0, 0, 0.05)' }">
-                <FontAwesomeIcon icon="fa-solid fa-angle-left" class="3xsphone:text-lg xsphone:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-5xl text-7xl text-primary_text dark:text-primary_dark cursor-pointer" @click="prevCarousel()"/>
+    <div class="sm:mb-4 flex flex-col items-center relative 3xsphone:left-1/2 md:left-0 3xsphone:-translate-x-1/2 md:-translate-x-0 whitespace-nowrap md:flex-1 w-10/12 bg-reed-500" ref="carouselRef">
+        <div class="relative w-9/12 bg-orange-400" ref="mainImageLoadingRef" @mouseenter="handleMainImage('enter')" @mouseleave="handleMainImage('leave')">
+            <div class="relative flex">
+                <div ref="arrLeftRef" class="refArr absolute z-10 left-0  flex justify-center items-center h-full w-10" :style="{ backgroundColor: useDarkModeStore().darkMode? 'rgba(0, 0, 0, 0.24)' : 'rgba(0, 0, 0, 0.05)' }">
+                    <FontAwesomeIcon icon="fa-solid fa-angle-left" class="3xsphone:text-lg xsphone:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-5xl text-7xl text-primary_text dark:text-primary_dark cursor-pointer" @click="prevCarousel()"/>
+                </div>
+                <img :src="props.images[0]+''" alt="" ref="mainImageRef" class="h-full relative object-contain 3xsphone:rounded-md sm:rounded-lg md:rounded-xl">
+                <div ref="arrRightRef" class="refArr absolute z-10 right-0 flex justify-center items-center h-full w-10" :style="{ backgroundColor: useDarkModeStore().darkMode? 'rgba(0, 0, 0, 0.24)' : 'rgba(0, 0, 0, 0.05)', transition:'background-color 2s' }">
+                    <FontAwesomeIcon icon="fa-solid fa-angle-right" class="3xsphone:text-lg xsphone:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-5xl text-7xl text-primary_text dark:text-primary_dark cursor-pointer" @click="nextCarousel()"/>
+                </div>
             </div>
-            <img :src="props.images[0]+''" alt="" ref="mainImageRef" class="relative object-contain 3xsphone:rounded-md sm:rounded-lg md:rounded-xl">
-            <div class="card-loading absolute top-0 left-0 flex flex-col bg-red-500 w-full h-full" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
-            <div ref="arrRightRef" class="refArr absolute z-10 right-0 flex justify-center items-center h-full w-10" :style="{ backgroundColor: useDarkModeStore().darkMode? 'rgba(0, 0, 0, 0.24)' : 'rgba(0, 0, 0, 0.05)', transition:'background-color 2s' }">
-                <FontAwesomeIcon icon="fa-solid fa-angle-right" class="3xsphone:text-lg xsphone:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-5xl text-7xl text-primary_text dark:text-primary_dark cursor-pointer" @click="nextCarousel()"/>
-            </div>
+            <!-- <div class="card-loading bg-green-500 absolute top-0 left-0 flex flex-col w-full h-full" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/> -->
         </div>
-        <ul class="flex gap-1.5 mt-1 w-1/2 scrollable-container relative" ref="scrollableContainer">
+        <ul class="flex gap-1.5 mt-1 w-1/3 scrollable-container relative" ref="scrollableContainer">
             <template v-for="(item, index) in props.images" :key="index">
-                <!-- <li ref="caItemLoadingRef"> -->
-                    <img :src="item" alt="" @click="updateImage(item, index)" ref="caItemRef" class="pointer-events-auto object-contain w-1/3 rounded-md border-3 border-transparent hover:border-primary dark:hover:border-primary_dark" draggable="false">
-                    <!-- <div class="card-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/> -->
-                <!-- </li> -->
+                <li ref="caItemLoadingRef" class="flex-shrink-0">
+                    <img :src="item" alt="" @click="updateImage(item, index)" ref="caItemRef" class="pointer-events-auto object-contain rounded-md border-3 border-transparent hover:border-primary dark:hover:border-primary_dark" draggable="false">
+                    <div class="card-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
+                </li>
             </template>
         </ul>
     </div>
@@ -49,40 +51,73 @@ const caItemRef = ref([]);
 const caItemLoadingRef = ref([]);
 const arrLeftRef = ref(null);
 const arrRightRef = ref(null);
-const ratioWidth = 16/9;
-const ratioHeight = 9/16;
+const ratioImg = '16:9';
+const maxItemContainer = 3;
+const ratioWidth = ratioImg.match(/\d+/g)[0]/ratioImg.match(/\d+/g)[1];
+const ratioHeight = ratioImg.match(/\d+/g)[1]/ratioImg.match(/\d+/g)[0];
 const props = defineProps({
     images:Object,
 });
-const local = reactive({
-    isActiveIndex: 0,
-});
-watch(mainImageLoadingRef, (newValue) => {
-    mainImageLoadingRef.value.style.height = `${getComputedStyle(newValue).width.match(/\d+/g)[0] * ratioHeight}px`;
-    handleLoading(mainImageLoadingRef.value)
-});
 let loop = null;
+const updateAspectRatio = (el = null) => {
+    const updateHeight = item => item.style.height = `${getComputedStyle(item).width.match(/\d+/g)[0] * ratioHeight}px`;
+    el != null ? updateHeight(el) : updateHeight(mainImageLoadingRef.value) && caItemLoadingRef.value.forEach(updateHeight)
+};
+onMounted(() => {
+    window.addEventListener('resize', updateAspectRatio);
+    $gsap.set(arrLeftRef.value, {
+        x: '-100%',
+        opacity: 0,
+        delay: 0.6,
+        duration:1,
+    });
+    $gsap.set(arrRightRef.value, {
+        x: '50%',
+        opacity: 0,
+        delay: 0.6,
+        duration:1,
+    });
+    const tl = $gsap.timeline();
+    const rdiv = $gsap.utils.selector('div');
+    tl.from(rdiv('div img'), {
+        x:'-100%',
+        opacity: 0,
+        delay: 0.6,
+        duration:1,
+    }, 0);
+    tl.from(rdiv('ul'), {
+        y: '-50%',
+        scale: 0.5,
+        opacity: 0,
+        delay: 2,
+        duration:1,
+    }, 0);
+    tl.from(rdiv('ul li'), {
+        x:'',
+        opacity: 0,
+        delay: 0.6,
+        duration:1,
+        stagger: {
+            from: 'start',
+            each: 0.3,
+        },
+    }, 0);
+});
+onBeforeUnmount(() => window.removeEventListener('resize', updateAspectRatio));
+watch(mainImageLoadingRef, (newValue) => updateAspectRatio(newValue) && handleLoading(newValue));
 onUpdated(() => {
     if (Array.isArray(caItemLoadingRef.value) && caItemLoadingRef.value.length > 0) {
-        caItemLoadingRef.value.forEach((item, index) => {
-            caItemLoadingRef.value[index].style.height = `${getComputedStyle(item).width.match(/\d+/g)[0] * ratioHeight}px`;
+        const conCom = getComputedStyle(scrollableContainer.value);
+        const conWidth = conCom.width.match(/\d+/g)[0];
+        const widthItem = `${(((conWidth - (maxItemContainer - 1) * conCom.gap.match(/\d+/g)[0]) / maxItemContainer) / conWidth) * 100}%`;
+        caItemLoadingRef.value.forEach((item) => {
+            item.style.width = widthItem;
+            updateAspectRatio(item);
             handleLoading(item);
         });
     }
     nextTick(() => {
-        loop = horizontalLoop($gsap.utils.toArray(caItemRef.value), {paused: true, draggable: true});
-    });
-});
-onMounted(() => {
-    $gsap.set(arrLeftRef.value, {
-        display:'none',
-        opacity: 0,
-        x: '-50%',
-    });
-    $gsap.set(arrRightRef.value, {
-        display:'none',
-        opacity: 0,
-        x: '50%',
+        loop = horizontalLoop($gsap.utils.toArray(caItemRef.value), {paused: true, draggable: true, maxItem: maxItemContainer});
     });
 });
 const handleLoading = (card) => {
