@@ -1,22 +1,20 @@
 <template>
-    <div class="sm:mb-4 flex flex-col items-center relative 3xsphone:left-1/2 md:left-0 3xsphone:-translate-x-1/2 md:-translate-x-0 whitespace-nowrap md:flex-1 w-10/12 bg-reed-500" ref="carouselRef">
-        <div class="relative w-9/12 bg-orange-400" ref="mainImageLoadingRef" @mouseenter="handleMainImage('enter')" @mouseleave="handleMainImage('leave')">
-            <div class="relative flex">
-                <div ref="arrLeftRef" class="refArr absolute z-10 left-0  flex justify-center items-center h-full w-10" :style="{ backgroundColor: useDarkModeStore().darkMode? 'rgba(0, 0, 0, 0.24)' : 'rgba(0, 0, 0, 0.05)' }">
-                    <FontAwesomeIcon icon="fa-solid fa-angle-left" class="3xsphone:text-lg xsphone:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-5xl text-7xl text-primary_text dark:text-primary_dark cursor-pointer" @click="prevCarousel()"/>
-                </div>
-                <img :src="props.images[0]+''" alt="" ref="mainImageRef" class="h-full relative object-contain 3xsphone:rounded-md sm:rounded-lg md:rounded-xl">
-                <div ref="arrRightRef" class="refArr absolute z-10 right-0 flex justify-center items-center h-full w-10" :style="{ backgroundColor: useDarkModeStore().darkMode? 'rgba(0, 0, 0, 0.24)' : 'rgba(0, 0, 0, 0.05)', transition:'background-color 2s' }">
-                    <FontAwesomeIcon icon="fa-solid fa-angle-right" class="3xsphone:text-lg xsphone:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-5xl text-7xl text-primary_text dark:text-primary_dark cursor-pointer" @click="nextCarousel()"/>
-                </div>
+    <div id="carouselComponent" class="sm:mb-4 flex flex-col items-center relative 3xsphone:left-1/2 md:left-0 3xsphone:-translate-x-1/2 md:-translate-x-0 whitespace-nowrap md:flex-1 w-10/12 bg-reed-500" ref="carouselRef">
+        <div class="relative w-10/12 bg-oranged-400 flex bg-red-500" ref="mainImageLoadingRef" @mouseenter="handleMainImage('enter')" @mouseleave="handleMainImage('leave')">
+            <div ref="arrLeftRef" class="refArr absolute z-10 left-0 flex justify-center items-center h-full 3xsphone:w-5 xl:w-10" :style="{ backgroundColor: useDarkModeStore().darkMode? 'rgba(255, 255, 255, 0.14)' : 'rgba(255, 255, 255, 0.14)', boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)'}">
+                <FontAwesomeIcon icon="fa-solid fa-angle-left" class="3xsphone:text-lg xsphone:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-5xl text-7xl text-primary_text dark:text-primary_dark cursor-pointer" @click="prevCarousel()"/>
             </div>
-            <!-- <div class="card-loading bg-green-500 absolute top-0 left-0 flex flex-col w-full h-full" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/> -->
+            <img :src="props.images[0]+'r'" alt="" ref="mainImageRef" class="h-full relative object-contain 3xsphone:rounded-md sm:rounded-lg md:rounded-xl">
+            <div ref="arrRightRef" class="refArr absolute z-10 right-0 flex justify-center items-center h-full 3xsphone:w-5 xl:w-10" :style="{ backgroundColor: useDarkModeStore().darkMode? 'rgba(255, 255, 255, 0.14)' : 'rgba(255, 255, 255, 0.14)', boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)' }">
+                <FontAwesomeIcon icon="fa-solid fa-angle-right" class="3xsphone:text-lg xsphone:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-5xl text-7xl text-primary_text dark:text-primary_dark cursor-pointer" @click="nextCarousel()"/>
+            </div>
+            <div class="card-loading items-loading absolute top-0 left-0 w-full h-full" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
         </div>
         <ul class="flex gap-1.5 mt-1 w-1/3 scrollable-container relative" ref="scrollableContainer">
             <template v-for="(item, index) in props.images" :key="index">
-                <li ref="caItemLoadingRef" class="flex-shrink-0">
+                <li ref="caItemLoadingRef" class="flex-shrink-0 relative">
                     <img :src="item" alt="" @click="updateImage(item, index)" ref="caItemRef" class="pointer-events-auto object-contain rounded-md border-3 border-transparent hover:border-primary dark:hover:border-primary_dark" draggable="false">
-                    <div class="card-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
+                    <div class="card-loading items-loading absolute top-0 left-0 z-10 w-full h-full rounded-md" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
                 </li>
             </template>
         </ul>
@@ -55,56 +53,56 @@ const ratioImg = '16:9';
 const maxItemContainer = 3;
 const ratioWidth = ratioImg.match(/\d+/g)[0]/ratioImg.match(/\d+/g)[1];
 const ratioHeight = ratioImg.match(/\d+/g)[1]/ratioImg.match(/\d+/g)[0];
+const local = reactive({
+    isMainDone: false,
+    isItemDone: false,
+})
 const props = defineProps({
     images:Object,
 });
 let loop = null;
 const updateAspectRatio = (el = null) => {
-    const updateHeight = item => item.style.height = `${getComputedStyle(item).width.match(/\d+/g)[0] * ratioHeight}px`;
-    el != null ? updateHeight(el) : updateHeight(mainImageLoadingRef.value) && caItemLoadingRef.value.forEach(updateHeight)
+    el = el instanceof Event ? null : el;
+    const updateArr = () => arrLeftRef.value.style.height = getComputedStyle(mainImageRef.value); arrRightRef.value.style.height = getComputedStyle(mainImageRef.value);
+    const updateHeight = item => item.style.height = `${getComputedStyle(item).width.match(/\d+/g)[0] * ratioHeight}px` && item == 'main' ? updateArr() : null;
+    // if(!local.isMainDone){
+    //     //
+    // }else if(!local.isItemDone){
+    //     //
+    // }
+    el != null ? updateHeight(el) && updateArr() : updateHeight(mainImageLoadingRef.value) && caItemLoadingRef.value.forEach(updateHeight) && updateArr();
+    // const updateArr = () => arrLeftRef.value.style.height = getComputedStyle(mainImageRef.value); arrRightRef.value.style.height = getComputedStyle(mainImageRef.value);
+    // const updateHeight = item => item.style.height = `${getComputedStyle(item).width.match(/\d+/g)[0] * ratioHeight}px` && item == 'main' ? updateArr() : null;
+    // el != null ? updateHeight(el) && updateArr() : updateHeight(mainImageLoadingRef.value) && caItemLoadingRef.value.forEach(updateHeight) && updateArr();
 };
+
 onMounted(() => {
     window.addEventListener('resize', updateAspectRatio);
     $gsap.set(arrLeftRef.value, {
-        x: '-100%',
+        x: '-50%',
         opacity: 0,
-        delay: 0.6,
-        duration:1,
+        display:'none',
     });
     $gsap.set(arrRightRef.value, {
         x: '50%',
         opacity: 0,
-        delay: 0.6,
-        duration:1,
+        display:'none',
     });
-    const tl = $gsap.timeline();
-    const rdiv = $gsap.utils.selector('div');
-    tl.from(rdiv('div img'), {
-        x:'-100%',
-        opacity: 0,
-        delay: 0.6,
-        duration:1,
-    }, 0);
-    tl.from(rdiv('ul'), {
-        y: '-50%',
-        scale: 0.5,
-        opacity: 0,
-        delay: 2,
-        duration:1,
-    }, 0);
-    tl.from(rdiv('ul li'), {
-        x:'',
-        opacity: 0,
-        delay: 0.6,
-        duration:1,
-        stagger: {
-            from: 'start',
-            each: 0.3,
-        },
-    }, 0);
+    mainImageLoadingRef.value.style.height = `10px`;
 });
 onBeforeUnmount(() => window.removeEventListener('resize', updateAspectRatio));
-watch(mainImageLoadingRef, (newValue) => updateAspectRatio(newValue) && handleLoading(newValue));
+watch(mainImageLoadingRef, (newValue) => {
+    console.log('container', newValue);
+    console.log('data anyarrr', `${getComputedStyle(newValue).width.match(/\d+/g)[0] * ratioHeight}px`);
+    mainImageLoadingRef.value.style.height = `10px`;
+    // document.querySelector().style.setProperty()
+    // newValue.querySelector('.card-loading').style.height = `${getComputedStyle(newValue).width.match(/\d+/g)[0] * ratioHeight}px`;
+    // newValue.style.height = `${getComputedStyle(newValue).width.match(/\d+/g)[0] * ratioHeight}px`;
+    console.log('heightt', getComputedStyle(newValue).height)
+    updateAspectRatio(newValue);
+    handleLoading(newValue);
+});
+// mainImageLoadingRef.value.style.height = `${getComputedStyle(newValue).width.match(/\d+/g)[0] * ratioHeight}px`;
 onUpdated(() => {
     if (Array.isArray(caItemLoadingRef.value) && caItemLoadingRef.value.length > 0) {
         const conCom = getComputedStyle(scrollableContainer.value);
@@ -121,6 +119,11 @@ onUpdated(() => {
     });
 });
 const handleLoading = (card) => {
+    if(card.tagName.toLowerCase() == 'div'){
+        local.isMainDone = true;
+    }else if(card.tagName.toLowerCase() == 'li'){
+        // local.isItemDone = true;
+    }
     const image = card.querySelector('img');
     image.addEventListener('load', () => {
         const cardLoading = card.querySelector('.card-loading');
@@ -142,16 +145,20 @@ const handleLoading = (card) => {
 const nextCarousel = () => loop.next({duration: 0.4, ease: "power1.inOut"})
 const prevCarousel = () => loop.previous({duration: 0.4, ease: "power1.inOut"})
 const updateImage = (item, index) => {
-    loop.toIndex(index, {duration: 0.8, ease: "power1.inOut", cond:'click'})
-    mainImageRef.value.src = item;
+    if(local.isItemDone){
+        loop.toIndex(index, {duration: 0.8, ease: "power1.inOut", cond:'click'})
+        mainImageRef.value.src = item;
+    }
 }
 const handleMainImage = (cond) => {
-    if (cond === 'enter') {
-        $gsap.to(arrLeftRef.value, { x: '0%', opacity: 1, display:'flex', duration: 0.5 });
-        $gsap.to(arrRightRef.value, { x: '0%', opacity: 1, display:'flex', duration: 0.5 });
-    } else if (cond === 'leave') {
-        $gsap.to(arrLeftRef.value, { x: '-50%', opacity: 0, display:'none', duration: 0.5 });
-        $gsap.to(arrRightRef.value, { x: '50%', opacity: 0, display:'none', duration: 0.5 });
+    if(local.isMainDone){
+        if (cond === 'enter') {
+            $gsap.to(arrLeftRef.value, { x: '0%', opacity: 1, display:'flex', duration: 0.5 });
+            $gsap.to(arrRightRef.value, { x: '0%', opacity: 1, display:'flex', duration: 0.5 });
+        } else if (cond === 'leave') {
+            $gsap.to(arrLeftRef.value, { x: '-50%', opacity: 0, display:'none', duration: 0.5 });
+            $gsap.to(arrRightRef.value, { x: '50%', opacity: 0, display:'none', duration: 0.5 });
+        }
     }
 }
 const horizontalLoop = (items, config) => {

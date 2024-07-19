@@ -70,7 +70,7 @@ watch(() => local.fetchedViewData, () => {
             });
             local.fetchedViewData.forEach((item, index) => {
                 let card = cardRefs.value[index];
-                handleLoading(card);
+                // handleLoading(card);
             });
         });
     }

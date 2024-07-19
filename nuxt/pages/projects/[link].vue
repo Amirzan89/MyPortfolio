@@ -3,7 +3,7 @@
         <section>
             <div class="relative left-1/2 -translate-x-1/2 flex 3xsphone:flex-col md:flex-row 3xsphone:gap-3 sm:gap-5 md:gap-10 w-11/12 items-start">
                 <CarouselImageComponent :images="getImages()"/>
-                <div class="flex flex-col flex-1 text-primary_text dark:text-primary_dark_text">
+                <div id="detailProject" class="flex flex-col flex-1 text-primary_text dark:text-primary_dark_text">
                     <h1 class="3xsphone:text-sm xsphone:text-base phone:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-semibold">{{ capitalizeFirstLetter(local.fetchedDetailProject?.nama) }}</h1>
                     <p class="3xsphone:text-3xs phone:text-2xs sm:text-base md:text-sm lg:text-base xl:text-lg 2xl:text-xl 3xsphone:mt-1 phone:mt-3 sm:mt-5 font-normal" v-html="local.formattedDeskripsi"/>
                     <div class="flex flex-row 3xsphone:gap-1 sm:gap-3 md:gap-5 3xsphone:mt-1 sm:mt-1 xl:mt-3 ml-3">
@@ -173,10 +173,12 @@ watch(() => local.fetchedDetailProject, () => {
         local.thumbnail = local.fetchedDetailProject.thumbnail;
         nextTick(() => {
             const { $gsap } = useNuxtApp();
-            $gsap.from('section:nth-child(1) a:not(#btnPreview', {
+            const tl = $gsap.timeline();
+            const first = $gsap.utils.selector('section:first-child div');
+            tl.from(first('a:not(#btnPreview'), {
                 y:'300%',
                 opacity: 0,
-                delay: 2,
+                delay: 0.7,
                 duration: 1,
                 stagger: {
                     from: 'start',
@@ -187,6 +189,20 @@ watch(() => local.fetchedDetailProject, () => {
             local.carouselImage = local.fetchedDetailProject.foto.map((item) => {
                 return link + item;
             });
+            tl.from(first('#carouselComponent div'), {
+                y:'-100%',
+                scale: 0.5,
+                opacity: 0,
+                delay: 0,
+                duration:1,
+            }, 0);
+            tl.from(first('ul'), {
+                y: '50%',
+                scale: 0.5,
+                opacity: 0,
+                delay: 2,
+                duration:1,
+            }, 0);
         });
     }
 }, { immediate:true });
@@ -235,17 +251,4 @@ const getImages = () => {
         return local.carouselImage;
     }
 }
-// const changeImg = (index) => {
-//     for(let i = 0; i < slideRef.value.length; i++){
-//         if(index == i){
-//             slideRef.value[index].classList.remove('hover:border-red-500');
-//             slideRef.value[index].classList.add('border-red-500');
-//         }else{
-//             slideRef.value[i].classList.remove('border-red-500');
-//             slideRef.value[i].classList.add('hover:border-red-500');
-//         }
-//     }
-//     local.carouselSlide.changeCarousel(index);
-// }
-// slideRef.value = computed(() => local.carouselSlide.itemReff);
 </script>

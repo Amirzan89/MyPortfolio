@@ -21,13 +21,13 @@ export default () => {
             tl.from(first('h1'), {
                 x:'100%',
                 opacity: 0,
-                delay: 0.6,
+                delay: 1,
                 duration:1,
             }, 0);
             tl.from(first('p'), {
                 x:'100%',
                 opacity: 0,
-                delay: 0.8,
+                delay: 1,
                 duration:1,
             }, 0);
         }else{
@@ -39,27 +39,29 @@ export default () => {
                 duration:1,
             }, 0);
             tl.from(first('p'), {
-                x:'-100%',
+                x:'-50%',
                 opacity: 0,
-                delay: 0.8,
+                delay: 0.9,
                 duration:1,
             }, 0);
         }
         tl.from(first('a#btnPreview'), {
             y:'300%',
             opacity: 0,
-            delay: 0.8,
+            delay: 1.3,
             duration: 1,
         }, 0);
         const sec = gsap.utils.selector('section:last-child');
         tl.from(sec('span'), {
             x:'-100%',
             opacity: 0,
+            delay: 2,
             duration: 1.3,
         }, 0);
         tl.from(sec('a#btnOthers'), {
             x:'100%',
             display:'none',
+            delay: 2,
             opacity: 0,
             duration: 1.3,
         }, 0);
