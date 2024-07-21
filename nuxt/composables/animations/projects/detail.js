@@ -21,7 +21,7 @@ export default () => {
             tl.from(first('h1'), {
                 x:'100%',
                 opacity: 0,
-                delay: 1,
+                delay: 0.7,
                 duration:1,
             }, 0);
             tl.from(first('p'), {
@@ -35,34 +35,38 @@ export default () => {
             tl.from(first('h1'), {
                 x:'-100%',
                 opacity: 0,
-                delay: 0.6,
+                delay: 0.7,
                 duration:1,
             }, 0);
             tl.from(first('p'), {
                 x:'-50%',
                 opacity: 0,
-                delay: 0.9,
+                delay: 1,
                 duration:1,
             }, 0);
         }
         tl.from(first('a#btnPreview'), {
             y:'300%',
             opacity: 0,
-            delay: 1.3,
+            delay: 1.5,
             duration: 1,
         }, 0);
-        const sec = gsap.utils.selector('section:last-child');
-        tl.from(sec('span'), {
+        gsap.set(first('#carouselComponent div'), {
+            y:'-100%',
+            scale: 0.5,
+            opacity: 0,
+        }, 0);
+        const lastChi = gsap.utils.selector('section:last-child');
+        tl.from(lastChi('span'), {
             x:'-100%',
             opacity: 0,
-            delay: 2,
+            delay: 2.2,
             duration: 1.3,
         }, 0);
-        tl.from(sec('a#btnOthers'), {
+        tl.from(lastChi('a#btnOthers'), {
             x:'100%',
-            display:'none',
-            delay: 2,
             opacity: 0,
+            delay: 2.2,
             duration: 1.3,
         }, 0);
         footer();

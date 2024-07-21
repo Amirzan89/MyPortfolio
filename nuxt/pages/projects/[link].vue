@@ -33,7 +33,7 @@
                             <h3 class="relative 3xsphone:left-2 phone:left-3 sm:left-4 md:left-5 lg:left-4 xl:left-5 2xl:left-6 3xsphone:mt-5 xl:mt-7 2xl:mt-10 3xsphone:text-2xs phone:text-sm sm:text-base md:text-xl xl:text-2xl 2xl:text-xl font-semibold w-max">{{ item.nama }}</h3>
                             <span class="relative 3xsphone:left-2 phone:left-3 sm:left-4 md:left-5 lg:left-4 xl:left-5 2xl:left-6 3xsphone:mb-3 md:mb-4 xl:mb-5 3xsphone:text-3xs phone:text-xs sm:text-sm md:text-lg lg:text-base xl:text-lg 2xl:text-xl w-max">{{ item.category }}</span>
                         </NuxtLink>
-                        <div class="card-loading absolute top-0 left-0 flex flex-col bg-transparent w-full">
+                        <div class="card-loading absolute top-0 left-0 flex flex-col w-full">
                             <div class="rounded-md relative left-1/2 -translate-x-1/2 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
                             <h3 class="rounded-md relative left-5 mt-5 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
                             <span class="relative left-5 mt-4 mb-10 rounded-md items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
@@ -145,7 +145,6 @@ onUnmounted(() => {
     ctx.value?.kill()
 });
 watch(() => route.params.link, () => {
-    console.log('ganti link')
     const { gsapContext } = animationsComposable();
     ctx.value = gsapContext.value;
 });
@@ -189,18 +188,18 @@ watch(() => local.fetchedDetailProject, () => {
             local.carouselImage = local.fetchedDetailProject.foto.map((item) => {
                 return link + item;
             });
-            tl.from(first('#carouselComponent div'), {
-                y:'-100%',
-                scale: 0.5,
-                opacity: 0,
+            tl.to(first('#carouselComponent div'), {
+                y:'0%',
+                scale: 1,
+                opacity: 1,
                 delay: 0,
                 duration:1,
             }, 0);
-            tl.from(first('ul'), {
+            tl.from(first('#carouselComponent ul'), {
                 y: '50%',
                 scale: 0.5,
                 opacity: 0,
-                delay: 2,
+                delay: 0.2,
                 duration:1,
             }, 0);
         });
@@ -213,7 +212,7 @@ watch(() => local.fetchedOtherProject, () => {
             $gsap.from(cardRefs.value, {
                 opacity: 0,
                 y:'20%',
-                delay: 0.3,
+                delay: 0.25,
                 duration: 1,
                 scrollTrigger: {
                     trigger: 'section:last-child',
