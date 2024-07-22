@@ -1,20 +1,24 @@
 <template>
     <div id="carouselComponent" class="sm:mb-4 flex flex-col items-center relative 3xsphone:left-1/2 md:left-0 3xsphone:-translate-x-1/2 md:-translate-x-0 whitespace-nowrap md:flex-1 w-10/12" ref="carouselRef">
-        <div class="relative w-10/12 flex" ref="mainImageLoadingRef" @mouseenter="handleMainImage('enter')" @mouseleave="handleMainImage('leave')" @mousemove="handleMainImage('move')">
+        <div class="relative w-10/12 flex items-center" ref="mainImageLoadingRef" @mouseenter="handleMainImage('enter')" @mouseleave="handleMainImage('leave')" @mousemove="handleMainImage('move')">
             <div ref="arrLeftRef" class="refArr absolute z-10 left-0 flex justify-center items-center h-full 3xsphone:w-5 xl:w-10" :style="{ backgroundColor: useDarkModeStore().darkMode? 'rgba(255, 255, 255, 0.14)' : 'rgba(255, 255, 255, 0.14)', boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)'}">
                 <FontAwesomeIcon icon="fa-solid fa-angle-left" class="3xsphone:text-lg xsphone:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-5xl text-7xl text-primary_text dark:text-primary_dark cursor-pointer" @click="prevCarousel()"/>
             </div>
-            <img :src="props.images[0]+''" alt="" ref="mainImageRef" class="h-full relative object-contain 3xsphone:rounded-md sm:rounded-lg md:rounded-xl">
+            <div>
+                <img :src="props.images[0]+''" alt="" ref="mainImageRef" class="relative block object-contain 3xsphone:rounded-md sm:rounded-lg md:rounded-xl">
+            </div>
             <div ref="arrRightRef" class="refArr absolute z-10 right-0 flex justify-center items-center h-full 3xsphone:w-5 xl:w-10" :style="{ backgroundColor: useDarkModeStore().darkMode? 'rgba(255, 255, 255, 0.14)' : 'rgba(255, 255, 255, 0.14)', boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)' }">
                 <FontAwesomeIcon icon="fa-solid fa-angle-right" class="3xsphone:text-lg xsphone:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-5xl text-7xl text-primary_text dark:text-primary_dark cursor-pointer" @click="nextCarousel()"/>
             </div>
             <div class="card-loading items-loading absolute top-0 left-0 w-full h-full 3xsphone:rounded-md sm:rounded-lg md:rounded-xl" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
         </div>
-        <ul class="flex gap-1.5 mt-1 w-1/3 scrollable-container relative" ref="scrollableContainer">
+        <ul class="flex gap-1.5 mt-1 w-5/12 scrollable-container relative" ref="scrollableContainer">
             <template v-for="(item, index) in props.images" :key="index">
                 <li ref="caItemLoadingRef" class="flex-shrink-0 relative">
-                    <img :src="item+''" alt="" @click="updateImage(item, index)" ref="caItemRef" class="pointer-events-auto object-contain rounded-md border-3 border-transparent hover:border-primary dark:hover:border-primary_dark" draggable="false">
-                    <div class="card-loading items-loading absolute top-0 left-0 z-10 w-full h-full rounded-md" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
+                    <div>
+                        <img :src="item+''" alt="" @click="updateImage(item, index)" ref="caItemRef" class="pointer-events-auto relative block object-contain 3xsphone:rounded-sm md:rounded-md 3xsphone:border-1 md:border-3 border-transparent hover:border-primary dark:hover:border-primary_dark" draggable="false">
+                    </div>
+                    <div class="card-loading items-loading absolute top-0 left-0 z-10 w-full h-full 3xsphone:rounded-sm md:rounded-md" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s; background-color: rgba(255, 255, 255, 0.14);"/>
                 </li>
             </template>
         </ul>
@@ -73,12 +77,26 @@ const createComposableInstance = (composableType, elementId, composableFactory) 
 };
 const updateAspectRatio = (el = null) => {
     el = el instanceof Event ? null : el;
-    const updateArr = () => arrLeftRef.value.style.height = getComputedStyle(mainImageRef.value); arrRightRef.value.style.height = getComputedStyle(mainImageRef.value);
-    const updateHeight = item => {
-        item.style.height = `${getComputedStyle(item).width.match(/\d+/g)[0] * ratioHeight}px`;
-        item == 'main' ? updateArr() : null;
+    const conCom = getComputedStyle(scrollableContainer.value);
+    const conWidth = conCom.width.match(/\d+/g)[0];
+    const widthItem = `${(((conWidth - (maxItemContainer - 1) * conCom.gap.match(/\d+/g)[0]) / maxItemContainer) / conWidth) * 100}%`;
+    const updateArr = () => {
+        arrLeftRef.value.style.height = getComputedStyle(mainImageRef.value).height;
+        arrLeftRef.value.style.borderTopLeftRadius = getComputedStyle(mainImageRef.value).borderTopLeftRadius;
+        arrLeftRef.value.style.borderBottomLeftRadius = getComputedStyle(mainImageRef.value).borderBottomLeftRadius;
+
+        arrRightRef.value.style.height = getComputedStyle(mainImageRef.value).height;
+        arrRightRef.value.style.borderTopRightRadius = getComputedStyle(mainImageRef.value).borderTopRightRadius;
+        arrRightRef.value.style.borderBottomRightRadius = getComputedStyle(mainImageRef.value).borderBottomRightRadius;
     };
-    el != null ? updateHeight(el) && updateArr() : updateHeight(mainImageLoadingRef.value) && caItemLoadingRef.value.forEach(updateHeight) && updateArr();
+    const updateHeight = item => item.style.height = `${getComputedStyle(item).width.match(/\d+/g)[0] * ratioHeight}px`;
+    if(el != null){
+        updateHeight(el);
+    }else{
+        updateHeight(mainImageLoadingRef.value);
+        caItemLoadingRef.value.forEach(updateHeight);
+        updateArr();
+    }
 };
 onMounted(() => {
     window.addEventListener('resize', updateAspectRatio);
@@ -95,12 +113,21 @@ onMounted(() => {
 });
 onBeforeUnmount(() => window.removeEventListener('resize', updateAspectRatio));
 watch(mainImageLoadingRef, (newValue) => {
-    mainImageLoadingRef.value.style.height = `${getComputedStyle(newValue).width.match(/\d+/g)[0] * ratioHeight}}px`;
-    // updateAspectRatio(newValue);
-    handleLoading(newValue);
+    updateAspectRatio(newValue);
+    handleLoading(newValue, 'main');
 });
 onUpdated(() => {
     if (Array.isArray(caItemLoadingRef.value) && caItemLoadingRef.value.length > 0) {
+        $gsap.from(caItemLoadingRef.value, {
+            y:'200%',
+            opacity: 0,
+            delay: 2,
+            duration: 1,
+            stagger: {
+                from: 'start',
+                each: 0.3,
+            },
+        }, 0);
         const conCom = getComputedStyle(scrollableContainer.value);
         const conWidth = conCom.width.match(/\d+/g)[0];
         const widthItem = `${(((conWidth - (maxItemContainer - 1) * conCom.gap.match(/\d+/g)[0]) / maxItemContainer) / conWidth) * 100}%`;
@@ -114,9 +141,18 @@ onUpdated(() => {
         loop = horizontalLoop($gsap.utils.toArray(caItemRef.value), {paused: true, draggable: true, maxItem: maxItemContainer});
     });
 });
-const handleLoading = (card) => {
+const handleLoading = (card, cond = '') => {
     const image = card.querySelector('img');
     image.addEventListener('load', () => {
+        if(cond == 'main'){
+            arrLeftRef.value.style.height = getComputedStyle(mainImageRef.value).height;
+            arrLeftRef.value.style.borderTopLeftRadius = getComputedStyle(mainImageRef.value).borderTopLeftRadius;
+            arrLeftRef.value.style.borderBottomLeftRadius = getComputedStyle(mainImageRef.value).borderBottomLeftRadius;
+
+            arrRightRef.value.style.height = getComputedStyle(mainImageRef.value).height;
+            arrRightRef.value.style.borderTopRightRadius = getComputedStyle(mainImageRef.value).borderTopRightRadius;
+            arrRightRef.value.style.borderBottomRightRadius = getComputedStyle(mainImageRef.value).borderBottomRightRadius;
+        }
         const cardLoading = card.querySelector('.card-loading');
         if (cardLoading) {
             cardLoading.remove();
@@ -151,7 +187,7 @@ const nextCarousel = () => loop.next({duration: 0.4, ease: "power1.inOut"})
 const prevCarousel = () => loop.previous({duration: 0.4, ease: "power1.inOut"})
 const updateImage = (item, index) => {
     if(local.isItemDone){
-        loop.toIndex(index, {duration: 0.8, ease: "power1.inOut", cond:'click'})
+        loop.toIndex(index, {duration: 0.8, ease: "power1.inOut"});
         mainImageRef.value.src = item;
     }
 }
@@ -182,9 +218,13 @@ const handleMainImage = (cond) => {
 }
 const horizontalLoop = (items, config) => {
     function setMiddle(currentIndex, totalItems, visibleItems) {
+        console.log('middleee');
         items.forEach(box => box.classList.remove("middle-item"));
+        console.log('middleee1');
         items[(currentIndex + Math.floor(visibleItems / 2)) % totalItems].classList.add("middle-item");
+        console.log('middleee2');
         mainImageRef.value.src = items[(currentIndex + Math.floor(visibleItems / 2)) % totalItems].src;
+        console.log('middleee3');
     }
 	config = config || {};
     config.maxItem = (Number.isInteger(config.maxItem) && config.maxItem % 2 != 0) ? config.maxItem : 3; //max item must be show inside container
@@ -221,6 +261,7 @@ const horizontalLoop = (items, config) => {
     }
     function toIndex(index, vars) {
         vars = vars || {};
+        console.log('testtt');
         (Math.abs(index - curIndex) > length / 2) && (index += index > curIndex ? -length : length); // always go in the shortest direction
         let newIndex = $gsap.utils.wrap(0, length, index),
         time = times[newIndex];
@@ -230,18 +271,22 @@ const horizontalLoop = (items, config) => {
         }
         curIndex = newIndex;
         vars.overwrite = true;
-        return tl.tweenTo(time, vars);  
+        console.log('testtt4');
+        const karepp = tl.tweenTo(time, vars);
+        console.log('hasil ', karepp);
+        return karepp
+        // return tl.tweenTo(time, vars);
     }
     //for static
     // tl.next = vars => { toIndex(curIndex + 1, vars) && setMiddle(curIndex + 0, length, 3)};
     // tl.previous = vars => { toIndex(curIndex - 1, vars) && setMiddle((curIndex + 1) - 1, length, 3)};
 
     //for dynamic
-    tl.next = vars => {toIndex(curIndex + 1, {...vars, cond:'next'}) && setMiddle(curIndex + (config.maxItem - 5) / 2 + 1, length, config.maxItem)};
-    tl.previous = vars => { toIndex(curIndex - 1, {...vars, cond:'prev'}) && setMiddle(curIndex + (config.maxItem - 3) / 2, length, config.maxItem)};
+    tl.next = vars => { toIndex(curIndex + 1, vars) && setMiddle(curIndex + (config.maxItem - 5) / 2 + 1, length, config.maxItem)};
+    tl.previous = vars => { toIndex(curIndex - 1, vars) && setMiddle(curIndex + (config.maxItem - 3) / 2, length, config.maxItem)};
 
     tl.current = () => curIndex;
-    tl.toIndex = (index, vars) => toIndex(index, {...vars, cond:'click'});
+    tl.toIndex = (index, vars) => toIndex(index, vars);
     tl.updateIndex = () => curIndex = Math.round(tl.progress() * items.length);
     tl.times = times;
     tl.progress(1, true).progress(0, true); // pre-render for performance
@@ -249,60 +294,62 @@ const horizontalLoop = (items, config) => {
         tl.vars.onReverseComplete();
         tl.reverse();
     }
-    if (config.draggable) {
-        let proxy = document.createElement("div"),
-            wrap = $gsap.utils.wrap(0, 1),
-            ratio, startProgress, draggable, dragSnap, roundFactor,
-            align = () => tl.progress(wrap(startProgress + (draggable.startX - draggable.x) * ratio)),
-            syncIndex = () => tl.updateIndex();
-        draggable = $Draggable.create(proxy, {
-            trigger: items[0].parentNode,
-            type: "x",
-            onPress() {
-                startProgress = tl.progress();
-                tl.progress(0);
-                populateWidths();
-                totalWidth = getTotalWidth();
-                ratio = 1 / totalWidth;
-                dragSnap = totalWidth / items.length;
-                roundFactor = Math.pow(10, ((dragSnap + "").split(".")[1] || "").length);
-                tl.progress(startProgress);
-            },
-            onDrag: align,
-            onThrowUpdate: align,
-            snap: value => {
-                let n = Math.round(parseFloat(value) / dragSnap) * dragSnap * roundFactor;
-                return (n - n % 1) / roundFactor;
-            },
-            onRelease: () => {
-                syncIndex();
-                let dragProgress = (draggable.startX - draggable.endX) * ratio;
-                let triggerThreshold = config.alignThreshold * widths[curIndex];
-                let alignedProgress = startProgress + dragProgress;
-                if (Math.abs(dragProgress) > triggerThreshold) {
-                    let closest = Math.round(alignedProgress / dragSnap) * dragSnap;
-                    alignedProgress = wrap(closest);
-                }
-                $gsap.to(proxy, {
-                    x: 0,
-                    duration: 0.2,
-                    onUpdate: () => tl.progress(alignedProgress),
-                    onComplete: () => {
-                        syncIndex();
-                        $gsap.to(tl, {
-                            time: times[curIndex],
-                            duration: 0.2,
-                            ease: "power1.inOut",
-                            onComplete: () => {
-                                setMiddle(curIndex, length, config.maxItem);
-                            }
-                        });
-                    }
-                });
-            }
-        })[0];
-        tl.draggable = draggable;
-    }
+    // if (config.draggable) {
+    //     let proxy = document.createElement("div"),
+    //         wrap = $gsap.utils.wrap(0, 1),
+    //         ratio, startProgress, draggable, dragSnap, roundFactor,
+    //         align = () => tl.progress(wrap(startProgress + (draggable.startX - draggable.x) * ratio)),
+    //         syncIndex = () => tl.updateIndex();
+    //     draggable = $Draggable.create(proxy, {
+    //         trigger: items[0].parentNode,
+    //         type: "x",
+    //         onPress() {
+    //             console.log('trig press')
+    //             startProgress = tl.progress();
+    //             tl.progress(0);
+    //             populateWidths();
+    //             totalWidth = getTotalWidth();
+    //             ratio = 1 / totalWidth;
+    //             dragSnap = totalWidth / items.length;
+    //             roundFactor = Math.pow(10, ((dragSnap + "").split(".")[1] || "").length);
+    //             tl.progress(startProgress);
+    //         },
+    //         onDrag: align,
+    //         onThrowUpdate: align,
+    //         snap: value => {
+    //             let n = Math.round(parseFloat(value) / dragSnap) * dragSnap * roundFactor;
+    //             return (n - n % 1) / roundFactor;
+    //         },
+    //         onRelease: () => {
+    //             console.log('trig release')
+    //             syncIndex();
+    //             let dragProgress = (draggable.startX - draggable.endX) * ratio;
+    //             let triggerThreshold = config.alignThreshold * widths[curIndex];
+    //             let alignedProgress = startProgress + dragProgress;
+    //             if (Math.abs(dragProgress) > triggerThreshold) {
+    //                 let closest = Math.round(alignedProgress / dragSnap) * dragSnap;
+    //                 alignedProgress = wrap(closest);
+    //             }
+    //             $gsap.to(proxy, {
+    //                 x: 0,
+    //                 duration: 0.2,
+    //                 onUpdate: () => tl.progress(alignedProgress),
+    //                 onComplete: () => {
+    //                     syncIndex();
+    //                     $gsap.to(tl, {
+    //                         time: times[curIndex],
+    //                         duration: 0.2,
+    //                         ease: "power1.inOut",
+    //                         onComplete: () => {
+    //                             setMiddle(curIndex, length, config.maxItem);
+    //                         }
+    //                     });
+    //                 }
+    //             });
+    //         }
+    //     })[0];
+    //     tl.draggable = draggable;
+    // }
 	return tl;
 }
 // const visibleItems = 3; // Update as per your visible items count

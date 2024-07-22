@@ -2,7 +2,7 @@
     <div class="min-h-screen">
         <section>
             <div class="relative left-1/2 -translate-x-1/2 flex 3xsphone:flex-col md:flex-row 3xsphone:gap-3 sm:gap-5 md:gap-10 w-11/12 items-start">
-                <CarouselImageComponent :images="getImages()"/>
+                <CarouselImageComponent :images="getImages"/>
                 <div id="detailProject" class="flex flex-col flex-1 text-primary_text dark:text-primary_dark_text">
                     <h1 class="3xsphone:text-sm xsphone:text-base phone:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-semibold">{{ capitalizeFirstLetter(local.fetchedDetailProject?.nama) }}</h1>
                     <p class="3xsphone:text-3xs phone:text-2xs sm:text-base md:text-sm lg:text-base xl:text-lg 2xl:text-xl 3xsphone:mt-1 phone:mt-3 sm:mt-5 font-normal" v-html="local.formattedDeskripsi"/>
@@ -13,17 +13,21 @@
                             </a>
                         </template>
                     </div>
-                    <a :href="local.fetchedDetailProject?.link_project" target="_blank" id="btnPreview" class="3xsphone:ml-1 sm:ml-3 md:ml-3 2xl:ml-5 3xsphone:mt-2 2xsphone:mt-3 md:mt-5 xl:mt-7 2xl:mt-10 3xsphone:w-14 xsphone:w-17 phone:w-20 sm:w-27 md:w-27 lg:w-30 xl:w-37 3xsphone:h-4 xsphone:h-6 sm:h-9 md:h-8 lg:h-9 xl:h-12 3xsphone:rounded-sm xsphone:rounded-md xl:rounded-lg bg-primary dark:bg-primary_dark text-white flex items-center justify-center 3xsphone:text-2xs xsphone:text-xs phone:text-sm sm:text-lg md:text-lg lg:text-xl xl:text-2xl 3xsphone:font-medium md:font-semibold">Preview</a>
+                    <template v-if="local.fetchedDetailProject != null">
+                        <a :href="local.fetchedDetailProject?.link_project" target="_blank" id="btnPreview" class="3xsphone:ml-1 sm:ml-3 md:ml-3 2xl:ml-5 3xsphone:mt-2 2xsphone:mt-3 md:mt-5 xl:mt-7 2xl:mt-10 3xsphone:w-14 xsphone:w-17 phone:w-20 sm:w-27 md:w-27 lg:w-30 xl:w-37 3xsphone:h-4 xsphone:h-6 sm:h-9 md:h-8 lg:h-9 xl:h-12 3xsphone:rounded-sm xsphone:rounded-md xl:rounded-lg bg-primary dark:bg-primary_dark text-white flex items-center justify-center 3xsphone:text-2xs xsphone:text-xs phone:text-sm sm:text-lg md:text-lg lg:text-xl xl:text-2xl 3xsphone:font-medium md:font-semibold">Preview</a>
+                    </template>
                 </div>
             </div>
         </section>
         <section class="mt-10">
             <div class="flex relative left-1/2 -translate-x-1/2 justify-between items-center text-primary_text dark:text-primary_dark_text">
-                <span class="3xsphone:text-2xs 2xsphone:text-xs phone:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl relative font-semibold">Projects</span>
-                <NuxtLink id="btnOthers" to="/projects" class="3xsphone:text-2xs 2xsphone:text-xs phone:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl flex gap-2 items-center hover:text-red-500">
-                    <span>Others</span>
-                    <FontAwesomeIcon icon="fa-solid fa-arrow-right-long" class="3xsphone:text-2xs 2xsphone:text-xs phone:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl"/> 
-                </NuxtLink>
+                <template v-if="local.fetchedOtherProject != null">
+                    <span class="3xsphone:text-2xs 2xsphone:text-xs phone:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl relative font-semibold">Projects</span>
+                    <NuxtLink id="btnOthers" to="/projects" class="3xsphone:text-2xs 2xsphone:text-xs phone:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl flex gap-2 items-center hover:text-red-500">
+                        <span>Others</span>
+                        <FontAwesomeIcon icon="fa-solid fa-arrow-right-long" class="3xsphone:text-2xs 2xsphone:text-xs phone:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl"/> 
+                    </NuxtLink>
+                </template>
             </div>
             <ul class="conCard relative left-1/2 -translate-x-1/2 flex 3xsphone:mt-1 xl:mt-5 flex-wrap -blue-500 gap-5">
                 <template v-for="(item, index) in local.fetchedOtherProject" :key="index">
@@ -48,7 +52,7 @@
     @import '~/assets/css/detailProject.css';
 </style>
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { useNotFoundStore } from '~/store/NotFound';
 import { useFetchDataStore } from "~/store/FetchData";
 import CarouselImageComponent from '~/components/CarouselImage.vue';
@@ -122,7 +126,7 @@ const caItemRef = ref([]);
 const slideRef = ref([]);
 const cardRefs = ref([]);
 const ctx = ref(null);
-useLazyAsyncData(async () => {
+useAsyncData(async () => {
     const res = await useFetchDataStore().fetchData();
     if(res.status == 'success'){
         local.fetchedDetailProject = res.data.detailProject;
@@ -184,24 +188,16 @@ watch(() => local.fetchedDetailProject, () => {
                     each: 0.3,
                 },
             }, 0);
+            tl.from(first('a#btnPreview'), {
+                y:'300%',
+                opacity: 0,
+                delay: 0.5,
+                duration: 1,
+            }, 0);
             const link = publicConfig.baseURL + '/img/project/';
             local.carouselImage = local.fetchedDetailProject.foto.map((item) => {
                 return link + item;
             });
-            tl.to(first('#carouselComponent div'), {
-                y:'0%',
-                scale: 1,
-                opacity: 1,
-                delay: 0,
-                duration:1,
-            }, 0);
-            tl.from(first('#carouselComponent ul'), {
-                y: '50%',
-                scale: 0.5,
-                opacity: 0,
-                delay: 0.2,
-                duration:1,
-            }, 0);
         });
     }
 }, { immediate:true });
@@ -209,6 +205,19 @@ watch(() => local.fetchedOtherProject, () => {
     if (local?.fetchedOtherProject !== undefined && local.fetchedOtherProject !== null && typeof local.fetchedOtherProject === 'object' && Array.isArray(local.fetchedOtherProject) && Object.keys(local.fetchedOtherProject).length > 0) {
         nextTick(() => {
             const { $gsap } = useNuxtApp();
+            const lastChi = $gsap.utils.selector('section:last-child');
+            $gsap.from(lastChi('span'), {
+                x:'-100%',
+                opacity: 0,
+                delay: 2.2,
+                duration: 1.3,
+            }, 0);
+            $gsap.from(lastChi('a#btnOthers'), {
+                x:'100%',
+                opacity: 0,
+                delay: 2.2,
+                duration: 1.3,
+            }, 0);
             $gsap.from(cardRefs.value, {
                 opacity: 0,
                 y:'20%',
@@ -245,9 +254,7 @@ const filteredTechStack = computed(() => {
     });
     return result;
 });
-const getImages = () => {
-    if(local.carouselImage != []){
-        return local.carouselImage;
-    }
-}
+const getImages = computed(() => {
+    return local.carouselImage;
+});
 </script>

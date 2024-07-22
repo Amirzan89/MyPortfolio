@@ -45,29 +45,20 @@ export default () => {
                 duration:1,
             }, 0);
         }
-        tl.from(first('a#btnPreview'), {
-            y:'300%',
-            opacity: 0,
-            delay: 1.5,
-            duration: 1,
-        }, 0);
-        gsap.set(first('#carouselComponent div'), {
-            y:'-100%',
+        tl.from(first('#carouselComponent div'), {
+            y:'-50%',
             scale: 0.5,
             opacity: 0,
+            delay: 1.1,
+            duration:1,
         }, 0);
-        const lastChi = gsap.utils.selector('section:last-child');
-        tl.from(lastChi('span'), {
-            x:'-100%',
+        tl.from(first('#carouselComponent ul'), {
+            x: '-50%',
+            y: '100%',
+            scale: 0.5,
             opacity: 0,
-            delay: 2.2,
-            duration: 1.3,
-        }, 0);
-        tl.from(lastChi('a#btnOthers'), {
-            x:'100%',
-            opacity: 0,
-            delay: 2.2,
-            duration: 1.3,
+            delay: 1.7,
+            duration:1,
         }, 0);
         footer();
         return tl;
