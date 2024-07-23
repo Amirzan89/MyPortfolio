@@ -175,25 +175,25 @@ watch(() => local.fetchedDetailProject, () => {
     if (local?.fetchedDetailProject !== undefined && local.fetchedDetailProject !== null && typeof local.fetchedDetailProject === 'object' && !Array.isArray(local.fetchedDetailProject) && Object.keys(local.fetchedDetailProject).length > 0) {
         local.thumbnail = local.fetchedDetailProject.thumbnail;
         nextTick(() => {
-            // const { $gsap } = useNuxtApp();
-            // const tl = $gsap.timeline();
-            // const first = $gsap.utils.selector('section:first-child div');
-            // tl.from(first('a:not(#btnPreview'), {
-            //     y:'300%',
-            //     opacity: 0,
-            //     delay: 0.7,
-            //     duration: 1,
-            //     stagger: {
-            //         from: 'start',
-            //         each: 0.3,
-            //     },
-            // }, 0);
-            // tl.from(first('a#btnPreview'), {
-            //     y:'300%',
-            //     opacity: 0,
-            //     delay: 0.5,
-            //     duration: 1,
-            // }, 0);
+            const { $gsap } = useNuxtApp();
+            const tl = $gsap.timeline();
+            const first = $gsap.utils.selector('section:first-child div');
+            tl.from(first('a:not(#btnPreview'), {
+                y:'300%',
+                opacity: 0,
+                delay: 0.7,
+                duration: 1,
+                stagger: {
+                    from: 'start',
+                    each: 0.3,
+                },
+            }, 0);
+            tl.from(first('a#btnPreview'), {
+                y:'300%',
+                opacity: 0,
+                delay: 0.5,
+                duration: 1,
+            }, 0);
             const link = publicConfig.baseURL + '/img/project/';
             local.carouselImage = local.fetchedDetailProject.foto.map((item) => {
                 return link + item;
@@ -206,33 +206,33 @@ watch(() => local.fetchedOtherProject, () => {
         nextTick(() => {
             const { $gsap } = useNuxtApp();
             const lastChi = $gsap.utils.selector('section:last-child');
-            // $gsap.from(lastChi('span'), {
-            //     x:'-100%',
-            //     opacity: 0,
-            //     delay: 2.2,
-            //     duration: 1.3,
-            // }, 0);
-            // $gsap.from(lastChi('a#btnOthers'), {
-            //     x:'100%',
-            //     opacity: 0,
-            //     delay: 2.2,
-            //     duration: 1.3,
-            // }, 0);
-            // $gsap.from(cardRefs.value, {
-            //     opacity: 0,
-            //     y:'20%',
-            //     delay: 0.25,
-            //     duration: 1,
-            //     scrollTrigger: {
-            //         trigger: 'section:last-child',
-            //         start: 'top 60%',
-            //         end: 'top none',
-            //     },
-            //     stagger:{
-            //         from: 'start',
-            //         each: 0.3,
-            //     }
-            // });
+            $gsap.from(lastChi('span'), {
+                x:'-100%',
+                opacity: 0,
+                delay: 2.2,
+                duration: 1.3,
+            }, 0);
+            $gsap.from(lastChi('a#btnOthers'), {
+                x:'100%',
+                opacity: 0,
+                delay: 2.2,
+                duration: 1.3,
+            }, 0);
+            $gsap.from(cardRefs.value, {
+                opacity: 0,
+                y:'20%',
+                delay: 0.25,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: 'section:last-child',
+                    start: 'top 60%',
+                    end: 'top none',
+                },
+                stagger:{
+                    from: 'start',
+                    each: 0.3,
+                }
+            });
             local.fetchedOtherProject.forEach((item, index) => {
                 let card = cardRefs.value[index];
                 handleLoading(card);
