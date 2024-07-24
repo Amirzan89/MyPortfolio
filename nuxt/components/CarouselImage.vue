@@ -107,6 +107,14 @@ onMounted(() => {
             statusMessage: 'Max item container must odd at detail page',
         });
     }
+    // const configg = { 
+    //     firstName: "John",
+    //     lastName: "Doe",
+    //     age: 50,
+    //     eyeColor: "blue"
+    // }
+    // console.log('keyy', Object.keys(configg));
+    // Object.keys(configg).forEach(item => console.log('itemmm', item));
     window.addEventListener('resize', updateAspectRatio);
     $gsap.set(arrLeftRef.value, {
         x: '-50%',
@@ -123,32 +131,38 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateAspectRatio));
 watch(mainImageLoadingRef, (newValue) => {
     updateAspectRatio(newValue);
     handleLoading(newValue, 'main');
-
 });
-onUpdated(() => {
-    nextTick(() => {
-        if (Array.isArray(caItemLoadingRef.value) && caItemLoadingRef.value.length > 0) {
-            $gsap.from(caItemLoadingRef.value, {
-                y:'200%',
-                opacity: 0,
-                delay: 2,
-                duration: 1,
-                stagger: {
-                    from: 'start',
-                    each: 0.3,
-                },
-            }, 0);
-            const conCom = getComputedStyle(scrollableContainer.value);
-            const conWidth = conCom.width.match(/\d+/g)[0];
-            const widthItem = `${(((conWidth - (conCom.gap.match(/\d+/g) ? (maxItemContainer - 1) * conCom.gap.match(/\d+/g)[0] : 0)) / maxItemContainer) / conWidth) * 100}%`;
-            caItemLoadingRef.value.forEach((item) => {
-                item.style.width = widthItem;
-                updateAspectRatio(item);
-                handleLoading(item);
-            });
+onUpdated(async() => {
+    if (Array.isArray(caItemLoadingRef.value) && caItemLoadingRef.value.length > 0) {
+        //init carousel
+        for(let i = 0; i < Math.floor((maxItemContainer - 1) / 2); i++){
+            const lastChild = scrollableContainer.value.lastElementChild;
+            const clonedLastChild = lastChild.cloneNode(true);
+            clonedLastChild.querySelector('img').addEventListener('click', () => updateImage(lastChild.querySelector('img').src, Array.prototype.indexOf.call(scrollableContainer.value.children, lastChild)));
+            scrollableContainer.value.insertBefore(clonedLastChild, scrollableContainer.value.firstChild);
+            scrollableContainer.value.removeChild(lastChild);
         }
-        loop = horizontalLoop($gsap.utils.toArray(caItemLoadingRef.value), {paused: true, draggable: true, maxItem: maxItemContainer});
-    });
+        caItemLoadingRef.value = Array.from(scrollableContainer.value.querySelectorAll('li'));
+        $gsap.from(caItemLoadingRef.value, {
+            y:'200%',
+            opacity: 0,
+            delay: 2,
+            duration: 1,
+            stagger: {
+                from: 'start',
+                each: 0.3,
+            },
+        }, 0);
+        const conCom = getComputedStyle(scrollableContainer.value);
+        const conWidth = conCom.width.match(/\d+/g)[0];
+        const widthItem = `${(((conWidth - (conCom.gap.match(/\d+/g) ? (maxItemContainer - 1) * conCom.gap.match(/\d+/g)[0] : 0)) / maxItemContainer) / conWidth) * 100}%`;
+        caItemLoadingRef.value.forEach(item => {
+            item.style.width = widthItem;
+            updateAspectRatio(item);
+            handleLoading(item);
+        });
+    }
+    loop = horizontalLoop($gsap.utils.toArray(caItemLoadingRef.value), {paused: true, draggable: true, maxItem: maxItemContainer});
 });
 const handleLoading = (card, cond = '') => {
     const image = card.querySelector('img');
@@ -196,8 +210,10 @@ const nextCarousel = () => loop.next({duration: 0.4, ease: "power1.inOut"})
 const prevCarousel = () => loop.previous({duration: 0.4, ease: "power1.inOut"})
 const updateImage = (item, index) => {
     if(local.isItemDone){
+        loop.updateConfig({isClickImage: true});
         loop.toIndex(index, {duration: 0.8, ease: "power1.inOut"});
         mainImageRef.value.src = item;
+        loop.updateConfig({isClickImage: false});
     }
 }
 const useHandleMainImageComposable = () => {
@@ -228,13 +244,12 @@ const handleMainImage = (cond) => {
 const horizontalLoop = (items, config) => {
     function setMiddle(currentIndex, totalItems, visibleItems) {
         items.forEach(box => box.classList.remove("middle-item"));
-        // console.log('indexx set ', currentIndex);
-        // console.log('indexx 2set ', ((currentIndex + Math.floor(visibleItems / 2)) % totalItems));
         items[(currentIndex + Math.floor(visibleItems / 2)) % totalItems].classList.add("middle-item");
         mainImageRef.value.src = items[(currentIndex + Math.floor(visibleItems / 2)) % totalItems].querySelector('div img').src;
     }
 	config = config || {};
     config.maxItem = (Number.isInteger(config.maxItem) && config.maxItem % 2 != 0) ? config.maxItem : 3; //max item must be show inside container
+    config.isClickImage = false;
     config.alignThreshold = config.alignThreshold || 0.5; // Default to 50% if not specified
 	let tl = $gsap.timeline({repeat: config.repeat, paused: config.paused, defaults: {ease: "none"}, onReverseComplete: () => tl.totalTime(tl.rawTime() + tl.duration() * 100)}),
 		length = items.length,
@@ -284,7 +299,7 @@ const horizontalLoop = (items, config) => {
     tl.previous = vars => { toIndex(curIndex - 1, vars) && setMiddle(curIndex + (config.maxItem - 3) / 2, length, config.maxItem)};
 
     tl.current = () => curIndex;
-    tl.toIndex = (index, vars) => { toIndex(index, vars); setMiddle(index - a', length, config.maxItem); }
+    tl.toIndex = (index, vars) => { toIndex(index, vars); setMiddle(index, length, config.maxItem); }
     tl.updateIndex = () => curIndex = Math.round(tl.progress() * items.length);
     tl.times = times;
     tl.progress(1, true).progress(0, true); // pre-render for performance
@@ -292,8 +307,8 @@ const horizontalLoop = (items, config) => {
         tl.vars.onReverseComplete();
         tl.reverse();
     }
-    // if (config.draggable) {
-    if (config.draggable && local.isItem) {
+    tl.updateConfig = (newConfig) => typeof newConfig == 'object' && (Object.keys(newConfig).forEach(key => config.hasOwnProperty(key) && (config[key] = newConfig[key] && console.log('keyy updateedd'))));
+    if (config.draggable) {
         let proxy = document.createElement("div"),
             wrap = $gsap.utils.wrap(0, 1),
             ratio, startProgress, draggable, dragSnap, roundFactor,
@@ -301,8 +316,9 @@ const horizontalLoop = (items, config) => {
             syncIndex = () => tl.updateIndex();
         draggable = $Draggable.create(proxy, {
             trigger: items[0].parentNode,
-            type: "x",
+            type: "x",/
             onPress() {
+                if(!config.isClickImage) return;
                 startProgress = tl.progress();
                 tl.progress(0);
                 populateWidths();
@@ -319,7 +335,8 @@ const horizontalLoop = (items, config) => {
                 return (n - n % 1) / roundFactor;
             },
             onRelease: () => {
-                syncIndex();
+                if(!config.isClickImage) return;
+                syncIndex();/
                 let dragProgress = (draggable.startX - draggable.endX) * ratio;
                 let triggerThreshold = config.alignThreshold * widths[curIndex];
                 let alignedProgress = startProgress + dragProgress;
