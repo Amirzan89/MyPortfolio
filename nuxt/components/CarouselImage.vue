@@ -12,7 +12,7 @@
             </div>
             <div class="card-loading items-loading absolute top-0 left-0 w-full h-full 3xsphone:rounded-md sm:rounded-lg md:rounded-xl" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
         </div>
-        <ul class="flex gap-1.5 mt-1 w-5/12 scrollable-container relative" ref="scrollableContainer">
+        <ul class="flex gap-1.5 mt-1 w-5/12 scrollable-container relative bg-primary dark:bg-transparent" ref="scrollableContainer" style="transition: var(--darkMode);">
             <template v-for="(item, index) in props.images" :key="index">
                 <li ref="caItemLoadingRef" class="flex-shrink-0 relative">
                     <div>
@@ -24,22 +24,25 @@
         </ul>
     </div>
 </template>
-<style scoped>
+<style lang="scss" scoped>
 .refArr{
     transition: var(--darkMode);
 }
 .middle-item div img{
     border-color: red;
+    &:hover{
+        border-color: red;
+    }
 }
 .scrollable-container{
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-}
-.scrollable-container::-webkit-scrollbar {
-    width: 0;
-    display: none;
+    &::-webkit-scrollbar {
+        width: 0;
+        display: none;
+    }
 }
 </style>
 <script setup>
@@ -95,6 +98,14 @@ const updateAspectRatio = (el = null) => {
     }
 };
 onMounted(() => {
+    $gsap.from('section:first-child div #carouselComponent div', {
+        y:'-50%',
+        scale: 0.5,
+        opacity: 0,
+        delay: 1.5,
+        duration:1,
+        onComplete: () => local.isMainDone = true,
+    }, 0);
     if(!Number.isInteger(maxItemContainer)){
         throw createError({
             statusCode: 500,
@@ -120,42 +131,42 @@ onMounted(() => {
     });
 });
 onBeforeUnmount(() => window.removeEventListener('resize', updateAspectRatio));
-watch(mainImageLoadingRef, (newValue) => {
+watch(() => mainImageLoadingRef.value, (newValue) => {
+    if(newValue == null) return;
     updateAspectRatio(newValue);
     handleLoading(newValue, 'main');
-});
-onUpdated(async() => {
-    if (Array.isArray(caItemLoadingRef.value) && caItemLoadingRef.value.length > 0) {
-        //init carousel
-        for(let i = 0; i < Math.floor((maxItemContainer - 1) / 2); i++){
-            const lastChild = scrollableContainer.value.lastElementChild;
-            const clonedLastChild = lastChild.cloneNode(true);
-            clonedLastChild.querySelector('img').addEventListener('click', () => updateImage(lastChild.querySelector('img').src, Array.prototype.indexOf.call(scrollableContainer.value.children, lastChild)));
-            scrollableContainer.value.insertBefore(clonedLastChild, scrollableContainer.value.firstChild);
-            scrollableContainer.value.removeChild(lastChild);
-        }
-        caItemLoadingRef.value = Array.from(scrollableContainer.value.querySelectorAll('li'));
-        $gsap.from(caItemLoadingRef.value, {
-            y:'200%',
-            opacity: 0,
-            delay: 2,
-            duration: 1,
-            stagger: {
-                from: 'start',
-                each: 0.3,
-            },
-        }, 0);
-        const conCom = getComputedStyle(scrollableContainer.value);
-        const conWidth = conCom.width.match(/\d+/g)[0];
-        const widthItem = `${(((conWidth - (conCom.gap.match(/\d+/g) ? (maxItemContainer - 1) * conCom.gap.match(/\d+/g)[0] : 0)) / maxItemContainer) / conWidth) * 100}%`;
-        caItemLoadingRef.value.forEach(item => {
-            item.style.width = widthItem;
-            updateAspectRatio(item);
-            handleLoading(item);
-        });
+}, { immediate:true });
+watch(() => caItemLoadingRef.value, (newValue) => {
+    if(caItemLoadingRef.value.length <= 0) return;
+    //init carousel
+    for(let i = 0; i < Math.floor((maxItemContainer - 1) / 2); i++){
+        const lastChild = scrollableContainer.value.lastElementChild;
+        const clonedLastChild = lastChild.cloneNode(true);
+        clonedLastChild.querySelector('img').addEventListener('click', () => updateImage(lastChild.querySelector('img').src, Array.prototype.indexOf.call(scrollableContainer.value.children, lastChild)));
+        scrollableContainer.value.insertBefore(clonedLastChild, scrollableContainer.value.firstChild);
+        scrollableContainer.value.removeChild(lastChild);
     }
-    loop = horizontalLoop($gsap.utils.toArray(caItemLoadingRef.value), {paused: true, draggable: true, maxItem: maxItemContainer});
-});
+    newValue = Array.from(scrollableContainer.value.querySelectorAll('li'));
+    $gsap.from(newValue, {
+        y:'200%',
+        opacity: 0,
+        delay: 2,
+        duration: 1,
+        stagger: {
+            from: 'start',
+            each: 0.3,
+        },
+    }, 0);
+    const conCom = getComputedStyle(scrollableContainer.value);
+    const conWidth = conCom.width.match(/\d+/g)[0];
+    const widthItem = `${(((conWidth - (conCom.gap.match(/\d+/g) ? (maxItemContainer - 1) * conCom.gap.match(/\d+/g)[0] : 0)) / maxItemContainer) / conWidth) * 100}%`;
+    newValue.forEach(item => {
+        item.style.width = widthItem;
+        updateAspectRatio(item);
+        handleLoading(item);
+    });
+    loop = horizontalLoop($gsap.utils.toArray(newValue), {paused: true, draggable: true, maxItem: maxItemContainer});
+}, { immediate:true, deep: true });
 const handleLoading = (card, cond = '') => {
     const image = card.querySelector('img');
     image.addEventListener('load', () => {
@@ -171,11 +182,7 @@ const handleLoading = (card, cond = '') => {
         const cardLoading = card.querySelector('.card-loading');
         if (cardLoading) {
             cardLoading.remove();
-            if(card.tagName.toLowerCase() == 'div' && !local.isMainDone){
-                setTimeout(() => {
-                    local.isMainDone = true;
-                }, 200);
-            }else if(card.tagName.toLowerCase() == 'li' && !local.isItemDone){
+            if(card.tagName.toLowerCase() == 'li' && !local.isItemDone){
                 setTimeout(() => {
                     local.isItemDone = true;
                 }, 200);
@@ -190,9 +197,7 @@ const handleLoading = (card, cond = '') => {
         const cardLoading = card.querySelector('.card-loading');
         if (cardLoading) {
             cardLoading.remove();
-            if(card.tagName.toLowerCase() == 'div'){
-                local.isMainDone = true;
-            }else if(card.tagName.toLowerCase() == 'li'){
+            if(card.tagName.toLowerCase() == 'li'){
                 local.isItemDone = true;
             }
         }
@@ -202,10 +207,8 @@ const nextCarousel = () => loop.next({duration: 0.4, ease: "power1.inOut"})
 const prevCarousel = () => loop.previous({duration: 0.4, ease: "power1.inOut"})
 const updateImage = (item, index) => {
     if(local.isItemDone){
-        loop.updateConfig({isClickImage: true});
         loop.toIndex(index, {duration: 0.8, ease: "power1.inOut"});
         mainImageRef.value.src = item;
-        loop.updateConfig({isClickImage: false});
     }
 }
 const useHandleMainImageComposable = () => {
@@ -299,7 +302,7 @@ const horizontalLoop = (items, config) => {
         tl.vars.onReverseComplete();
         tl.reverse();
     }
-    tl.updateConfig = (newConfig) => typeof newConfig == 'object' && (Object.keys(newConfig).forEach(key => config.hasOwnProperty(key) && (config[key] = newConfig[key] && console.log('keyy updateedd'))));
+    setMiddle(0, length, config.maxItem); //init middle
     if (config.draggable) {
         const threshold = 5;
         let proxy = document.createElement("div"),

@@ -39,10 +39,10 @@ export const useDarkModeStore = defineStore('darkMode', {
         watchSystemPreference() {
             if (window.matchMedia) {
                 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                if (localStorage.getItem('dark-mode') === null) {
-                    this.darkMode = e.matches;
-                    this.applyDarkMode();
-                }
+                    if (localStorage.getItem('dark-mode') === null) {
+                        this.darkMode = e.matches;
+                        this.applyDarkMode();
+                    }
                 });
             }
         }

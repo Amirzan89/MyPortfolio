@@ -45,13 +45,6 @@ export default () => {
                 duration:1,
             }, 0);
         }
-        tl.from(first('#carouselComponent div'), {
-            y:'-50%',
-            scale: 0.5,
-            opacity: 0,
-            delay: 1.1,
-            duration:1,
-        }, 0);
         tl.from(first('#carouselComponent ul'), {
             x: '-50%',
             y: '100%',
