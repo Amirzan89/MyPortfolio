@@ -354,6 +354,7 @@ const horizontalLoop = (items, config) => {
                             ease: "power1.inOut",
                             onComplete: () => {
                                 setMiddle(curIndex, length, config.maxItem);
+                                isDragging = false;
                             }
                         });
                     }
