@@ -1,0 +1,233 @@
+/* transition */
+/* styling */
+section > div, ul{
+    width: 92%;
+}
+.cardI{
+    width: 46.2%;
+    div{
+        div{
+            margin-top: 12px;
+            width: 90%;
+            height: 100px;
+        }
+        h3{
+            margin-top: 12px;
+            width: 50%;
+            height: 32px;
+        }
+        span{
+            margin-top: 20px;
+            width: 30%;
+            height: 28px;
+        }
+    }
+    a img{
+        margin-top: 16px;
+        width: 90%;
+        height: 70px;
+    }
+}
+@media (min-width: 320px) {
+    section > div, ul{
+        width: 92%;
+    }
+    .cardI{
+        width: 46.2%;
+        div{
+            div{
+                margin-top: 10px;
+                height: 70px;
+            }
+            h3{
+                margin-top: 20px;
+                width: 60%;
+                height: 14px;
+            }
+            span{
+                margin-top: 3px;
+                width: 40%;
+                height: 10px;
+            }
+        }
+        a img{
+            margin-top: 10px;
+            width: 90%;
+            height: 70px;
+        }
+    }
+}
+@media (min-width: 480px) {
+    section > div, ul{
+        width: 92%;
+    }
+    .cardI{
+        width: 46.2%;
+        div{
+            div{
+                margin-top: 16px;
+                height: 110px;
+            }
+            h3{
+                margin-top: 18px;
+                width: 60%;
+                height: 21px;
+            }
+            span{
+                margin-top: 4px;
+                width: 40%;
+                height: 14px;
+            }
+        }
+        a img{
+            margin-top: 16px;
+            width: 90%;
+            height: 110px;
+        }
+    }
+}
+@media (min-width: 640px) {
+    section > div, ul{
+        width: 90%;
+    }
+    .cardI{
+        width: 48%;
+        div{
+            div{
+                margin-top: 16px;
+                height: 130px;
+            }
+            h3{
+                margin-top: 24px;
+                width: 60%;
+                height: 18px;
+            }
+            span{
+                margin-top: 6px;
+                width: 40%;
+                height: 15px;
+            }
+        }
+        a img{
+            margin-top: 16px;
+            width: 90%;
+            height: 130px;
+        }
+    }
+}
+@media (min-width: 768px) {
+    section > div, ul{
+        width: 90%;
+    }
+    .cardI{
+        width: 48%;
+        div{
+            div{
+                margin-top: 12px;
+                height: 190px;
+            }
+            h3{
+                margin-top: 18px;
+                width: 60%;
+                height: 24px;
+            }
+            span{
+                margin-top: 6px;
+                width: 40%;
+                height: 19px;
+            }
+        }
+        a img{
+            margin-top: 16px;
+            width: 90%;
+            height: 180px;
+        }
+    }
+}
+@media (min-width: 1024px) {
+    section > div, ul{
+        width: 90%;
+    }
+    .cardI{
+        width: 31.5%;
+        div{
+            div{
+                margin-top: 16px;
+                height: 150px;
+            }
+            h3{
+                margin-top: 24px;
+                width: 60%;
+                height: 22px;
+            }
+            span{
+                margin-top: 7px;
+                width: 40%;
+                height: 16px;
+            }
+        }
+        a img{
+            margin-top: 16px;
+            width: 90%;
+            height: 150px;
+        }
+    }
+}
+@media (min-width: 1280px) {
+    section > div, ul{
+        width: 90%;
+    }
+    .cardI{
+        width: 32%;
+        div{
+            div{
+                margin-top: 16px;
+                height: 185px;
+            }
+            h3{
+                margin-top: 31px;
+                width: 60%;
+                height: 28px;
+            }
+            span{
+                margin-top: 6px;
+                width: 40%;
+                height: 20px;
+            }
+        }
+        a img{
+            margin-top: 16px;
+            width: 90%;
+            height: 185px;
+        }
+    }
+}
+@media (min-width: 1536px) {
+    section > div, ul{
+        width: 89%;
+    }
+    .cardI{
+        width: 32.3%;
+        div{
+            div{
+                margin-top: 16px;
+                height: 230px;
+            }
+            h3{
+                margin-top: 44px;
+                width: 60%;
+                height: 22px;
+            }
+            span{
+                margin-top: 6px;
+                width: 40%;
+                height: 22px;
+            }
+        }
+        a img{
+            margin-top: 16px;
+            width: 90%;
+            height: 230px;
+        }
+    }
+}

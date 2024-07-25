@@ -37,10 +37,15 @@
                             <h3 class="relative 3xsphone:left-2 phone:left-3 sm:left-4 md:left-5 lg:left-4 xl:left-5 2xl:left-6 3xsphone:mt-5 xl:mt-7 2xl:mt-10 3xsphone:text-2xs phone:text-sm sm:text-base md:text-xl xl:text-2xl 2xl:text-xl font-semibold w-max">{{ item.nama }}</h3>
                             <span class="relative 3xsphone:left-2 phone:left-3 sm:left-4 md:left-5 lg:left-4 xl:left-5 2xl:left-6 3xsphone:mb-3 md:mb-4 xl:mb-5 3xsphone:text-3xs phone:text-xs sm:text-sm md:text-lg lg:text-base xl:text-lg 2xl:text-xl w-max">{{ item.category }}</span>
                         </NuxtLink>
-                        <div class="card-loading absolute top-0 left-0 flex flex-col w-full">
+                        <!-- <div class="card-loading absolute top-0 left-0 flex flex-col w-full">
                             <div class="rounded-md relative left-1/2 -translate-x-1/2 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
                             <h3 class="rounded-md relative left-5 mt-5 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
                             <span class="relative left-5 mt-4 mb-10 rounded-md items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
+                        </div> -->
+                        <div class="card-loading absolute top-0 left-0 flex flex-col bg-transparent w-full">
+                            <div class="rounded-md relative left-1/2 -translate-x-1/2 items-loading h-10" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
+                            <h3 class="3xsphone:rounded-sm lgg:rounded-md relative 3xsphone:left-2 phone:left-3 sm:left-4 md:left-5 lg:left-4 xl:left-5 2xl:left-6 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
+                            <span class="relative 3xsphone:left-2 phone:left-3 sm:left-4 md:left-5 lg:left-4 xl:left-5 2xl:left-6 mb-10 3xsphone:rounded-sm xl:rounded-md items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
                         </div>
                     </li>
                 </template>
@@ -48,8 +53,8 @@
         </section>
     </div>
 </template>
-<style scoped>
-    @import '~/assets/css/detailProject.css';
+<style lang="scss" scoped>
+    @import '~/assets/css/detailProject.scss';
 </style>
 <script setup>
 import { ref, watch, computed } from "vue";
