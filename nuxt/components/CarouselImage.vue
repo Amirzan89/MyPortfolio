@@ -18,7 +18,7 @@
                     <div>
                         <img :src="item+''" alt="" @click="updateImage(item, index)" class="pointer-events-auto relative block object-contain 3xsphone:rounded-sm md:rounded-md 3xsphone:border-3 md:border-3 border-transparent hover:border-primary dark:hover:border-primary_dark" draggable="false">
                     </div>
-                    <div class="card-loading items-loadinsg absolute top-0 left-0 z-10 w-full h-full 3xsphone:rounded-sm md:rounded-md" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s; background-color: rgba(255, 255, 255, 0.54);"/>
+                    <div class="card-loading items-loadinsg absolute top-0 left-0 z-10 w-full h-full 3xsphone:rounded-sm md:rounded-md" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
                 </li>
             </template>
         </ul>
@@ -107,14 +107,6 @@ onMounted(() => {
             statusMessage: 'Max item container must odd at detail page',
         });
     }
-    // const configg = { 
-    //     firstName: "John",
-    //     lastName: "Doe",
-    //     age: 50,
-    //     eyeColor: "blue"
-    // }
-    // console.log('keyy', Object.keys(configg));
-    // Object.keys(configg).forEach(item => console.log('itemmm', item));
     window.addEventListener('resize', updateAspectRatio);
     $gsap.set(arrLeftRef.value, {
         x: '-50%',
@@ -309,16 +301,19 @@ const horizontalLoop = (items, config) => {
     }
     tl.updateConfig = (newConfig) => typeof newConfig == 'object' && (Object.keys(newConfig).forEach(key => config.hasOwnProperty(key) && (config[key] = newConfig[key] && console.log('keyy updateedd'))));
     if (config.draggable) {
+        const threshold = 5;
         let proxy = document.createElement("div"),
             wrap = $gsap.utils.wrap(0, 1),
             ratio, startProgress, draggable, dragSnap, roundFactor,
             align = () => tl.progress(wrap(startProgress + (draggable.startX - draggable.x) * ratio)),
-            syncIndex = () => tl.updateIndex();
+            syncIndex = () => tl.updateIndex(),
+            isDragging = false,
+            startX;
         draggable = $Draggable.create(proxy, {
             trigger: items[0].parentNode,
-            type: "x",/
-            onPress() {
-                if(!config.isClickImage) return;
+            type: "x",
+            onPress(event) {
+                startX = event.clientX;
                 startProgress = tl.progress();
                 tl.progress(0);
                 populateWidths();
@@ -328,15 +323,15 @@ const horizontalLoop = (items, config) => {
                 roundFactor = Math.pow(10, ((dragSnap + "").split(".")[1] || "").length);
                 tl.progress(startProgress);
             },
-            onDrag: align,
+            onDrag: (event) => { if (Math.abs(event.clientX - startX) > threshold) isDragging = true; align(); },
             onThrowUpdate: align,
             snap: value => {
                 let n = Math.round(parseFloat(value) / dragSnap) * dragSnap * roundFactor;
                 return (n - n % 1) / roundFactor;
             },
             onRelease: () => {
-                if(!config.isClickImage) return;
-                syncIndex();/
+                if (!isDragging) return;
+                syncIndex();
                 let dragProgress = (draggable.startX - draggable.endX) * ratio;
                 let triggerThreshold = config.alignThreshold * widths[curIndex];
                 let alignedProgress = startProgress + dragProgress;
@@ -366,6 +361,4 @@ const horizontalLoop = (items, config) => {
     }
 	return tl;
 }
-// const visibleItems = 3; // Update as per your visible items count
-// setMiddle(0, boxes.length, visibleItems);
 </script>
