@@ -12,11 +12,11 @@
             </div>
             <div class="card-loading items-loading absolute top-0 left-0 w-full h-full 3xsphone:rounded-md sm:rounded-lg md:rounded-xl" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
         </div>
-        <ul class="flex gap-1.5 mt-1 w-5/12 scrollable-container relative bg-primary dark:bg-transparent" ref="scrollableContainer" style="transition: var(--darkMode);">
+        <ul class="flex gap-1.5 mt-1 w-5/12 scrollable-container relative bg-primary dark:bg-transparent" ref="scrollableContainerRef" style="transition: var(--darkMode);">
             <template v-for="(item, index) in props.images" :key="index">
                 <li ref="caItemLoadingRef" class="flex-shrink-0 relative">
                     <div>
-                        <img :src="item+''" alt="" @click="updateImage(item, index)" class="pointer-events-auto relative block object-contain 3xsphone:rounded-sm md:rounded-md 3xsphone:border-3 md:border-3 border-transparent hover:border-primary dark:hover:border-primary_dark" draggable="false">
+                        <img :src="item+''" alt="" @click="updateImage(item, index)" class="pointer-events-auto relative block object-contain 3xsphone:rounded-sm md:rounded-md 3xsphone:border-3 md:border-3 border-transparent hover:border-primary dark:hover:border-primary_dark 3xsphone:max-h-40 xl:max-h-40" draggable="false">
                     </div>
                     <div class="card-loading items-loadinsg absolute top-0 left-0 z-10 w-full h-full 3xsphone:rounded-sm md:rounded-md" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
                 </li>
@@ -54,11 +54,12 @@ const props = defineProps({
 });
 const local = reactive({
     isMainDone: false,
+    isFirstTime: false,
     isItemDone: false,
 });
 const mainImageRef = ref(null);
 const mainImageLoadingRef = ref(null);
-const scrollableContainer = ref(null);
+const scrollableContainerRef = ref(null);
 const caItemLoadingRef = ref([]);
 const arrLeftRef = ref(null);
 const arrRightRef = ref(null);
@@ -97,15 +98,83 @@ const updateAspectRatio = (el = null) => {
         updateArr();
     }
 };
+const initAll = () => {
+    nextTick(() => {
+        //main image
+        if(!local.isMainDone || (mainImageLoadingRef.value != null && !local.isFirstTime)){
+            const mainImgObs = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting){
+                        updateAspectRatio(mainImageLoadingRef.value);
+                        handleLoading(mainImageLoadingRef.value, 'main');
+                        mainImgObs.disconnect();
+                    }
+                });
+            }, { threshold: 0.5 });
+            mainImgObs.observe(mainImageLoadingRef.value);
+        }
+
+        //item card
+        if(!local.isItemDone || (scrollableContainerRef.value != null && !local.isFirstTime)){
+            const scrollContainerObs = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting){
+                        //init carousel
+                        for(let i = 0; i < Math.floor((maxItemContainer - 1) / 2); i++){
+                            const lastChild = scrollableContainerRef.value.lastElementChild;
+                            const clonedLastChild = lastChild.cloneNode(true);
+                            clonedLastChild.querySelector('img').addEventListener('click', () => updateImage(lastChild.querySelector('img').src, Array.prototype.indexOf.call(scrollableContainerRef.value.children, lastChild)));
+                            scrollableContainerRef.value.insertBefore(clonedLastChild, scrollableContainerRef.value.firstChild);
+                            scrollableContainerRef.value.removeChild(lastChild);
+                        }
+                        caItemLoadingRef.value = Array.from(scrollableContainerRef.value.querySelectorAll('li'));
+                        const tl = $gsap.timeline();
+                        const prefix = 'section:first-child div';
+                        tl.from(`${prefix} #carouselComponent div`, {
+                            y:'-50%',
+                            scale: 0.5,
+                            opacity: 0,
+                            delay: 0.6,
+                            duration:1,
+                            onComplete: () => local.isMainDone = true,
+                        }, 0);
+                        tl.from(`${prefix} #carouselComponent ul`, {
+                            x: '-50%',
+                            y: '100%',
+                            scale: 0.5,
+                            opacity: 0,
+                            delay: 0.8,
+                            duration:1,
+                        }, 0);
+                        tl.from(caItemLoadingRef.value, {
+                            y:'200%',
+                            opacity: 0,
+                            delay: 1,
+                            duration: 1,
+                            stagger: {
+                                from: 'start',
+                                each: 0.3,
+                            },
+                        }, 0);
+                        const conCom = getComputedStyle(scrollableContainerRef.value);
+                        const conWidth = conCom.width.match(/\d+/g)[0];
+                        const widthItemCard = `${(((conWidth - (conCom.gap.match(/\d+/g) ? (maxItemContainer - 1) * conCom.gap.match(/\d+/g)[0] : 0)) / maxItemContainer) / conWidth) * 100}%`;
+                        caItemLoadingRef.value.forEach(item => {
+                            item.style.width = widthItemCard;
+                            updateAspectRatio(item);
+                            handleLoading(item);
+                        });
+                        scrollContainerObs.disconnect();
+                        loop = horizontalLoop($gsap.utils.toArray(caItemLoadingRef.value), {paused: true, draggable: true, maxItem: maxItemContainer});
+                    }
+                });
+            }, { threshold: 0.5 });
+            scrollContainerObs.observe(scrollableContainerRef.value);
+        }
+    });
+}
 onMounted(() => {
-    $gsap.from('section:first-child div #carouselComponent div', {
-        y:'-50%',
-        scale: 0.5,
-        opacity: 0,
-        delay: 1.5,
-        duration:1,
-        onComplete: () => local.isMainDone = true,
-    }, 0);
+    initAll();
     if(!Number.isInteger(maxItemContainer)){
         throw createError({
             statusCode: 500,
@@ -129,44 +198,12 @@ onMounted(() => {
         opacity: 0,
         display:'none',
     });
+    local.isFirstTime = true;
 });
-onBeforeUnmount(() => window.removeEventListener('resize', updateAspectRatio));
-watch(() => mainImageLoadingRef.value, (newValue) => {
-    if(newValue == null) return;
-    updateAspectRatio(newValue);
-    handleLoading(newValue, 'main');
-}, { immediate:true });
-watch(() => caItemLoadingRef.value, (newValue) => {
-    if(caItemLoadingRef.value.length <= 0) return;
-    //init carousel
-    for(let i = 0; i < Math.floor((maxItemContainer - 1) / 2); i++){
-        const lastChild = scrollableContainer.value.lastElementChild;
-        const clonedLastChild = lastChild.cloneNode(true);
-        clonedLastChild.querySelector('img').addEventListener('click', () => updateImage(lastChild.querySelector('img').src, Array.prototype.indexOf.call(scrollableContainer.value.children, lastChild)));
-        scrollableContainer.value.insertBefore(clonedLastChild, scrollableContainer.value.firstChild);
-        scrollableContainer.value.removeChild(lastChild);
-    }
-    newValue = Array.from(scrollableContainer.value.querySelectorAll('li'));
-    $gsap.from(newValue, {
-        y:'200%',
-        opacity: 0,
-        delay: 2,
-        duration: 1,
-        stagger: {
-            from: 'start',
-            each: 0.3,
-        },
-    }, 0);
-    const conCom = getComputedStyle(scrollableContainer.value);
-    const conWidth = conCom.width.match(/\d+/g)[0];
-    const widthItem = `${(((conWidth - (conCom.gap.match(/\d+/g) ? (maxItemContainer - 1) * conCom.gap.match(/\d+/g)[0] : 0)) / maxItemContainer) / conWidth) * 100}%`;
-    newValue.forEach(item => {
-        item.style.width = widthItem;
-        updateAspectRatio(item);
-        handleLoading(item);
-    });
-    loop = horizontalLoop($gsap.utils.toArray(newValue), {paused: true, draggable: true, maxItem: maxItemContainer});
-}, { immediate:true, deep: true });
+onBeforeUnmount(() => {
+    window.removeEventListener('resize', updateAspectRatio);
+    local.isFirstTime = false;
+});
 const handleLoading = (card, cond = '') => {
     const image = card.querySelector('img');
     image.addEventListener('load', () => {

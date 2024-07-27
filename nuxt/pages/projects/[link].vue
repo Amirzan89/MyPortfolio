@@ -2,7 +2,7 @@
     <div class="min-h-screen">
         <section>
             <div class="relative left-1/2 -translate-x-1/2 flex 3xsphone:flex-col md:flex-row 3xsphone:gap-3 sm:gap-5 md:gap-10 w-11/12 items-start">
-                <CarouselImageComponent :images="getImages"/>
+                <CarouselImageComponent v-if="!local.isLoading" :images="getImages"/>
                 <div id="detailProject" class="flex flex-col flex-1 text-primary_text dark:text-primary_dark_text">
                     <h1 class="3xsphone:text-sm xsphone:text-base phone:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-semibold">{{ capitalizeFirstLetter(local.fetchedDetailProject?.nama) }}</h1>
                     <p class="3xsphone:text-3xs phone:text-2xs sm:text-base md:text-sm lg:text-base xl:text-lg 2xl:text-xl 3xsphone:mt-1 phone:mt-3 sm:mt-5 font-normal" v-html="local.formattedDeskripsi"/>
@@ -37,11 +37,6 @@
                             <h3 class="relative 3xsphone:left-2 phone:left-3 sm:left-4 md:left-5 lg:left-4 xl:left-5 2xl:left-6 3xsphone:mt-5 xl:mt-7 2xl:mt-10 3xsphone:text-2xs phone:text-sm sm:text-base md:text-xl xl:text-2xl 2xl:text-xl font-semibold w-max">{{ item.nama }}</h3>
                             <span class="relative 3xsphone:left-2 phone:left-3 sm:left-4 md:left-5 lg:left-4 xl:left-5 2xl:left-6 3xsphone:mb-3 md:mb-4 xl:mb-5 3xsphone:text-3xs phone:text-xs sm:text-sm md:text-lg lg:text-base xl:text-lg 2xl:text-xl w-max">{{ item.category }}</span>
                         </NuxtLink>
-                        <!-- <div class="card-loading absolute top-0 left-0 flex flex-col w-full">
-                            <div class="rounded-md relative left-1/2 -translate-x-1/2 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
-                            <h3 class="rounded-md relative left-5 mt-5 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
-                            <span class="relative left-5 mt-4 mb-10 rounded-md items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
-                        </div> -->
                         <div class="card-loading absolute top-0 left-0 flex flex-col bg-transparent w-full">
                             <div class="rounded-md relative left-1/2 -translate-x-1/2 items-loading h-10" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
                             <h3 class="3xsphone:rounded-sm lgg:rounded-md relative 3xsphone:left-2 phone:left-3 sm:left-4 md:left-5 lg:left-4 xl:left-5 2xl:left-6 items-loading" style="animation: 2.5s shine ease-in infinite; animation-delay: 0.25s;"/>
@@ -124,6 +119,7 @@ const local = reactive({
     fetchedOtherProject: null,
     thumbnail: '',
     carouselImage: [],
+    isLoading: true,
     formattedDeskripsi:'',
 });
 const carouselRef = ref(null);
@@ -152,10 +148,6 @@ onMounted(() => {
 });
 onUnmounted(() => {
     ctx.value?.kill()
-});
-watch(() => route.params.link, () => {
-    const { gsapContext } = animationsComposable();
-    ctx.value = gsapContext.value;
 });
 const handleLoading = (card) => {
     const image = card.querySelector('img');
@@ -203,6 +195,7 @@ watch(() => local.fetchedDetailProject, () => {
             local.carouselImage = local.fetchedDetailProject.foto.map((item) => {
                 return link + item;
             });
+            local.isLoading = false;
         });
     }
 }, { immediate:true });
