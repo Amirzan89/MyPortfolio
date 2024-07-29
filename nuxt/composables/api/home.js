@@ -9,6 +9,10 @@ export async function contactMe(data, retryCount = 0){
             subject: data.subject,
             email: data.email,
             description: data.message,
+        }, {
+            headers: {
+                'Accept': 'application/json',
+            }
         });
         return { status:'success', message: response.data.message};
     }catch(err){

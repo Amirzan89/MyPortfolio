@@ -13,7 +13,7 @@
                     </div>
                     <a href="#contact" id="btnContact" class="3xsphone:w-20 sm:w-30 md:w-35 lg:w-45 xl:w-57 2xl:w-60 3xsphone:h-6 sm:h-7 md:h-9 lg:h-12 xl:h-14 2xl:h-17 bg-primary dark:bg-primary_dark 3xsphone:rounded-md lg:rounded-xl xl:rounded-2xl flex justify-center items-center 3xsphone:ml-2 lg:ml-7 3xsphone:mt-3 md:mt-8 xl:mt-10 2xl:mt-12 text-white 3xsphone:font-normal font-semibold 3xsphone:text-xs sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">Contact Me</a>
                 </div>
-                <img src="~assets/images/testing.png" class="max-w-sm object-cover rounded-lg 3xsphone:w-30 sm:w-50 md:w-50 lg:w-70 xl:w-100 2xl:w-200 
+                <img src="~assets/images/cv/profile.jpg" class="max-w-sm object-cover rounded-lg 3xsphone:w-30 sm:w-50 md:w-50 lg:w-70 xl:w-100 2xl:w-200 
                 3xsphone:h-30 sm:h-55 md:h-55 lg:h-60 xl:h-100
                 "/>
             </div>
@@ -22,7 +22,6 @@
         <!--  About -->
         <section id="about" class="bg-greend-500 relative left-1/2 -translate-x-1/2 flex justify-center 3xsphone:mt-2 xl:mt-30">
             <div class="content 3xsphone:w-11/12 xl:w-7/8 flex flex-row cursor-default text-xl text-primary_text dark:text-primary_dark_text gap-10">
-                <!-- <img src="~assets/images/testing.png" class="max-w-sm object-cover rounded-lg w-200 h-100"/> -->
                 <div class="flex flex-col">
                     <p class="text-normal 3xsphone:text-3xs 2xsphone:text-2xs xsphone:text-2xs phone:text-2xs sm:text-xs md:text-sm lg:text-lg xl:text-xl 2xl:text-2xl">
                         Hello there i'm web developer on laravel and vue. I offer expertise in website development, responsive design, front end using tailwind css & vue js or back end using laravel. I am committed to delivering high-quality work and collaborating with clients to create effective and functional websites that meet their needs. With a strong attention to detail and a passion for learning and staying up-to-date with industry trends, I am excited to work with you on your web development projects.
@@ -58,7 +57,7 @@
             </div>
             <ul class="relative left-1/2 -translate-x-1/2 flex 3xsphone:mt-1 md:mt-5 mb-10 flex-wrap gap-5">
                 <template v-for="(item, index) in local.fetchedViewData" :key="index">
-                    <li class="cardI list-none relative" ref="cardRefs">
+                    <li class="cardI list-none relative pointer-events-none" ref="cardRefs">
                         <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 hover:bg-primary dark:hover:bg-primary_dark flex flex-col 3xsphone:rounded-md md:rounded-lg xl:rounded-xl text-primary_text dark:text-primary_dark_text hover:text-white dark:hover:text-white">
                             <img :src="baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 3xsphone:rounded-md md:rounded-lg 3xsphone:mt-1 md:mt-3 h-40">
                             <h3 class="relative 3xsphone:left-2 phone:left-3 sm:left-4 md:left-5 lg:left-4 xl:left-5 2xl:left-6 3xsphone:mt-5 xl:mt-7 2xl:mt-10 3xsphone:text-2xs phone:text-sm sm:text-base md:text-xl lg:text-lg xl:text-xl 2xl:text-xl font-semibold w-max">{{ item.nama }}</h3>
@@ -189,7 +188,8 @@ watch(() => local.fetchedViewData, () => {
                 stagger:{
                     from: 'start',
                     each: 0.3,
-                }
+                },
+                onComplete: () => cardRefs.value.forEach(item => item.classList.remove('pointer-events-none')),
             });
             local.fetchedViewData.forEach((item, index) => {
                 let card = cardRefs.value[index];
@@ -272,7 +272,7 @@ const sendEmail = async(event) => {
         name: input.name,
         subject: input.subject,
         email: input.email,
-        description: input.message,
+        message: input.message,
     });
     if(contactRes.status === 'success'){
         eventBus.emit('closeLoading');

@@ -22,16 +22,16 @@
         <section class="mt-10">
             <div class="flex relative left-1/2 -translate-x-1/2 justify-between items-center text-primary_text dark:text-primary_dark_text">
                 <template v-if="local.fetchedOtherProject != null">
-                    <span class="3xsphone:text-2xs 2xsphone:text-xs phone:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl relative font-semibold">Projects</span>
+                    <h4 class="3xsphone:text-2xs 2xsphone:text-xs phone:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl relative font-semibold">Projects</h4>
                     <NuxtLink id="btnOthers" to="/projects" class="3xsphone:text-2xs 2xsphone:text-xs phone:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl flex gap-2 items-center hover:text-red-500">
-                        <span>Others</span>
+                        <h4>Others</h4>
                         <FontAwesomeIcon icon="fa-solid fa-arrow-right-long" class="3xsphone:text-2xs 2xsphone:text-xs phone:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl"/> 
                     </NuxtLink>
                 </template>
             </div>
             <ul class="conCard relative left-1/2 -translate-x-1/2 flex 3xsphone:mt-1 xl:mt-5 flex-wrap -blue-500 gap-5">
                 <template v-for="(item, index) in local.fetchedOtherProject" :key="index">
-                    <li class="cardI list-none relative" ref="cardRefs">
+                    <li class="cardI list-none relative pointer-events-none" ref="cardRefs">
                         <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="3xsphone:mb-2 sm:mb-7 md:mb-2 hover:bg-primary dark:hover:bg-primary_dark flex flex-col 3xsphone:rounded-md md:rounded-lg xl:rounded-xl text-primary_text dark:text-primary_dark_text hover:text-white dark:hover:text-white">
                             <img :src="publicConfig.baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 3xsphone:rounded-md md:rounded-lg 3xsphone:mt-1 md:mt-3 h-40">
                             <h3 class="relative 3xsphone:left-2 phone:left-3 sm:left-4 md:left-5 lg:left-4 xl:left-5 2xl:left-6 3xsphone:mt-5 xl:mt-7 2xl:mt-10 3xsphone:text-2xs phone:text-sm sm:text-base md:text-xl xl:text-2xl 2xl:text-xl font-semibold w-max">{{ item.nama }}</h3>
@@ -63,6 +63,7 @@ import tailwindicon from '~/assets/icon/tailwind.svg';
 import vueicon from '~/assets/icon/vue.svg';
 import nuxtIcon from '~/assets/icon/nuxtjs.svg';
 const route = useRoute();
+const { $gsap } = useNuxtApp();
 const publicConfig = useRuntimeConfig().public;
 definePageMeta({
     name: 'ProjectsDetail',
@@ -122,9 +123,6 @@ const local = reactive({
     isLoading: true,
     formattedDeskripsi:'',
 });
-const carouselRef = ref(null);
-const caItemRef = ref([]);
-const slideRef = ref([]);
 const cardRefs = ref([]);
 const ctx = ref(null);
 useAsyncData(async () => {
@@ -172,7 +170,6 @@ watch(() => local.fetchedDetailProject, () => {
     if (local?.fetchedDetailProject !== undefined && local.fetchedDetailProject !== null && typeof local.fetchedDetailProject === 'object' && !Array.isArray(local.fetchedDetailProject) && Object.keys(local.fetchedDetailProject).length > 0) {
         local.thumbnail = local.fetchedDetailProject.thumbnail;
         nextTick(() => {
-            const { $gsap } = useNuxtApp();
             const tl = $gsap.timeline();
             const first = $gsap.utils.selector('section:first-child div');
             tl.from(first('a:not(#btnPreview'), {
@@ -192,9 +189,7 @@ watch(() => local.fetchedDetailProject, () => {
                 duration: 1,
             }, 0);
             const link = publicConfig.baseURL + '/img/project/';
-            local.carouselImage = local.fetchedDetailProject.foto.map((item) => {
-                return link + item;
-            });
+            local.carouselImage = local.fetchedDetailProject.foto.map(item => link + item);
             local.isLoading = false;
         });
     }
@@ -202,35 +197,31 @@ watch(() => local.fetchedDetailProject, () => {
 watch(() => local.fetchedOtherProject, () => {
     if (local?.fetchedOtherProject !== undefined && local.fetchedOtherProject !== null && typeof local.fetchedOtherProject === 'object' && Array.isArray(local.fetchedOtherProject) && Object.keys(local.fetchedOtherProject).length > 0) {
         nextTick(() => {
-            const { $gsap } = useNuxtApp();
+            const tl = $gsap.timeline();
             const lastChi = $gsap.utils.selector('section:last-child');
-            $gsap.from(lastChi('span'), {
+            tl.from(lastChi('h4'), {
                 x:'-100%',
                 opacity: 0,
-                delay: 2.2,
+                delay: 2,
                 duration: 1.3,
             }, 0);
-            $gsap.from(lastChi('a#btnOthers'), {
+            tl.from(lastChi('a#btnOthers'), {
                 x:'100%',
                 opacity: 0,
-                delay: 2.2,
+                delay: 2,
                 duration: 1.3,
             }, 0);
-            $gsap.from(cardRefs.value, {
+            tl.from(cardRefs.value, {
                 opacity: 0,
                 y:'20%',
-                delay: 0.25,
+                delay: 2.1,
                 duration: 1,
-                scrollTrigger: {
-                    trigger: 'section:last-child',
-                    start: 'top 60%',
-                    end: 'top none',
-                },
                 stagger:{
                     from: 'start',
                     each: 0.3,
-                }
-            });
+                },
+                onComplete: () => cardRefs.value.forEach(item => item.classList.remove('pointer-events-none')),
+            }, 0);
             local.fetchedOtherProject.forEach((item, index) => {
                 let card = cardRefs.value[index];
                 handleLoading(card);

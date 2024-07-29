@@ -1,11 +1,11 @@
 <template>
-    <section class="relative  h-[calc(100vh">
+    <section class="relative  h-[calc(100vh)]">
         <div class="flex relative left-1/2 -translate-x-1/2 items-center">
             <span class="3xsphone:text-2xs 2xsphone:text-xs phone:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl relative font-semibold text-primary_text dark:text-primary_dark_text">Projects</span>
         </div>
         <ul class="relative left-1/2 -translate-x-1/2 flex mt-5 flex-wrap gap-5">
             <template v-for="(item, index) in local.fetchedViewData" :key="index">
-                <li class="cardI list-none relative" ref="cardRefs">
+                <li class="cardI list-none relative pointer-events-none" ref="cardRefs">
                     <NuxtLink :to="{ name: 'ProjectsDetail', params: { link:item.link }}" class="mb-2 hover:bg-primary dark:hover:bg-primary_dark flex flex-col 3xsphone:rounded-md md:rounded-lg xl:rounded-xl text-primary_text dark:text-primary_dark_text hover:text-white dark:hover:text-white">
                         <img :src="baseURL + '/img/project/' + item.thumbnail" alt="" class="relative left-1/2 -translate-x-1/2 3xsphone:rounded-md md:rounded-lg 3xsphone:mt-1 md:mt-3 h-40">
                         <h3 class="relative 3xsphone:left-2 phone:left-3 sm:left-4 md:left-5 lg:left-4 xl:left-5 2xl:left-6 3xsphone:mt-5 xl:mt-7 2xl:mt-10 3xsphone:text-2xs phone:text-sm sm:text-base md:text-xl xl:text-2xl 2xl:text-xl font-semibold w-max">{{ item.nama }}</h3>
@@ -66,7 +66,8 @@ watch(() => local.fetchedViewData, () => {
                 stagger:{
                     from: 'start',
                     each: 0.3,
-                }
+                },
+                onComplete: () => cardRefs.value.forEach(item => item.classList.remove('pointer-events-none')),
             });
             local.fetchedViewData.forEach((item, index) => {
                 let card = cardRefs.value[index];
